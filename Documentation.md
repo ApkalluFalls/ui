@@ -93,6 +93,7 @@ The `localisation` object contains localised strings.
 | Name | Type | Description |
 | --- | --- | --- |
 | \{0\} | <code>string</code> | Zero-indexed argument replacement position within string. |
+| \{a0\} | <code>string</code> | Converts match to a hyperlink, provided passed-in arg is an object containing usual hyperlink properties. |
 | \{i0\} | <code>string</code> | Wraps match in `<strong>` tags. |
 | \{n0\} | <code>string</code> | Converts match to number and executes `toLocaleString` on it. |
 
