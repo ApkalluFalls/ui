@@ -148,7 +148,7 @@ export default () => (
 #### Naming Convention
 Key names must match the component name.
 
-### Thememing
+### Themeing
 
 | Entrypoint | Usage |
 | --- | --- |
