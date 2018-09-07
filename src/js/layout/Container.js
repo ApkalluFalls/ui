@@ -1,6 +1,6 @@
 /**
  * The `<Container />` layout component wraps each page.
- * @module [ {js/layout} Container ]
+ * @module [{js/layout}Container]
  */
 import React from "react";
 import { Route } from 'react-router-dom';

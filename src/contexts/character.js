@@ -1,6 +1,6 @@
 /**
  * The character context controls the actively tracked character.
- * @module [ {contexts} character ]
+ * @module [{contexts}character]
  * @default character.none
  * @example import { CharacterContext, character } from "context/theme";
  */

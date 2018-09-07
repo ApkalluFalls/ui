@@ -1,6 +1,6 @@
 /**
  * The theme context controls which style theme to apply to the site (light or dark).
- * @module [ {contexts} theme ]
+ * @module [{contexts}theme]
  * @default theme.light
  * @example import { ThemeContext, themes } from "context/theme";
  */

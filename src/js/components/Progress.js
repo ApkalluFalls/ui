@@ -1,6 +1,6 @@
 /**
  * The `<Progress />` component displays a progress bar with caption, value, total and percentage.
- * @module [ {js/components} Progress ]
+ * @module [{js/components}Progress]
  * @prop {string} props.caption - Text to display within the `figcaption` element and `aria-valuetext` arribute.
  * @prop {Number} props.total - The maximum value for the progress bar, also used within `aria-valuemax`.
  * @prop {Number} props.value - The current value for the progress bar, also used within `aria-valuenow`.

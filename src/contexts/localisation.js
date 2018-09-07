@@ -1,6 +1,6 @@
 /**
  * The localisation context controls the text language throughout the site.
- * @module [ {contexts} localisation ]
+ * @module [{contexts}localisation]
  * @default localisation.en
  * @example import { LocalisationContext, localisation } from "context/theme";
  */

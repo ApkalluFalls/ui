@@ -1,6 +1,6 @@
 /**
  * The `<AFComponent />` utility component wraps other components with themeing and localisation support.
- * @module [ {js} AFComponent ]
+ * @module [{js}AFComponent]
  * @prop {Object} props.style - Style rules to apply on the wrapped component.
  */
 import React from "react";

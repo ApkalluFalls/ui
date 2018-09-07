@@ -1,6 +1,6 @@
 /**
  * The `<Home />` page component controls https://apkallufalls.com (route: `'/'`).
- * @module [ {js/pages }Home ]
+ * @module [{js/pages}Home]
  */
 import React from "react";
 import AFComponent from "js/AFComponent";
