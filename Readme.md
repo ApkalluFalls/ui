@@ -5,6 +5,14 @@ This repository contains the building blocks used to create [https://apkallufall
 ## 🚧 This repository is a work-in-progress
 The current minified Apkallu Falls UI is not built from this repository, but will be in future. This repository is a pathway towards getting Apkallu Falls ready for React 17.
 
+## Documentation
+
+The [documentation](https://github.com/ApkalluFalls/ui/blob/master/Documentation.md) is written using JSDoc syntax and compiled using:
+
+```
+npm run doc
+```
+
 ---
 
 ## Installation
