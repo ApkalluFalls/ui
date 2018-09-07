@@ -5,6 +5,8 @@ This repository contains the building blocks used to create [https://apkallufall
 ## 🚧 This repository is a work-in-progress
 The current minified Apkallu Falls UI is not built from this repository, but will be in future. This repository is a patheway towards getting Apkallu Falls ready for React 17.
 
+---
+
 ## Installation
 After cloning the repository, you'll need to install the dependencies from NPM:
 
@@ -25,6 +27,8 @@ npm run start
 ```
 
 The repository will now be running at [http://127.0.0.1:7000](http://127.0.0.1:7000).
+
+---
 
 ## UI Components
 
