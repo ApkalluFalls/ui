@@ -6,7 +6,7 @@ module.exports = (env, argv) => ({
     port: 7000
   },
   entry: {
-    app: ['babel-polyfill', 'whatwg-fetch', './src/index.js', './src/less/global.less'],
+    app: ['babel-polyfill', 'whatwg-fetch', './src/index.js'],
     vendor: ['babel-polyfill', 'react', 'react-dom', 'firebase']
   },
   resolve: {
@@ -25,21 +25,6 @@ module.exports = (env, argv) => ({
         use: {
           loader: "babel-loader"
         }
-      }, {
-        test: /\.less$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'style-loader'
-        }, {
-          loader: 'css-loader',
-          options: {
-            sourceMap: true,
-            modules: true,
-            localIdentName: "[local]___[hash:base64:5]"
-          }
-        }, {
-          loader: 'less-loader'
-        }]
       }, {
         test: /\.(woff2?|eot|svg|ttf|md|jpg|png)$/,
         exclude: /node_modules/,

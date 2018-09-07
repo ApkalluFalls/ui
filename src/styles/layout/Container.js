@@ -1,4 +1,20 @@
 export default theme => ({
+  '@global': {
+    'html, body': {
+      fontFamily: `'Roboto', sans-serif`,
+      height: '100%',
+      margin: 0
+    },
+    'body > section': {
+      background: theme.background,
+      height: '100%',
+      position: 'relative'
+    },
+    'a, a:visited': {
+      color: theme.link,
+      textDecoration: 'none'
+    }
+  },
   container: {
     boxShadow: {
       x: 0,

@@ -14,6 +14,7 @@ export const themes = {
     brand: '#ffee58',
     background: '#f5f5f5',
     color: '#212121',
+    link: '#337ab7',
     shadow: '#212121',
     subtleBackground: '#bdbdbd',
     navigation: {
