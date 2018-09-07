@@ -3,7 +3,7 @@
 This repository contains the building blocks used to create [https://apkallufalls.com](https://apkallufalls.com).
 
 ## 🚧 This repository is a work-in-progress
-The current minified Apkallu Falls UI is not built from this repository, but will be in future. This repository is a patheway towards getting Apkallu Falls ready for React 17.
+The current minified Apkallu Falls UI is not built from this repository, but will be in future. This repository is a pathway towards getting Apkallu Falls ready for React 17.
 
 ---
 
