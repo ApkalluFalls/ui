@@ -9,6 +9,7 @@
   "scripts": {
     "deploy": "(rm -rf ./dist/compiled || true) && webpack --mode production",
     "dev": "webpack --mode=development",
+    "doc": "jsdoc2md 'src/**/*.js' > Documentation.md",
     "start": "webpack-dev-server --mode=development --open"
   },
   "dependencies": {
@@ -33,6 +34,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
+    "jsdoc": "^3.5.5",
+    "jsdoc-to-markdown": "^4.0.1",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "style-loader": "^0.23.0",

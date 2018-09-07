@@ -1,3 +1,7 @@
+/**
+ * The `<Navigation />` layout component wraps the sidebar.
+ * @module [ {js/layout} Navigation ]
+ */
 import React from "react";
 import injectSheet, { ThemeProvider } from 'react-jss';
 import { ThemeContext, themes } from 'contexts/theme';

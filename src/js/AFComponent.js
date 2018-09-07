@@ -1,6 +1,11 @@
+/**
+ * The `<AFComponent />` utility component wraps other components with themeing and localisation support.
+ * @module [ {js} AFComponent ]
+ * @prop {Object} props.style - Style rules to apply on the wrapped component.
+ */
 import React from "react";
 import injectSheet, { ThemeProvider } from 'react-jss';
-import { LocalisationContext, localisation } from 'contexts/localisation';
+import { LocalisationContext, localisation, localeInject } from 'contexts/localisation';
 import { ThemeContext, themes } from 'contexts/theme';
 
 export default (props) => {
@@ -12,7 +17,11 @@ export default (props) => {
         <ThemeProvider theme={themes[theme]}>
           <LocalisationContext.Consumer>
             {locale => (
-              <Component locale={localisation[locale]} />
+              <Component
+                locale={localisation[locale]}
+                localeInject={localeInject}
+                {...props}
+              />
             )}
           </LocalisationContext.Consumer>
         </ThemeProvider>
