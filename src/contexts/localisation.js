@@ -12,7 +12,9 @@ import React from "react";
 export const localisation = {
   en: {
     common: {
-      achievements: 'Achievements'
+      achievements: 'Achievements',
+      discordServer: 'Discord server',
+      patreonBlog: 'Patreon blog'
     },
     components: {
       progress: {
@@ -23,7 +25,8 @@ export const localisation = {
       home: {
         heading: 'Welcome to Apkallu Falls',
         about: 'Apkallu Falls is a character content tracking website which by default hides anything which is unobtainable, time-limited or promotional. It also provides details of how to obtain everything it tracks.',
-        whatIsHidden: 'What is hidden?'
+        whatIsHidden: 'What is hidden?',
+        aboutExtra: 'For website-specific updates and notices, keep an eye on our {a0}, join our {a1} or click on the button below to follow us on Twitter!'
       }
     }
   }
@@ -34,6 +37,7 @@ export const localisation = {
  * @param {string} string - The base string to apply injection to.
  * @param  {...any} args - The content to inject into the base string.
  * @prop {string} \{0\} - Zero-indexed argument replacement position within string.
+ * @prop {string} \{a0\} - Converts match to a hyperlink, provided passed-in arg is an object containing usual hyperlink properties.
  * @prop {string} \{i0\} - Wraps match in `<strong>` tags.
  * @prop {string} \{n0\} - Converts match to number and executes `toLocaleString` on it.
  * @example localeInject('The {0} is {1}', 'minion ID', 40)
@@ -49,8 +53,16 @@ export const localeInject = (string, ...args) => {
       return '';
 
     switch (important) {
+      case 'a': {
+        if (!arg || typeof arg !== 'object')
+          return console.warn(`Expected object to be passed to {aN}, instead found ${arg} for "${string}".`);
+        const elem = document.createElement('a');
+        Object.keys(arg).forEach(prop => elem[prop] = arg[prop]);
+        return elem.outerHTML;
+      };
+
       case 'i':
-        return '<strong>' + arg + '</strong>';
+        return `<strong>${arg}</strong>`;
 
       case 'n':
         return Number(arg).toLocaleString()
