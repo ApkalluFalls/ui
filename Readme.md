@@ -5,6 +5,27 @@ This repository contains the building blocks used to create [https://apkallufall
 ## 🚧 This repository is a work-in-progress
 The current minified Apkallu Falls UI is not built from this repository, but will be in future. This repository is a patheway towards getting Apkallu Falls ready for React 17.
 
+## Installation
+After cloning the repository, you'll need to install the dependencies from NPM:
+
+```
+npm install
+```
+
+To get the project to run, you'll want two terminal windows open. In the first, run:
+
+```
+webpack --watch --mode=development
+```
+
+...and in the second, run:
+
+```
+npm run start
+```
+
+The repository will now be running at [http://127.0.0.1:7000](http://127.0.0.1:7000).
+
 ## UI Components
 
 | Entrypoint | Alias |
