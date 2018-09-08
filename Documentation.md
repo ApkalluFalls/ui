@@ -13,6 +13,12 @@
 <dt><a href="#module_[AFComponent]">[AFComponent]</a> : <code>js</code></dt>
 <dd><p>The <code>&lt;AFComponent /&gt;</code> utility component wraps other components with themeing and localisation support.</p>
 </dd>
+<dt><a href="#module_[Language]">[Language]</a> : <code>js/components</code></dt>
+<dd><p>The <code>&lt;Language /&gt;</code> component displays language selection controls.</p>
+</dd>
+<dt><a href="#module_[Panel]">[Panel]</a> : <code>js/components</code></dt>
+<dd><p>The <code>&lt;Panel /&gt;</code> component displays a panel (box) on the page for content to sit within.</p>
+</dd>
 <dt><a href="#module_[Progress]">[Progress]</a> : <code>js/components</code></dt>
 <dd><p>The <code>&lt;Progress /&gt;</code> component displays a progress bar with caption, value, total and percentage.</p>
 </dd>
@@ -145,6 +151,30 @@ The `<AFComponent />` utility component wraps other components with themeing and
 | --- | --- | --- |
 | props.style | <code>Object</code> | Style rules to apply on the wrapped component. |
 
+<a name="module_[Language]"></a>
+
+## [Language] : <code>js/components</code>
+The `<Language />` component displays language selection controls.
+
+**Example**  
+```js
+<Language />
+```
+<a name="module_[Panel]"></a>
+
+## [Panel] : <code>js/components</code>
+The `<Panel />` component displays a panel (box) on the page for content to sit within.
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| props.children | <code>Component</code> | Content to be rendered within the panel. |
+
+**Example**  
+```js
+<Panel>Foobar</Panel>
+```
 <a name="module_[Progress]"></a>
 
 ## [Progress] : <code>js/components</code>

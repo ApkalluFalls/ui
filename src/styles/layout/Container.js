@@ -13,6 +13,9 @@ export default theme => ({
     'a, a:visited': {
       color: theme.link,
       textDecoration: 'none'
+    },
+    p: {
+      margin: '0 0 10px'
     }
   },
   container: {
@@ -21,7 +24,7 @@ export default theme => ({
       y: 0,
       blur: 3,
       spread: 2,
-      color: theme.shadow
+      color: theme.container.shadow
     },
     boxSizing: 'border-box',
     display: 'block',
@@ -32,5 +35,26 @@ export default theme => ({
       top: 0,
     width: 'calc(100% - 192px)',
     zIndex: 2
+  },
+  footer: {
+    borderTop: {
+      color: theme.container.footer.border,
+      style: 'solid',
+      width: 1
+    },
+    color: theme.container.footer.color,
+    marginTop: 15,
+    paddingTop: 15
+  },
+  copyright: {
+    fontSize: 14,
+    marginBottom: 0
+  },
+  footerLinks: {
+    display: 'inline-block'
+  },
+  disclaimer: {
+    color: theme.faded,
+    fontSize: 8
   }
 });

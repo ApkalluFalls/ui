@@ -8,7 +8,7 @@ import AFComponent from "js/AFComponent";
 import style from "styles/pages/Home";
 
 // Components.
-import Progress from "js/components/Progress";
+import Panel from "js/components/Panel";
 
 const Home = ({ classes, locale, localeInject }) => (
   <section className={classes.page}>
@@ -33,11 +33,7 @@ const Home = ({ classes, locale, localeInject }) => (
         }
       )
     }} />
-    <Progress
-      caption={locale.common.achievements}
-      total="2109"
-      value="266"
-    />
+    <Panel>Foobar</Panel>
   </section>
 );
 

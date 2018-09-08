@@ -14,11 +14,23 @@ export const themes = {
     brand: '#ffee58',
     background: '#f5f5f5',
     color: '#212121',
+    faded: '#bdbdbd',
     link: '#337ab7',
-    shadow: '#212121',
+    shadow: '#bdbdbd',
     subtleBackground: '#bdbdbd',
+    container: {
+      shadow: '#212121',
+      footer: {
+        border: '#e0e0e0',
+        color: '#424242'
+      }
+    },
     navigation: {
       background: 'rgba(31, 21, 0, 0.7)'
+    },
+    panel: {
+      background: '#fff',
+      border: '#e0e0e0'
     },
     progressBar: {
       background: '#e0e0e0',

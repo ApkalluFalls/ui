@@ -6,17 +6,27 @@
  */
 import React from "react";
 
+const shared = {
+  copyright: '© Apkallu Falls',
+  footerLinks: '⟶ {a0} · {a1} · {a2} · {a3} · {a4}'
+}
+
 /**
  * The `localisation` object contains localised strings.
  */
 export const localisation = {
   en: {
+    shared,
     common: {
       achievements: 'Achievements',
       discordServer: 'Discord server',
+      donate: 'Donate',
       patreonBlog: 'Patreon blog'
     },
     components: {
+      language: {
+        change: 'Change language'
+      },
       progress: {
         nOfN2: '{n0} of {n1}'
       }
