@@ -9,7 +9,7 @@ import { LocalisationContext, localisation, localeInject } from 'contexts/locali
 import { ThemeContext, themes } from 'contexts/theme';
 
 export default (props) => {
-  const Component = injectSheet(props.style)(props.children.type);
+  const Component = injectSheet((theme) => props.style(theme, props.source))(props.children.type);
 
   // Is there a better way to do this?
   const wrappedChildren = props.children.props && props.children.props.children || undefined;
@@ -17,7 +17,7 @@ export default (props) => {
   return (
     <ThemeContext.Consumer>
       {theme => (
-        <ThemeProvider theme={themes[theme]}>
+        <ThemeProvider theme={themes[theme]} source={props.source}>
           <LocalisationContext.Consumer>
             {locale => (
               <Component

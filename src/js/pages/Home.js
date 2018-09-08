@@ -10,12 +10,14 @@ import style from "styles/pages/Home";
 // Components.
 import Panel from "js/components/Panel";
 import Popup from "js/components/Popup";
+import Progress from "js/components/Progress";
 
 const Home = ({ classes, locale, localeInject }) => (
   <section className={classes.page}>
     <h2 className={classes.heading}>
       {locale.pages.home.heading}
     </h2>
+    <Progress caption="Foo" value={4} total={7} />
     <p>
       {locale.pages.home.about}
       {' '}

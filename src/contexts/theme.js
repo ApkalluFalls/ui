@@ -30,7 +30,13 @@ export const themes = {
       }
     },
     navigation: {
-      background: 'rgba(31, 21, 0, 0.7)'
+      background: 'rgba(31, 21, 0, 0.7)',
+      color: '#fff',
+      progress: {
+        background: 'rgba(255, 253, 231, 0.5)',
+        border: '#212121',
+        color: '#e0e0e0'
+      }
     },
     panel: {
       background: '#fff',
