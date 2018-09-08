@@ -32,6 +32,11 @@ export const themes = {
     navigation: {
       background: 'rgba(31, 21, 0, 0.7)',
       color: '#fff',
+      link: {
+        border: 'rgba(255, 240, 87, 0.15)',
+        color: '#fff',
+        hoverBackground: 'rgba(255, 240, 87, 0.1)'
+      },
       progress: {
         background: 'rgba(255, 253, 231, 0.5)',
         border: '#212121',

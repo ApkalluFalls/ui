@@ -51,5 +51,42 @@ export default theme => ({
   links: {
     background: theme.navigation.background,
     height: `calc(100% - ${local.header.height}px)`
+  },
+  linksList: {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0
+  },
+  linksListItem: {
+    borderBottom: {
+      color: theme.navigation.link.border,
+      style: 'solid',
+      width: 1
+    },
+    '&:first-child': {
+      borderTop: {
+        color: theme.navigation.link.border,
+        style: 'solid',
+        width: 1
+      }
+    }
+  },
+  link: {
+    color: theme.navigation.link.color,
+    display: 'flex',
+    padding: 6,
+    '&:hover, &:focus': {
+      background: theme.navigation.link.hoverBackground,
+      color: theme.navigation.link.color,
+      textDecoration: 'none'
+    }
+  },
+  linkIcon: {
+    flex: '0 0 32px',
+    marginRight: 6,
+    textAlign: 'center'
+  },
+  linkText: {
+    flexGrow: 1
   }
 });

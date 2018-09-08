@@ -19,12 +19,18 @@ export const localisation = {
     shared,
     common: {
       achievements: 'Achievements',
+      chocoboBarding: 'Chocobo Barding',
       clickForHelp: 'Click for help',
       close: 'Close',
       discordServer: 'Discord server',
       donate: 'Donate',
+      emotes: 'Emotes',
+      minions: 'Minions',
+      mounts: 'Mounts',
+      orchestrionRolls: 'Orchestrion Rolls',
       patreonBlog: 'Patreon blog',
       promotional: 'Promotional',
+      titles: 'Titles',
       unavailable: 'Unavailable'
     },
     components: {

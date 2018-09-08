@@ -11,7 +11,7 @@ import Language from "components/common/Language";
 
 // Page routes.
 import routes from "js/routes";
-import pageRoutes from "components/pages/routes";
+import pageRoutes from "js/routes/pages";
 
 // Component style rules.
 import style from "styles/layout/Container";
