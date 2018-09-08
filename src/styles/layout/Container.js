@@ -14,7 +14,11 @@ export default theme => ({
       color: theme.link,
       textDecoration: 'none'
     },
-    p: {
+    'a:hover, a:focus, a:active': {
+      color: theme.linkHover,
+      textDecoration: 'underline'
+    },
+    'h1, h2, h3, h4, h5, h6, p': {
       margin: '0 0 10px'
     }
   },

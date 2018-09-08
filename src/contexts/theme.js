@@ -16,8 +16,12 @@ export const themes = {
     color: '#212121',
     faded: '#bdbdbd',
     link: '#337ab7',
+    linkHover: '#23527c',
     shadow: '#bdbdbd',
     subtleBackground: '#bdbdbd',
+    button: {
+      color: '#2196f3'
+    },
     container: {
       shadow: '#212121',
       footer: {
@@ -31,6 +35,16 @@ export const themes = {
     panel: {
       background: '#fff',
       border: '#e0e0e0'
+    },
+    popup: {
+      backdrop: 'rgba(21, 21, 21, 0.6)',
+      background: '#fafafa',
+      border: '#fff',
+      close: '#9e9e9e',
+      shadow: '#212121',
+      footer: {
+        border: '#e0e0e0'
+      }
     },
     progressBar: {
       background: '#e0e0e0',

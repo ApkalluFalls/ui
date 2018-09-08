@@ -52,12 +52,8 @@ const Language = ({ classes, locale }) => (
   </article>
 );
 
-export default class extends React.PureComponent {
-  render() {
-    return (
-      <AFComponent style={style} {...this.props}>
-        <Language />
-      </AFComponent>
-    )
-  }
-};
+export default (props) => (
+  <AFComponent style={style} {...props}>
+    <Language />
+  </AFComponent>
+);

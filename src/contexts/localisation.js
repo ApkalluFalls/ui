@@ -19,9 +19,13 @@ export const localisation = {
     shared,
     common: {
       achievements: 'Achievements',
+      clickForHelp: 'Click for help',
+      close: 'Close',
       discordServer: 'Discord server',
       donate: 'Donate',
-      patreonBlog: 'Patreon blog'
+      patreonBlog: 'Patreon blog',
+      promotional: 'Promotional',
+      unavailable: 'Unavailable'
     },
     components: {
       language: {
@@ -31,12 +35,27 @@ export const localisation = {
         nOfN2: '{n0} of {n1}'
       }
     },
+    content: {
+      caitSithDoll: 'Cait Sith Doll'
+    },
     pages: {
       home: {
         heading: 'Welcome to Apkallu Falls',
         about: 'Apkallu Falls is a character content tracking website which by default hides anything which is unobtainable, time-limited or promotional. It also provides details of how to obtain everything it tracks.',
         whatIsHidden: 'What is hidden?',
-        aboutExtra: 'For website-specific updates and notices, keep an eye on our {a0}, join our {a1} or click on the button below to follow us on Twitter!'
+        aboutExtra: 'For website-specific updates and notices, keep an eye on our {a0}, join our {a1} or click on the button below to follow us on Twitter!',
+        whatIsHiddenPopup: {
+          heading: 'What content does Apkallu Falls hide?',
+          intro: 'By default, Apkallu Falls hides any content which is unobtainable, time-limited or promotional. This is split into two categories, {i0} and {i1}, and includes:',
+          li1: 'In-game events',
+          li2: 'The Feast season rewards',
+          li3: 'Marketing campaigns and fan festivals',
+          li4: 'Lodestone contest rewards',
+          li5: 'Mog Station and Square Enix Store purchases',
+          li6: 'Disused Legacy (1.0) content',
+          li7: 'Starting city achievements',
+          outro: 'This content is still accessible, take the {a0} for example, it just doesn\'t display within the content lists without first applying a filter, nor does this hidden content count towards character progress displayed in the sidebar when tracking a character.'
+        }
       }
     }
   }

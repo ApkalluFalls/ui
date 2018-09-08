@@ -19,6 +19,9 @@
 <dt><a href="#module_[Panel]">[Panel]</a> : <code>js/components</code></dt>
 <dd><p>The <code>&lt;Panel /&gt;</code> component displays a panel (box) on the page for content to sit within.</p>
 </dd>
+<dt><a href="#module_[Popup]">[Popup]</a> : <code>js/components</code></dt>
+<dd><p>The <code>&lt;Popup /&gt;</code> component displays a control to open a popup, which when clicked reveals the popup on the page.</p>
+</dd>
 <dt><a href="#module_[Progress]">[Progress]</a> : <code>js/components</code></dt>
 <dd><p>The <code>&lt;Progress /&gt;</code> component displays a progress bar with caption, value, total and percentage.</p>
 </dd>
@@ -174,6 +177,23 @@ The `<Panel />` component displays a panel (box) on the page for content to sit 
 **Example**  
 ```js
 <Panel>Foobar</Panel>
+```
+<a name="module_[Popup]"></a>
+
+## [Popup] : <code>js/components</code>
+The `<Popup />` component displays a control to open a popup, which when clicked reveals the popup on the page.
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| props.children | <code>Component</code> | Content to be rendered within the popup. |
+| props.openerCaption | <code>string</code> | Clickable text to be displayed for opening the popup. This is also used within accessibility attribute `aria-labelledby`. |
+| props.openerDescription | <code>string</code> | Title text to be displayed when hovering over the opener. This is also used within accessibility attribute `aria-describedby`. |
+
+**Example**  
+```js
+<Popup openerCaption="Open" openerDescription="Opens a popup">Foobar</Popup>
 ```
 <a name="module_[Progress]"></a>
 
