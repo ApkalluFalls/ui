@@ -37,6 +37,9 @@ export const themes = {
         color: '#fff',
         hoverBackground: 'rgba(255, 240, 87, 0.1)'
       },
+      logo: {
+        shadow: '#212121'
+      },
       progress: {
         background: 'rgba(255, 253, 231, 0.5)',
         border: '#212121',

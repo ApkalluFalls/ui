@@ -38,6 +38,14 @@ export default theme => ({
       image: `url(${Logo})`,
       size: 'contain'
     },
+    borderRadius: '100%',
+    boxShadow: {
+      x: 0,
+      y: 1,
+      blur: 2,
+      spread: null,
+      color: theme.navigation.logo.shadow
+    },
     display: 'inline-block',
     height: local.header.logoSize,
     marginRight: 10,
@@ -46,7 +54,12 @@ export default theme => ({
   },
   title: {
     display: 'inline-block',
-    margin: 0
+    margin: 0,
+    textShadow: {
+      x: 0,
+      y: 1,
+      color: theme.navigation.logo.shadow
+    }
   },
   links: {
     background: theme.navigation.background,
