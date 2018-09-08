@@ -1,16 +1,16 @@
 /**
  * The `<Home />` page component controls https://apkallufalls.com (route: `'/'`).
- * @module [{js/pages}Home]
+ * @module [{components/pages}Home]
  */
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/pages/Home";
 
 // Components.
-import Panel from "js/components/Panel";
-import Popup from "js/components/Popup";
-import Progress from "js/components/Progress";
+import Panel from "components/common/Panel";
+import Popup from "components/common/Popup";
+import Progress from "components/common/Progress";
 
 const Home = ({ classes, locale, localeInject }) => (
   <section className={classes.page}>

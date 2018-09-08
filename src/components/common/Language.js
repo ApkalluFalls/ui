@@ -1,11 +1,11 @@
 /**
  * The `<Language />` component displays language selection controls.
- * @module [{js/components}Language]
+ * @module [{components/common}Language]
  * @example <Language />
  */
 import React from "react";
 import { LocalisationContext } from 'contexts/localisation';
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/components/Language";
 

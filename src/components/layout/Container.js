@@ -1,17 +1,17 @@
 /**
  * The `<Container />` layout component wraps each page.
- * @module [{js/layout}Container]
+ * @module [{components/layout}Container]
  */
 import React from "react";
 import { Route } from 'react-router-dom';
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 // Language selector (used in the footer).
-import Language from "js/components/Language";
+import Language from "components/common/Language";
 
 // Page routes.
 import routes from "js/routes";
-import pageRoutes from "js/pages/routes";
+import pageRoutes from "components/pages/routes";
 
 // Component style rules.
 import style from "styles/layout/Container";

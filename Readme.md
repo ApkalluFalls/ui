@@ -7,7 +7,11 @@ The current minified Apkallu Falls UI is not built from this repository, but wil
 
 ## Documentation
 
-The [documentation](https://github.com/ApkalluFalls/ui/blob/master/Documentation.md) is written using JSDoc syntax and compiled using:
+JSDoc is used to automatically generate Readme.md files within the following folders:
+
+* [src/components/Readme.me](https://github.com/ApkalluFalls/ui/blob/master/src/components/Readme.md) documents all React components.
+* [src/contexts/Readme.md](https://github.com/ApkalluFalls/ui/blob/master/src/contexts/Readme.md) documents uses of React's Context API.
+* [src/js/Readme.md](https://github.com/ApkalluFalls/ui/blob/master/src/js/Readme.md) documents all script files.
 
 ```
 npm run doc
@@ -38,24 +42,25 @@ The repository will now be running at [http://127.0.0.1:7000](http://127.0.0.1:7
 
 ---
 
+
 ## UI Components
 
 | Entrypoint | Alias |
 | --- | --- |
-| `src/js` | `js` |
+| `src/components` | `components` |
 
 UI components are written with [React](https://reactjs.org).
 
-* `js/layout` contains the general page layout components.
-* `js/pages` contains the individual page components.
+* `components/layout` contains the general page layout components.
+* `components/pages` contains the individual page components.
 
-To make life easier, rather than reinvent the wheel when it comes to implementing styling and theming, the `js/AFComponent.js` component can be used to wrap each styled component.
+To make life easier, rather than reinvent the wheel when it comes to implementing styling and theming, the `components/AFComponent.js` component can be used to wrap each styled component.
 
-A new `ExamplePage` component located in `js/pages/ExamplePage` may look like this:
+A new `ExamplePage` component located in `components/pages/ExamplePage` may look like this:
 
 ```javascript
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/pages/ExamplePage";
 
@@ -100,6 +105,14 @@ export default theme => ({
 });
 ```
 
+## Misc Scripts
+
+| Entrypoint | Alias |
+| --- | --- |
+| `src/js` | `js` |
+
+Helper scripts are separated from the UI components.
+
 ## Routing
 Routing is handled by [React Router](https://reacttraining.com/react-router).
 
@@ -108,7 +121,7 @@ Routing is handled by [React Router](https://reacttraining.com/react-router).
 | `src/js` | `js` |
 
 * `js/routes.js` contains a collection of all routes.
-* `js/pages/routes.js` maps routes to page components.
+* `components/pages/routes.js` maps routes to page components.
 
 ## Contexts
 
@@ -134,11 +147,11 @@ Contexts allow for passing properties down through a component hierarchy.
 
 In order to support multiple languages, content is localised using the localisation context.
 
-This is easily implemented using the `js/AFComponent` component, where `locale` is exposed to the child component.
+This is easily implemented using the `components/AFComponent` component, where `locale` is exposed to the child component.
 
 ```javascript
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/Example";
 
@@ -164,11 +177,11 @@ Key names must match the component name.
 
 To allow for light mode and dark mode, a theme context is used to pass relevant JSS variables down through the entire application.
 
-This is easily implemented using the `js/AFComponent` component, where `classes` is exposed to the child component.
+This is easily implemented using the `components/AFComponent` component, where `classes` is exposed to the child component.
 
 ```javascript
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/Example";
 

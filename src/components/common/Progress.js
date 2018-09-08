@@ -1,13 +1,13 @@
 /**
  * The `<Progress />` component displays a progress bar with caption, value, total and percentage.
- * @module [{js/components}Progress]
+ * @module [{components/common}Progress]
  * @prop {string} props.caption - Text to display within the `figcaption` element and `aria-valuetext` arribute.
  * @prop {Number} props.total - The maximum value for the progress bar, also used within `aria-valuemax`.
  * @prop {Number} props.value - The current value for the progress bar, also used within `aria-valuenow`.
  * @example <Progress caption="Minions" value="5" total="220" />
  */
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/components/Progress";
 

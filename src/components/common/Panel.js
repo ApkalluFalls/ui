@@ -1,11 +1,11 @@
 /**
  * The `<Panel />` component displays a panel (box) on the page for content to sit within.
- * @module [{js/components}Panel]
+ * @module [{components/common}Panel]
  * @prop {Component} props.children - Content to be rendered within the panel.
  * @example <Panel>Foobar</Panel>
  */
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/components/Panel";
 

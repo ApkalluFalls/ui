@@ -11,6 +11,7 @@ module.exports = (env, argv) => ({
   },
   resolve: {
     alias: {
+      components: __dirname + "/src/components",
       contexts: __dirname + "/src/contexts",
       js: __dirname + "/src/js",
       images: __dirname + "/src/images",

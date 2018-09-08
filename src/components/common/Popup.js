@@ -1,13 +1,13 @@
 /**
  * The `<Popup />` component displays a control to open a popup, which when clicked reveals the popup on the page.
- * @module [{js/components}Popup]
+ * @module [{components/common}Popup]
  * @prop {Component} props.children - Content to be rendered within the popup.
  * @prop {string} props.openerCaption - Clickable text to be displayed for opening the popup. This is also used within accessibility attribute `aria-labelledby`.
  * @prop {string} props.openerDescription - Title text to be displayed when hovering over the opener. This is also used within accessibility attribute `aria-describedby`.
  * @example <Popup openerCaption="Open" openerDescription="Opens a popup">Foobar</Popup>
  */
 import React from "react";
-import AFComponent from "js/AFComponent";
+import AFComponent from "components/AFComponent";
 
 import style from "styles/components/Popup";
 

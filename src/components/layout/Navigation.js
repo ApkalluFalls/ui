@@ -1,6 +1,6 @@
 /**
  * The `<Navigation />` layout component wraps the sidebar.
- * @module [{js/layout}Navigation]
+ * @module [{components/layout}Navigation]
  */
 import React from "react";
 import injectSheet, { ThemeProvider } from 'react-jss';
@@ -9,7 +9,7 @@ import { ThemeContext, themes } from 'contexts/theme';
 import style from "styles/layout/Navigation";
 
 // Components.
-import Progress from "js/components/Progress";
+import Progress from "components/common/Progress";
 
 const Navigation = injectSheet(style)(({classes}) => (
   <nav className={classes.navigation}>

@@ -6,8 +6,8 @@ import { CharacterContext } from "contexts/character";
 import { LocalisationContext } from "contexts/localisation";
 import { ThemeContext } from "contexts/theme";
 
-import Container from "./js/layout/Container";
-import Navigation from "./js/layout/Navigation";
+import Container from "./components/layout/Container";
+import Navigation from "./components/layout/Navigation";
 
 ReactDOM.render(
   (
