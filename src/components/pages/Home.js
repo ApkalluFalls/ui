@@ -16,7 +16,7 @@ const Home = ({ classes, locale, localeInject }) => (
     <h2 className={classes.heading}>
       {locale.pages.home.heading}
     </h2>
-    <p>
+    <div className={classes.popupWrapper}>
       {locale.pages.home.about}
       {' '}
       <Popup
@@ -50,7 +50,7 @@ const Home = ({ classes, locale, localeInject }) => (
           )
         }} />
       </Popup>
-    </p>
+    </div>
     <p dangerouslySetInnerHTML={{
       __html: localeInject(
         locale.pages.home.aboutExtra,
