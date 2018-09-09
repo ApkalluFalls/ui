@@ -27,7 +27,6 @@ export default theme => ({
   header: {
     background: theme.navigation.background,
     boxSizing: 'border-box',
-    color: theme.brand,
     display: 'block',
     lineHeight: '40px',
     height: local.header.height,
@@ -53,6 +52,7 @@ export default theme => ({
     width: local.header.logoSize
   },
   title: {
+    color: theme.brand,
     display: 'inline-block',
     margin: 0,
     textShadow: {

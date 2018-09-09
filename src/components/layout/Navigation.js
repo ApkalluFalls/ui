@@ -46,8 +46,10 @@ const Navigation = injectSheet(style)(({classes, locale}) => {
   return (
     <nav className={classes.navigation}>
       <header className={classes.header}>
-        <span className={classes.logo} />
-        <h1 className={classes.title}>Apkallu Falls</h1>
+        <Link to="/">
+          <span className={classes.logo} />
+          <h1 className={classes.title}>Apkallu Falls</h1>
+        </Link>
       </header>
       <section className={classes.links}>
         <ul className={classes.linksList}>
