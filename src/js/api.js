@@ -1,13 +1,9 @@
-/**
- * This allows for API calls to be executed whilst also caching the responses where necessary.
- * @module [{js}api]
- */
 import firebase from "firebase/app";
 
 /**
- * @class Api
+ * @class API
  */
-class Api {
+class API {
   /**
    * Get data from https://api.apkallufalls.com.
    * This function either fetches new data or grabs cached data from the user's
@@ -517,4 +513,4 @@ class Api {
   }
 }
 
-export default new Api();
+export default new API();
