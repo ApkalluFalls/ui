@@ -57,7 +57,7 @@ const Navigation = injectSheet(style)(({classes, locale}) => {
             <li key={page.url} className={classes.linksListItem}>
               <Link to={page.url} className={classes.link}>
                 <span className={classes.linkIcon}>
-                  <span class={`fal ${page.icon}`} />
+                  <span className={`fal ${page.icon}`} />
                 </span>
                 <span className={classes.linkText}>
                   {page.text}

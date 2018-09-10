@@ -9,7 +9,7 @@
 import React from "react";
 import AFComponent from "components/AFComponent";
 
-import style from "styles/components/Popup";
+import style from "styles/common/Popup";
 
 const Popup = ({
   classes,
@@ -40,7 +40,7 @@ const Popup = ({
     <React.Fragment>
       {control}
       <section
-        aria-describedBy={openerDescription}
+        aria-describedby={openerDescription}
         aria-labelledby={openerCaption}
         className={classes.wrapper}
         onClick={onCloseClick}

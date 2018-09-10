@@ -7,7 +7,7 @@ import React from "react";
 import { LocalisationContext } from 'contexts/localisation';
 import AFComponent from "components/AFComponent";
 
-import style from "styles/components/Language";
+import style from "styles/common/Language";
 
 const languages = [{
   locale: 'en',

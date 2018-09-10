@@ -7,7 +7,7 @@
 import React from "react";
 import AFComponent from "components/AFComponent";
 
-import style from "styles/components/Panel";
+import style from "styles/common/Panel";
 
 const Panel = ({
   classes,

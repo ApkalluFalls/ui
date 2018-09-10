@@ -9,7 +9,7 @@
 import React from "react";
 import AFComponent from "components/AFComponent";
 
-import style from "styles/components/Progress";
+import style from "styles/common/Progress";
 
 const Progress = ({
   caption,

@@ -13,12 +13,14 @@ import Popup from "components/common/Popup";
 
 const Home = ({ classes, locale, localeInject }) => (
   <section className={classes.page}>
-    <h2 className={classes.heading}>
+    <h2 className={classes.heading}
+    >
       {locale.pages.home.heading}
     </h2>
     <div className={classes.popupWrapper}>
       {locale.pages.home.about}
       {' '}
+      <p>
       <Popup
         openerCaption={locale.pages.home.whatIsHidden}
         openerDescription={locale.common.clickForHelp}
@@ -50,6 +52,7 @@ const Home = ({ classes, locale, localeInject }) => (
           )
         }} />
       </Popup>
+      </p>
     </div>
     <p dangerouslySetInnerHTML={{
       __html: localeInject(
