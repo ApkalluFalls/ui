@@ -10,6 +10,7 @@
     "deploy": "(rm -rf ./dist/compiled || true) && webpack --mode production",
     "dev": "webpack --mode=development",
     "doc": "jsdoc2md 'src/components/**/*.js' > 'src/components/Readme.md' && jsdoc2md 'src/contexts/**/*.js' > 'src/contexts/Readme.md' && jsdoc2md 'src/js/**/*.js' > 'src/js/Readme.md'",
+    "test": "jest",
     "start": "webpack-dev-server --mode=development --open"
   },
   "dependencies": {
@@ -23,9 +24,11 @@
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-es6-promise": "^1.1.1",
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
@@ -34,10 +37,12 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
+    "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "react-test-renderer": "^16.5.0",
     "style-loader": "^0.23.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",

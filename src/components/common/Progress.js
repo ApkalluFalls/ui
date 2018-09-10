@@ -62,3 +62,5 @@ export default (props) => (
     <Progress />
   </AFComponent>
 )
+
+export { Progress as TestComponent };

@@ -1,27 +1,24 @@
 import React from "react";
-import renderer from "react-test-renderer";
-
-import { LocalisationContext, localisation, localeInject } from 'contexts/localisation';
+import TestRenderer from 'react-test-renderer';
+import { localisation, localeInject } from 'contexts/localisation';
 
 import { TestComponent } from "components/common/Progress";
-import classes from "styles/common/Progress";
+
+const testRenderer = TestRenderer.create(
+  <TestComponent
+    classes={{
+      percentage: 'percentage'
+    }}
+    locale={localisation['en']}
+    localeInject={localeInject}
+    caption="Test"
+    value="5"
+    total="15"
+  />
+);
+
+const testInstance = testRenderer.root;
 
 test('Percentage is accurately calculated', () => {
-  const component = renderer.create(
-    <LocalisationContext.Consumer>
-      {locale => (
-        <TestComponent
-          locale={localisation[locale]}
-          localeInject={localeInject}
-          classes={classes}
-          caption="Test"
-          value="5"
-          total="15"
-        />
-      )}
-    </LocalisationContext.Consumer>
-  );
-
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(testInstance.findByProps({className: "percentage"}).children).toEqual(['33', '%']);
 })
