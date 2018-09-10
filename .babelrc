@@ -1,4 +1,14 @@
 {
-  "presets": [["es2015", { "modules": false }], "react", "stage-0"],
-  "plugins": ["babel-polyfill"]
+  "presets": ["env", ["es2015", { "modules": false }], "react", "stage-0"],
+  "plugins": [
+    "babel-polyfill",
+    ["module-resolver", {
+      "alias": {
+        "components": "./src/components",
+        "contexts": "./src/contexts",
+        "js": "./src/js",
+        "styles": "./src/styles"
+      }
+    }]
+  ]
 }
