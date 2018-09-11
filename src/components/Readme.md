@@ -4,6 +4,10 @@
 <dt><a href="#module_[AFComponent]">[AFComponent]</a> : <code>js</code></dt>
 <dd><p>The <code>&lt;AFComponent /&gt;</code> utility component wraps other components with themeing and localisation support.</p>
 </dd>
+<dt><a href="#module_[Icon]">[Icon]</a> : <code>components/common</code></dt>
+<dd><p>The <code>&lt;Icon /&gt;</code> component renders an icon (image).
+This component assumes the various icon spritesheets from <a href="https://api.apkallufalls.com">https://api.apkallufalls.com</a> have already been stored in localStorage (which happens when the app loads).</p>
+</dd>
 <dt><a href="#module_[Language]">[Language]</a> : <code>components/common</code></dt>
 <dd><p>The <code>&lt;Language /&gt;</code> component displays language selection controls.</p>
 </dd>
@@ -38,6 +42,37 @@ The `<AFComponent />` utility component wraps other components with themeing and
 | --- | --- | --- |
 | props.style | <code>Object</code> | Style rules to apply on the wrapped component. |
 
+<a name="module_[Icon]"></a>
+
+## [Icon] : <code>components/common</code>
+The `<Icon />` component renders an icon (image).
+This component assumes the various icon spritesheets from https://api.apkallufalls.com have already been stored in localStorage (which happens when the app loads).
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| props.caption | <code>String</code> | The text to be displayed on hover (used within the rendered component's `title` attribute and `<figcaption>` element). |
+| [props.iconId] | <code>number</code> | An icon ID used to generate the image URL. This is used to fetch the X and Y co-ordinates from the resource's spritesheet JSON. Necessary if `props.url` is not specified. |
+| [props.resource] | <code>String</code> | The resource the icon belongs to. Used to fetch the spritesheet JSON for the icon. Can be one of the following: achievements, chocoboBardings, emotes, minions, mounts, orchestrionRolls or titles. Necessary if `props.url` is not specified. |
+| [props.url] | <code>String</code> | A qualified image URL to use. Necessary if `props.iconId` is not specified. |
+
+**Example**  
+```js
+// This renders an icon with a qualified URL.
+<Icon caption="Test" url="example.png" />
+```
+**Example**  
+```js
+// This renders an icon from a content spritesheet.
+<Icon caption="Test" iconId={4501} resource="minions" />
+```
+**Example**  
+```js
+// This icon ID is invalid and there's no resource specified.
+// This will return the Example Self emote as it looks like a generic 'not found' image.
+<Icon caption="Test" iconId={9999} />
+```
 <a name="module_[Language]"></a>
 
 ## [Language] : <code>components/common</code>

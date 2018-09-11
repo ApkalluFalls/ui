@@ -8,7 +8,9 @@ import AFComponent from "components/AFComponent";
 import style from "styles/pages/Home";
 
 // Components.
+import Icon from "components/common/Icon";
 import Panel from "components/common/Panel";
+import Progress from "components/common/Progress";
 import Popup from "components/common/Popup";
 
 const Home = ({ classes, locale, localeInject }) => (
@@ -71,7 +73,13 @@ const Home = ({ classes, locale, localeInject }) => (
         }
       )
     }} />
-    <Panel>Foobar</Panel>
+    <Panel>
+      <Progress caption="Example" value={4} total={7} />
+      <Icon caption="Example" url="https://api.apkallufalls.com/icons/item/10.png" />
+      <Icon caption="Example" iconId={4501} resource="minions" />
+      <Icon caption="Example 'no spritesheet found'" />
+      <Icon caption="Example 'unable to find icon'" resource="minions" />
+    </Panel>
   </section>
 );
 
