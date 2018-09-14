@@ -91,7 +91,7 @@ Styling is CSS module-based using [JSS](http://cssinjs.org/react-jss).
 
 The folder structure matches that of the `src/js` folder to make it easier to locate relevant component styles.
 
-Using the `ExamplePage` component from the above UI Components section, the JSS for this compnent would exist at `styles/pages/ExampleComponent` and may look something like this:
+Using the `ExamplePage` component from the above UI Components section, the JSS for this component would exist at `styles/pages/ExampleComponent` and may look something like this:
 
 ```javascript
 import page from "styles/page";
