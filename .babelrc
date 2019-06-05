@@ -41,6 +41,7 @@
         "components": "./src/components",
         "contexts": "./src/contexts",
         "js": "./src/js",
+        "pages": "./src/pages",
         "styles": "./src/styles"
       }
     }]

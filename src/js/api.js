@@ -1,65 +1,94 @@
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 
 /**
  * @class API
  */
 class API {
+  static spritesheet(source) {
+    return `https://apiv2.apkallufalls.com/icons/${source}.png`;
+  }
+
   /**
-   * Get data from https://api.apkallufalls.com.
+   * @param {String} dir - The directory to pull data from (e.g. `"icons"`)
+   */
+  constructor(dir = 'misc') {
+    this.dir = dir;
+  }
+
+  async fromCache(resource) {
+    const cachedApi = (localStorage && JSON.parse(localStorage.getItem('api')));
+
+    if (!cachedApi || typeof cachedApi !== 'object') {
+      return;
+    }
+
+    const cachedData = cachedApi[this.dir] && cachedApi[this.dir][resource];
+
+    if (!cachedData) {
+      return;
+    }
+
+    return await new Promise(resolve => {
+      setTimeout(() => {
+        resolve(cachedData)
+      }, 1);
+    });
+  }
+
+  /**
+   * Get data from https://apiv2.apkallufalls.com.
    * This function either fetches new data or grabs cached data from the user's
    * browser localStorage.
    * 
    * @param {string} resource - the filepath of the resource to fetch.
    * @param {bool} bypassCacheCheck - don't try to fetch a cached version.
-   * @param {string} xivdbApiVersion - the version of the API to use (null = v2).
    * 
    * @example
-   * // returns data from https://api.apkallufalls.com/minion/40.json OR
+   * // returns data from https://apiv2.apkallufalls.com/minion/40.json OR
    * // localStorage.getItem('api')['minion/40'] if that exists already.
    * json('minion/40');
    * 
    * @example
-   * // returns data from https://api.apkallufalls.com/version.json.
+   * // returns data from https://apiv2.apkallufalls.com/version.json.
    * json('version', true);
    * 
    * @returns {Promise} Returns the parsed API response.
    */
-  async json(resource, bypassCacheCheck, xivdbApiVersion) {
-    // Grab cached entry from API (if it exists).
-    const cachedApi = (localStorage && JSON.parse(localStorage.getItem('api'))) || {};
-
+  async json(resource, bypassCacheCheck) {
     // If we're not ignoring the cache, attempt to return cached data.
-    if (window.config.offline || !bypassCacheCheck) {
-      const cachedData = cachedApi[resource];
+    if (window.config && window.config.offline || !bypassCacheCheck) {
+      const cachedData = await this.fromCache(resource);
 
       // If an entry exists in the cache, return that instead of making a new
       // API call.
-      if (cachedData)
-        return await new Promise(resolve => {
-          setTimeout(() => {
-            resolve(cachedData)
-          }, 1);
-        });
+      if (cachedData) {
+        return cachedData;
+      }
     }
 
+    // Grab cached entry from API (if it exists).
+    const cachedApi = (localStorage && JSON.parse(localStorage.getItem('api'))) || {};
+
     // Appends a cache-friendly (or cache-busting) query parameter to the URL.
-    const version = resource !== 'version' && cachedApi['version'] && cachedApi['version']['@'] || ('new-' + +new Date());
+    const version = resource !== 'version' && cachedApi.misc && cachedApi.misc.version || ('new-' + +new Date());
 
     // Fetch the data.
-    const data = await new Promise(
-      (resolve) => fetch('https://api.apkallufalls.com/' + (xivdbApiVersion ? xivdbApiVersion + '/' : '') + resource + '.json?c=' + version)
-        .then(response => response.json())
-        .then(resolve)
-        .catch((e) => {
-          throw new Error("Api error", e);
-        })
-    );
+    const data = await fetch(
+      `https://apiv2.apkallufalls.com/${this.dir === 'misc' ? '' : `${this.dir}/`}${resource}.json?c=${version}`
+    ).then(
+      response => response.json()
+    ).catch(exception => {
+      throw new Error("API error", exception);
+    });
 
     // Update cache.
     if (localStorage) {
       // Re-fetch the cached API to ensure no collsions.
       const reFetchedCachedApi = JSON.parse(localStorage.getItem('api')) || {};
-      reFetchedCachedApi[resource] = data;
+      if (!reFetchedCachedApi[this.dir]) {
+        reFetchedCachedApi[this.dir] = {};
+      }
+      reFetchedCachedApi[this.dir][resource] = data;
       localStorage.setItem('api', JSON.stringify(reFetchedCachedApi));
     }
     
@@ -67,14 +96,13 @@ class API {
   }
 
   /**
-   * Consolidate resources from https://api.apkallufalls.com.
+   * Consolidate resources from https://apiv2.apkallufalls.com.
    * This function returns consolidated information about a given id from a
    * given resource to return a fully-fledged data object.
    * 
    * @param {string} resource - the name of the directory file.
    * @param {string} subresource - the name of the directory subfolder.
    * @param {number} id - the id of the piece of data to retrieve.
-   * @param {string} xivdbApiVersion - the version of the API to use (null = v2).
    * 
    * @example
    * // returns {
@@ -86,10 +114,10 @@ class API {
    * 
    * @returns {Promise} Returns the consilidated API responses.
    */
-  async consolidate(resource, subresource, id, xivdbApiVersion) {      
+  async consolidate(resource, subresource, id) {      
     // Grab the {resource}.json list (i.e. minions.json).
     const data = await new Promise(
-      (resolve, reject) => this.json(resource, false, xivdbApiVersion).then(resolve).catch(reject)
+      (resolve, reject) => this.json(resource, false).then(resolve).catch(reject)
     );
 
     const list = data.data;
@@ -138,7 +166,7 @@ class API {
     
     // We can now grab the individual json file for that entry.
     const individual = await new Promise(
-      (resolve, reject) => this.json(subresource + '/' + entry.id, false, xivdbApiVersion) .then(resolve).catch(reject)
+      (resolve, reject) => this.json(subresource + '/' + entry.id, false) .then(resolve).catch(reject)
     );
   
     // If no individual json file was found, error.
@@ -206,7 +234,7 @@ class API {
     let cachedDb = (localStorage && JSON.parse(localStorage.getItem('store'))) || {};
 
     // If we're not ignoring the cache, attempt to return cached data.
-    if ((window.config.offline || !bypassCacheCheck) && cachedDb.uid === uid) {
+    if (((window.config && window.config.offline) || !bypassCacheCheck) && cachedDb.uid === uid) {
       const cachedData = cachedDb[resource];
 
       // If an entry exists in the cache, return that instead of making a new DB call.
@@ -215,7 +243,7 @@ class API {
     }
 
     // It shouldn't ever get here. Do nothing just in case.
-    if (window.config.offline)
+    if (window.config && window.config.offline)
       return;
 
     // Wipe the currently-stored data (if any).
@@ -277,7 +305,7 @@ class API {
   /**
    * This function normalises ref objects contained in data returned from the API.
    * The cases here represent keys contained within the localisation objects from both
-   * http://api.apkallufalls.com/minions.json and http://api.apkallufalls.com/mounts.json.
+   * http://apiv2.apkallufalls.com/minions.json and http://apiv2.apkallufalls.com/mounts.json.
    * 
    * @param {Object} ref - The ref object.
    * @returns {Object} - The normalised representation.
@@ -513,4 +541,4 @@ class API {
   }
 }
 
-export default new API();
+export default API;

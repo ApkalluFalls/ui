@@ -2,7 +2,7 @@
  * The localisation context controls the text language throughout the site.
  * @module [{contexts}localisation]
  * @default localisation.en
- * @example import { LocalisationContext, localisation } from "context/theme";
+ * @example import { LocalisationContext, localisation } from 'context/localisation';
  */
 import React from "react";
 
@@ -32,6 +32,9 @@ export const localisation = {
       promotional: 'Promotional',
       titles: 'Titles',
       unavailable: 'Unavailable'
+    },
+    info: {
+      fetchingList: 'Fetching {0} list...'
     },
     components: {
       language: {

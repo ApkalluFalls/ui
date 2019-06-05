@@ -109,7 +109,7 @@ This maps routes to a given page component for use within the `<Container />` co
 <a name="API+json"></a>
 
 ### apI.json(resource, bypassCacheCheck, xivdbApiVersion) ⇒ <code>Promise</code>
-Get data from https://api.apkallufalls.com.
+Get data from https://apiv2.apkallufalls.com.
 This function either fetches new data or grabs cached data from the user's
 browser localStorage.
 
@@ -124,19 +124,19 @@ browser localStorage.
 
 **Example**  
 ```js
-// returns data from https://api.apkallufalls.com/minion/40.json OR
+// returns data from https://apiv2.apkallufalls.com/minion/40.json OR
 // localStorage.getItem('api')['minion/40'] if that exists already.
 json('minion/40');
 ```
 **Example**  
 ```js
-// returns data from https://api.apkallufalls.com/version.json.
+// returns data from https://apiv2.apkallufalls.com/version.json.
 json('version', true);
 ```
 <a name="API+consolidate"></a>
 
 ### apI.consolidate(resource, subresource, id, xivdbApiVersion) ⇒ <code>Promise</code>
-Consolidate resources from https://api.apkallufalls.com.
+Consolidate resources from https://apiv2.apkallufalls.com.
 This function returns consolidated information about a given id from a
 given resource to return a fully-fledged data object.
 
@@ -188,7 +188,7 @@ db('minions', { ... }, false, true);
 ### apI.getRefInfo(ref) ⇒ <code>Object</code>
 This function normalises ref objects contained in data returned from the API.
 The cases here represent keys contained within the localisation objects from both
-http://api.apkallufalls.com/minions.json and http://api.apkallufalls.com/mounts.json.
+http://apiv2.apkallufalls.com/minions.json and http://apiv2.apkallufalls.com/mounts.json.
 
 **Kind**: instance method of [<code>API</code>](#API)  
 **Returns**: <code>Object</code> - - The normalised representation.  

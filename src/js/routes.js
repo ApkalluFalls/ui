@@ -5,4 +5,7 @@
 export default [{
   path: '/',
   exact: true
+}, {
+  path: '/minions',
+  exact: true
 }];
