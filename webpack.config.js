@@ -6,8 +6,8 @@ module.exports = (env, argv) => ({
     port: 7000
   },
   entry: {
-    app: ['babel-polyfill', 'whatwg-fetch', './src/index.js'],
-    vendor: ['babel-polyfill', 'react', 'react-dom', 'firebase']
+    app: ['@babel/polyfill', 'whatwg-fetch', './src/index.js'],
+    vendor: ['@babel/polyfill', 'react', 'react-dom', 'firebase']
   },
   resolve: {
     alias: {
