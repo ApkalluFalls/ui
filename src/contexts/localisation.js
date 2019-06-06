@@ -66,6 +66,20 @@ export const localisation = {
           outro: 'This content is still accessible, take the {a0} for example, it just doesn\'t display within the content lists without first applying a filter, nor does this hidden content count towards character progress displayed in the sidebar when tracking a character.'
         }
       }
+    },
+    obtainMethods: {
+      achievementShort: 'Achievement',
+      craftShort: 'Craft',
+      gatherShort: 'Gather',
+
+      // Shops
+      gilShopShort: 'Gil shop',
+      specialShopShort: 'Special shop',
+
+      // Quests
+      eventQuestShort: 'Event quest',
+      msqShort: 'MSQ',
+      questShort: 'Quest'
     }
   }
 };
@@ -83,6 +97,8 @@ export const localisation = {
 export const localeInject = (string, ...args) => {
   if (!args.length)
     return console.warn(`localeInject called with no args on string "${string}"`);
+
+  console.info(string, [args]);
 
   return string.replace(/{([a-z]+)?(\d+)}/g, (match, important, group) => {
     const arg = args[group];

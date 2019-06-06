@@ -20,6 +20,7 @@ function List({
     (async () => {
       const sourceData = await new API(locale).json(source);
       const iconPositions = await new API('icons').json(source);
+      const methodIconPositions = await new API('icons').json('methods');
 
       setData({
         content: Object.entries(sourceData.reduce((obj, entry) => {
@@ -35,6 +36,7 @@ function List({
           return obj;
         }, {})).reverse(),
         iconPositions,
+        methodIconPositions,
         loaded: true
       });
     })();
@@ -73,7 +75,7 @@ function List({
                               className={classes.method}
                               key={index}
                             >
-                              {localeKey} icon:{icon} {details.join('; ')}
+                              {localeInject(text.obtainMethods[localeKey], icon, ...details)}
                             </li>
                           ))}
                         </ol>
