@@ -36,8 +36,8 @@ function List({
           return obj;
         }, {})).reverse(),
         iconPositions,
-        methodIconPositions,
-        loaded: true
+        loaded: true,
+        methodIconPositions
       });
     })();
   }, []);
@@ -45,7 +45,8 @@ function List({
   const {
     content,
     iconPositions,
-    loaded
+    loaded,
+    methodIconPositions
   } = data;
 
   return (
@@ -70,14 +71,24 @@ function List({
                       <h2 className={classes.name}>{entry.n}</h2>
                       {entry.m.length > 0 && (
                         <ol className={classes.methods}>
-                          {entry.m.map(([localeKey, icon, details], index) => (
-                            <li
-                              className={classes.method}
-                              key={index}
-                            >
-                              {localeInject(text.obtainMethods[localeKey], icon, ...details)}
-                            </li>
-                          ))}
+                          {entry.m.map(([localeKey, icon, details], index) => {
+                            console.info(icon);
+                            return (
+                              <li
+                                className={classes.method}
+                                key={index}
+                              >
+                                <span className={classes.methodIcon}>
+                                  <Icon id={icon} positions={methodIconPositions} source="methods" />
+                                </span>
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: localeInject(text.obtainMethods[localeKey], ...details)
+                                  }}
+                                />
+                              </li>
+                            )
+                          })}
                         </ol>
                       )}
                     </span>

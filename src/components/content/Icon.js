@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import API from 'js/api';
 
 // Theme.
@@ -7,12 +7,21 @@ import style from 'styles/content/Icon';
 
 function Icon(props) {
   if (props.positions) {
+    const position = props.positions[props.id];
+
+    if (!Array.isArray(position)) {
+      console.info(props.id);
+      return (
+        <span className={props.classes.icon}>?</span>
+      );
+    }
+
     const [
       x,
       y,
       height = 40,
       width = 40
-    ] = props.positions[props.id];
+    ] = position;
 
     return (
       <span

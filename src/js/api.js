@@ -5,7 +5,8 @@ import firebase from 'firebase/app';
  */
 class API {
   static spritesheet(source) {
-    return `https://apiv2.apkallufalls.com/icons/${source}.png`;
+    const cachedApi = (localStorage && JSON.parse(localStorage.getItem('api'))) || { misc: { version: 0 }};
+    return `https://apiv2.apkallufalls.com/icons/${source}.png?v=${cachedApi.misc.version}`;
   }
 
   /**

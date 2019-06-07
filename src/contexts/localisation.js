@@ -68,18 +68,18 @@ export const localisation = {
       }
     },
     obtainMethods: {
-      achievementShort: 'Achievement',
-      craftShort: 'Craft',
-      gatherShort: 'Gather',
+      achievementShort: 'Unlock the {i0} achievement',
+      craftShort: 'Crafted by a level {n0} {i1} {2}',
+      gatherShort: 'Gathered from a level {n0} {i1} node {2}',
 
       // Shops
-      gilShopShort: 'Gil shop',
-      specialShopShort: 'Special shop',
+      gilShopShort: 'Purchase for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
+      specialShopShort: 'Exchange for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
 
       // Quests
-      eventQuestShort: 'Event quest',
-      msqShort: 'MSQ',
-      questShort: 'Quest'
+      eventQuestShort: 'Complete the level {n0} event quest {i1}',
+      msqShort: 'Complete the level {n0} main scenario quest {i1}',
+      questShort: 'Complete the level {n0} quest {i1} ({2})'
     }
   }
 };
