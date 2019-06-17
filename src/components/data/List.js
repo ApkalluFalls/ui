@@ -69,10 +69,10 @@ function List({
                     </span>
                     <span className={classes.detail}>
                       <h2 className={classes.name}>{entry.n}</h2>
-                      {entry.m.length > 0 && (
+                      {Array.isArray(entry.m) && entry.m.length > 0 && (
                         <ol className={classes.methods}>
                           {entry.m.map(([localeKey, icon, details], index) => {
-                            console.info(icon);
+                            console.info(localeKey);
                             return (
                               <li
                                 className={classes.method}
@@ -81,11 +81,21 @@ function List({
                                 <span className={classes.methodIcon}>
                                   <Icon id={icon} positions={methodIconPositions} source="methods" />
                                 </span>
-                                <span
-                                  dangerouslySetInnerHTML={{
-                                    __html: localeInject(text.obtainMethods[localeKey], ...details)
-                                  }}
-                                />
+                                {
+                                  Array.isArray(details)
+                                  ? (
+                                    <span
+                                      dangerouslySetInnerHTML={{
+                                        __html: localeInject(
+                                          text.obtainMethods[localeKey],
+                                          ...details
+                                        )
+                                      }}
+                                    />
+                                  ) : (
+                                    <span>{text.obtainMethods[localeKey]}</span>
+                                  )
+                                }
                               </li>
                             )
                           })}

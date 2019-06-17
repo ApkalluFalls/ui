@@ -68,7 +68,10 @@ export const localisation = {
       }
     },
     obtainMethods: {
+      // Achievements
       achievementShort: 'Unlock the {i0} achievement',
+
+      // Crafting and gathering
       craftShort: 'Crafted by a level {n0} {i1} {2}',
       gatherShort: 'Gathered from a level {n0} {i1} node {2}',
 
@@ -79,7 +82,15 @@ export const localisation = {
       // Quests
       eventQuestShort: 'Complete the level {n0} event quest {i1}',
       msqShort: 'Complete the level {n0} main scenario quest {i1}',
-      questShort: 'Complete the level {n0} quest {i1} ({2})'
+      questShort: 'Complete the level {n0} quest {i1} ({2})',
+
+      // Misc
+      collectorsEditionShort: 'Purchase the Collectors Edition of {i0}',
+      instanceShort: 'Awarded randomly from {i1}',
+      legacyLevelGoalShort: 'Awarded for reaching level {i0} during {1}',
+      legacyStatusShort: 'Awarded for having at least {i0} cumulative days of subscription within the last {1} months of {2}',
+      mogStationShort: 'Purchase from the Mog Station',
+      recruitAFriendShort: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign'
     }
   }
 };
@@ -97,8 +108,6 @@ export const localisation = {
 export const localeInject = (string, ...args) => {
   if (!args.length)
     return console.warn(`localeInject called with no args on string "${string}"`);
-
-  console.info(string, [args]);
 
   return string.replace(/{([a-z]+)?(\d+)}/g, (match, important, group) => {
     const arg = args[group];
