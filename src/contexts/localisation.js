@@ -86,10 +86,13 @@ export const localisation = {
 
       // Misc
       collectorsEditionShort: 'Purchase the Collectors Edition of {i0}',
+      fanFestShort: 'Attend the {i0} {i1} Fan Festival',
+      fanFestStreamShort: 'Purchase access to the {i0} {i1} Fan Festival live stream',
       instanceShort: 'Awarded randomly from {i1}',
       legacyLevelGoalShort: 'Awarded for reaching level {i0} during {1}',
       legacyStatusShort: 'Awarded for having at least {i0} cumulative days of subscription within the last {1} months of {2}',
       mogStationShort: 'Purchase from the Mog Station',
+      promoShort: 'Promotion: "{i0}"',
       recruitAFriendShort: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign'
     }
   }
