@@ -75,7 +75,12 @@ export const localisation = {
       craftShort: 'Crafted by a level {n0} {i1} {2}',
       gatherShort: 'Gathered from a level {n0} {i1} node {2}',
 
+      // FATEs
+      fateShort: 'Achieve gold in the level {0} FATE {i1} in {2} (x: {3}, y: {4})',
+      instancedFATEShort: 'Achieve gold in the level {0} FATE {i1} within {2}',
+
       // Shops
+      gilAfterFateShort: 'Purchase for {n0} {i1} from {2} after completing the level {3} FATE {i4} in {5} (x: {6}, y: {7})',
       gilShopShort: 'Purchase for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
       specialShopShort: 'Exchange for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
 
