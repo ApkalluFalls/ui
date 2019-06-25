@@ -89,11 +89,14 @@ export const localisation = {
       fanFestShort: 'Attend the {i0} {i1} Fan Festival',
       fanFestStreamShort: 'Purchase access to the {i0} {i1} Fan Festival live stream',
       instanceShort: 'Awarded randomly from {i1}',
+      itemExchangeShort: 'Randomly awarded when exchanging 1 {i0} with {1} in {2} (x: {3}, y: {4})',
       legacyLevelGoalShort: 'Awarded for reaching level {i0} during {1}',
       legacyStatusShort: 'Awarded for having at least {i0} cumulative days of subscription within the last {1} months of {2}',
       mogStationShort: 'Purchase from the Mog Station',
       promoShort: 'Promotion: "{i0}"',
-      recruitAFriendShort: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign'
+      recruitAFriendShort: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign',
+      treasureHuntShort: 'Randomly awarded from {i0}',
+      ventureShort: 'Randomly awarded from the level {0} {i1} retainer venture'
     }
   }
 };

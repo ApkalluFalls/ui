@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Icon from 'components/content/Icon';
 import Panel from 'components/content/Panel';
 import { localeInject, LocalisationContext, localisation } from 'contexts/localisation';
 import API from 'js/api';
@@ -7,6 +6,9 @@ import API from 'js/api';
 // Theme.
 import injectSheet from 'react-jss';
 import style from 'styles/data/List';
+
+// Children.
+import ListItem from './List/ListItem';
 
 function List({
   classes,
@@ -57,52 +59,13 @@ function List({
             <article className={classes.patchEntries}>
               <Panel heading={`Patch ${patch}`}>
                 {entries.map(entry => (
-                  <article
-                    className={classes.item}
-                    key={`list-entry-${entry.id}`}
-                  >
-                    <span
-                      className={classes.icon}
-                      title={entry.n}
-                    >
-                      <Icon id={entry.i} positions={iconPositions} source={source} />
-                    </span>
-                    <span className={classes.detail}>
-                      <h2 className={classes.name}>{entry.n}</h2>
-                      {Array.isArray(entry.m) && entry.m.length > 0 && (
-                        <ol className={classes.methods}>
-                          {entry.m.map(([localeKey, icon, details], index) => {
-                            console.info(localeKey);
-                            return (
-                              <li
-                                className={classes.method}
-                                key={index}
-                              >
-                                <span className={classes.methodIcon}>
-                                  <Icon id={icon} positions={methodIconPositions} source="methods" />
-                                </span>
-                                {
-                                  Array.isArray(details)
-                                  ? (
-                                    <span
-                                      dangerouslySetInnerHTML={{
-                                        __html: localeInject(
-                                          text.obtainMethods[localeKey],
-                                          ...details
-                                        )
-                                      }}
-                                    />
-                                  ) : (
-                                    <span>{text.obtainMethods[localeKey]}</span>
-                                  )
-                                }
-                              </li>
-                            )
-                          })}
-                        </ol>
-                      )}
-                    </span>
-                  </article>
+                  <ListItem
+                    classes={classes}
+                    data={entry}
+                    iconPositions={iconPositions}
+                    methodIconPositions={methodIconPositions}
+                    source={source}
+                  />
                 ))}
               </Panel>
             </article>

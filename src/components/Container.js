@@ -10,7 +10,7 @@ function Container({
 }) {
   return (
     <section className={classes.container}>
-      <List source="mounts" />
+      <List source="minions" />
     </section>
   );
 }
