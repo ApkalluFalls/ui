@@ -1,6 +1,6 @@
 export default {
   panel: {
-    background: '#fff',
+    background: '#757575',
     border: {
       color: '#bdbdbd',
       style: 'solid',
@@ -13,6 +13,7 @@ export default {
       spread: null,
       color: '#333'
     },
+    color: '#fff',
     marginBottom: 20,
     padding: 16
   },

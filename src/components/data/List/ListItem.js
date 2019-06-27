@@ -28,6 +28,19 @@ function ListItem({
               <span
                 className={classes.icon}
               />
+              <span className={classes.detail}>
+                <h2 className={classes.name}>{data.n}</h2>
+                  {Array.isArray(data.m) && data.m.length > 0 && (
+                    <ol className={classes.methods}>
+                      {data.m.map((_, index) => (
+                        <li
+                          className={classes.methodLoading}
+                          key={index}
+                        />
+                      ))}
+                    </ol>
+                  )}
+              </span>
             </article>
           );
         }
@@ -61,6 +74,7 @@ function ListItem({
                           Array.isArray(details)
                           ? (
                             <span
+                              className={classes.methodText}
                               dangerouslySetInnerHTML={{
                                 __html: localeInject(
                                   text.obtainMethods[localeKey],
@@ -69,7 +83,7 @@ function ListItem({
                               }}
                             />
                           ) : (
-                            <span>{text.obtainMethods[localeKey]}</span>
+                            <span className={classes.methodText}>{text.obtainMethods[localeKey]}</span>
                           )
                         }
                       </li>

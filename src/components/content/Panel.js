@@ -6,13 +6,15 @@ import style from 'styles/content/Panel';
 
 function Panel({
   children,
+  className,
   classes,
-  heading
+  heading,
+  headingClassName
 }) {
   return (
-    <section className={classes.panel}>
+    <section className={`${classes.panel} ${className ? className : ''}`}>
       {heading && (
-        <h1 className={classes.heading}>{heading}</h1>
+        <h1 className={`${classes.heading} ${headingClassName ? headingClassName : ''}`}>{heading}</h1>
       )}
       {children}
     </section>

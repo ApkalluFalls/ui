@@ -19,7 +19,7 @@ export const localisation = {
     shared,
     common: {
       achievements: 'Achievements',
-      chocoboBarding: 'Chocobo Barding',
+      barding: 'Chocobo Barding',
       clickForHelp: 'Click for help',
       close: 'Close',
       discordServer: 'Discord server',
@@ -32,6 +32,10 @@ export const localisation = {
       promotional: 'Promotional',
       titles: 'Titles',
       unavailable: 'Unavailable'
+    },
+    actions: {
+      iconsMode: 'Icons mode',
+      listMode: 'List mode'
     },
     info: {
       fetchingList: 'Fetching {0} list...'
@@ -64,7 +68,20 @@ export const localisation = {
           li6: 'Disused Legacy (1.0) content',
           li7: 'Starting city achievements',
           outro: 'This content is still accessible, take the {a0} for example, it just doesn\'t display within the content lists without first applying a filter, nor does this hidden content count towards character progress displayed in the sidebar when tracking a character.'
-        }
+        },
+        title: 'Home'
+      },
+      barding: {
+        title: 'Chocobo Barding'
+      },
+      emotes: {
+        title: 'Emotes'
+      },
+      minions: {
+        title: 'Minions'
+      },
+      mounts: {
+        title: 'Mounts'
       }
     },
     obtainMethods: {

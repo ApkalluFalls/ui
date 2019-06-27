@@ -2,10 +2,32 @@
  * This contains page routes for the entire application.
  * @module [{js}routes]
  */
+export const paths = {
+  home: '/',
+  barding: '/barding',
+  emotes: '/emotes',
+  minions: '/minions',
+  mounts: '/mounts'
+};
+
 export default [{
-  path: '/',
-  exact: true
+  path: paths.home,
+  exact: true,
+  source: 'home'
 }, {
-  path: '/minions',
-  exact: true
+  path: paths.barding,
+  exact: true,
+  source: 'barding'
+}, {
+  path: paths.emotes,
+  exact: true,
+  source: 'emotes'
+}, {
+  path: paths.minions,
+  exact: true,
+  source: 'minions'
+}, {
+  path: paths.mounts,
+  exact: true,
+  source: 'mounts'
 }];

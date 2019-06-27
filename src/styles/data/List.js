@@ -2,23 +2,56 @@ export default {
   list: {
 
   },
-  patchEntries: {
+  patchList: {
 
+  },
+  patchListItem: {
+    borderColor: '#333',
+    overflow: 'hidden',
+    padding: 0
+  },
+  patchListItemHeading: {
+    alignItems: 'center',
+    background: '#333',
+    border: 0,
+    border: {
+      color: '#616161',
+      style: 'solid',
+      width: 1
+    },
+    boxShadow: {
+      blur: 0,
+      color: '#333',
+      spread: 1,
+      x: 0,
+      y: 1
+    },
+    boxSizing: 'border-box',
+    color: '#f2f2f2',
+    display: 'flex',
+    height: 32,
+    margin: 0,
+    padding: '0 8px',
+    width: '100%'
   },
   item: {
     alignItems: 'center',
-    borderBottom: {
-      color: '#f5f5f5',
-      style: 'solid',
-      width: 4
-    },
     display: 'flex',
     marginBottom: 0,
-    padding: {
-      bottom: 4,
-      left: 8,
-      right: 8,
-      top: 4
+    padding: 8,
+
+    '&:nth-child(odd)': {
+      background: '#6f6f6f',
+      borderBottom: {
+        color: '#616161',
+        style: 'solid',
+        width: 1
+      },
+      borderTop: {
+        color: '#616161',
+        style: 'solid',
+        width: 1
+      }
     },
 
     '&:last-child': {
@@ -28,9 +61,11 @@ export default {
   },
   icon: {
     alignSelf: 'flex-start',
+    background: '#f2f2f2',
     borderRadius: '4px',
     boxShadow: {
       blur: 2,
+      color: '#333',
       x: 1,
       y: 1
     },
@@ -58,21 +93,37 @@ export default {
     padding: 0
   },
   method: {
-    color: '#616161',
+    alignItems: 'center',
     borderBottom: {
-      color: '#ccc',
+      color: '#616161',
       style: 'dotted',
       width: 1
     },
-    paddingBottom: 4,
+    color: '#f2f2f2',
+    display: 'flex',
+    fontSize: 14,
+    lineHeight: '14px',
+    marginBottom: 4,
+    verticalAlign: 'top',
 
     '&:last-child': {
-      borderBottom: 0
+      borderBottom: 0,
+      marginBottom: 0
     }
+  },
+  methodLoading: {
+    background: '#f2f2f2',
+    display: 'block',
+    height: 18,
+    marginBottom: 4
   },
   methodIcon: {
     display: 'inline-block',
     height: 24,
-    verticalAlign: 'bottom'
+    marginTop: -6,
+    verticalAlign: 'top'
+  },
+  methodText: {
+    flexGrow: 1
   }
 }

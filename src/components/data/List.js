@@ -56,8 +56,12 @@ function List({
       {loaded ? (
         content.map(([patch, entries]) => {
           return (
-            <article className={classes.patchEntries}>
-              <Panel heading={`Patch ${patch}`}>
+            <article className={classes.patchList}>
+              <Panel
+                className={classes.patchListItem}
+                heading={`Patch ${patch}`}
+                headingClassName={classes.patchListItemHeading}
+              >
                 {entries.map(entry => (
                   <ListItem
                     classes={classes}

@@ -15,6 +15,7 @@ module.exports = (env, argv) => ({
       contexts: __dirname + "/src/contexts",
       js: __dirname + "/src/js",
       images: __dirname + "/src/images",
+      pages: __dirname + "/src/pages",
       styles: __dirname + "/src/styles"
     }
   },

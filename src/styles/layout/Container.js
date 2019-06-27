@@ -1,3 +1,5 @@
+import { navigation } from './Navigation';
+
 export default theme => ({
   '@global': {
     'html, body': {
@@ -33,7 +35,12 @@ export default theme => ({
     boxSizing: 'border-box',
     display: 'block',
     height: '100%',
-    padding: 15,
+    padding: {
+      bottom: 15,
+      left: 15 + navigation.width,
+      right: 15,
+      top: 15
+    },
     position: 'absolute',
       right: 0,
       top: 0,
