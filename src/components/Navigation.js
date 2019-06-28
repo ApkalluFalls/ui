@@ -29,6 +29,9 @@ function Navigation({
   }, {
     path: paths.mounts,
     title: contentText.mounts
+  }, {
+    path: paths.orchestrion,
+    title: contentText.orchestrionRolls
   }]
 
   return (

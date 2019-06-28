@@ -14,6 +14,7 @@ function ListItem({
   const text = localisation[locale];
 
   const hasKnownMethods = Array.isArray(data.m) && data.m.length > 0;
+  const hasRoundedIcon = source === 'orchestrion';
 
   return (
     <VisibilitySensor
@@ -28,7 +29,7 @@ function ListItem({
               key={`list-data-${data.id}`}
             >
               <span
-                className={classes.icon}
+                className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''}`}
               />
               <span className={classes.detail}>
                 <h2 className={classes.name}>{data.n}</h2>
@@ -53,18 +54,26 @@ function ListItem({
             key={`list-data-${data.id}`}
           >
             <span
-              className={classes.icon}
+              className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''}`}
               title={data.n}
             >
               <Icon id={data.i} positions={iconPositions} source={source} />
             </span>
             <span className={classes.detail}>
-              <h2 className={classes.name}>{data.n}</h2>
+              <h2 className={classes.name}>
+                {source === 'orchestrion' && data.o !== 65535 && (
+                  <small className={classes.orchestrionNumber}>
+                    #{data.o}{' '}
+                  </small>
+                )}
+                {data.n}
+              </h2>
               {hasKnownMethods
                 ? (
                   <ol className={classes.methods}>
                     {data.m.map(([localeKey, icon, details], index) => {
-                      console.info(localeKey);
+                      
+                      
                       return (
                         <li
                           className={classes.method}
@@ -74,7 +83,7 @@ function ListItem({
                             <Icon id={icon} positions={methodIconPositions} source="methods" />
                           </span>
                           {
-                            Array.isArray(details)
+                            Array.isArray(details) && details.length
                             ? (
                               <span
                                 className={classes.methodText}

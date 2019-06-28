@@ -10,8 +10,8 @@ export default {
     background: {
       color: '#333',
       image: `url(${Background})`,
-      position: '-156px -156px',
-      repeat: 'no-repeat'
+      repeat: 'no-repeat',
+      size: 'auto 100%'
     },
     borderRight: {
       color: '#333',

@@ -11,6 +11,8 @@ const routes = {
   [paths.home]: {
     component: Home
   },
+
+  // Content lists
   [paths.barding]: {
     component: List
   },
@@ -21,6 +23,9 @@ const routes = {
     component: List
   },
   [paths.mounts]: {
+    component: List
+  },
+  [paths.orchestrion]: {
     component: List
   }
 };

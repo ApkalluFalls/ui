@@ -83,6 +83,9 @@ export const localisation = {
       },
       mounts: {
         title: 'Mounts'
+      },
+      orchestrion: {
+        title: 'Orchestrion Rolls'
       }
     },
     obtainMethods: {
@@ -109,8 +112,10 @@ export const localisation = {
 
       // Misc
       collectorsEditionShort: 'Purchase the Collectors Edition of {i0}',
+      defaultShort: 'Available by default',
       fanFestShort: 'Attend the {i0} {i1} Fan Festival',
       fanFestStreamShort: 'Purchase access to the {i0} {i1} Fan Festival live stream',
+      genericShort: '{0}',
       instanceShort: 'Awarded randomly from {i1}',
       itemExchangeShort: 'Randomly awarded when exchanging 1 {i0} with {1} in {2} (x: {3}, y: {4})',
       legacyLevelGoalShort: 'Awarded for reaching level {i0} during {1}',

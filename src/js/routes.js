@@ -7,7 +7,8 @@ export const paths = {
   barding: '/barding',
   emotes: '/emotes',
   minions: '/minions',
-  mounts: '/mounts'
+  mounts: '/mounts',
+  orchestrion: '/orchestrion-rolls'
 };
 
 export default [{
@@ -30,4 +31,8 @@ export default [{
   path: paths.mounts,
   exact: true,
   source: 'mounts'
+}, {
+  path: paths.orchestrion,
+  exact: true,
+  source: 'orchestrion'
 }];

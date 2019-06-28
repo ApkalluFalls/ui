@@ -70,7 +70,12 @@ export default {
     },
     height: 40,
     marginRight: 10,
+    overflow: 'hidden',
+    position: 'relative',
     zIndex: 2
+  },
+  iconRound: {
+    borderRadius: '100%'
   },
   detail: {
     flex: {
@@ -79,7 +84,17 @@ export default {
   },
   name: {
     fontSize: 16,
-    margin: 0
+    margin: 0,
+    textShadow: {
+      blur: 1,
+      color: '#424242',
+      x: 1,
+      y: 1
+    },
+    textTransform: 'capitalize'
+  },
+  orchestrionNumber: {
+    fontWeight: 'normal'
   },
   methods: {
     background: '#7f7f7f',
