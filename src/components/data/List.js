@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PageLoader from 'components/content/PageLoader';
 import Panel from 'components/content/Panel';
 import { localeInject, LocalisationContext, localisation } from 'contexts/localisation';
 import API from 'js/api';
@@ -76,8 +77,10 @@ function List({
           );
         })
       ) : (
-        <article>
-          <p>{localeInject(text.info.fetchingList, text.common[source])}</p>
+        <article className={classes.patchList}>
+          <PageLoader>
+            {localeInject(text.info.fetchingList, text.common[source])}
+          </PageLoader>
         </article>
       )}
     </section>

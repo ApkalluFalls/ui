@@ -10,6 +10,9 @@ export default {
     overflow: 'hidden',
     padding: 0
   },
+  patchListPlaceholder: {
+    height: 256
+  },
   patchListItemHeading: {
     alignItems: 'center',
     background: '#333',
@@ -36,23 +39,14 @@ export default {
   },
   item: {
     alignItems: 'center',
+    borderBottom: {
+      color: '#616161',
+      style: 'solid',
+      width: 1
+    },
     display: 'flex',
     marginBottom: 0,
     padding: 8,
-
-    '&:nth-child(odd)': {
-      background: '#6f6f6f',
-      borderBottom: {
-        color: '#616161',
-        style: 'solid',
-        width: 1
-      },
-      borderTop: {
-        color: '#616161',
-        style: 'solid',
-        width: 1
-      }
-    },
 
     '&:last-child': {
       borderBottom: 0,
@@ -61,7 +55,7 @@ export default {
   },
   icon: {
     alignSelf: 'flex-start',
-    background: '#f2f2f2',
+    background: '#616161',
     borderRadius: '4px',
     boxShadow: {
       blur: 2,
@@ -75,7 +69,8 @@ export default {
       shrink: 0
     },
     height: 40,
-    marginRight: 8
+    marginRight: 10,
+    zIndex: 2
   },
   detail: {
     flex: {
@@ -83,14 +78,41 @@ export default {
     }
   },
   name: {
-    fontSize: 20,
+    fontSize: 16,
     margin: 0
   },
   methods: {
+    background: '#7f7f7f',
+    borderTop: {
+      color: '#6f6f6f',
+      style: 'solid',
+      width: 1
+    },
+    boxShadow: {
+      blur: 1,
+      color: '#616161',
+      inset: 'inset',
+      spread: 0,
+      x: 0,
+      y: 1
+    },
     listStyle: 'none',
-    marginBottom: 0,
-    marginTop: 4,
-    padding: 0
+    margin: {
+      bottom: -8,
+      left: -58,
+      right: -8,
+      top: 4
+    },
+    padding: {
+      bottom: 8,
+      left: 58,
+      right: 8,
+      top: 8
+    },
+    zIndex: 1
+  },
+  methodUnknown: {
+    background: '#777665'
   },
   method: {
     alignItems: 'center',
@@ -104,23 +126,30 @@ export default {
     fontSize: 14,
     lineHeight: '14px',
     marginBottom: 4,
+    paddingBottom: 4,
     verticalAlign: 'top',
 
     '&:last-child': {
       borderBottom: 0,
-      marginBottom: 0
+      marginBottom: 0,
+      paddingBottom: 0
     }
   },
   methodLoading: {
-    background: '#f2f2f2',
+    background: '#757575',
     display: 'block',
     height: 18,
-    marginBottom: 4
+    marginBottom: 5,
+
+    '&:last-child': {
+      marginBottom: 4
+    }
   },
   methodIcon: {
     display: 'inline-block',
     height: 24,
-    marginTop: -6,
+    marginLeft: -6,
+    marginTop: -2,
     verticalAlign: 'top'
   },
   methodText: {

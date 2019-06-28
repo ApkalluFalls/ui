@@ -1,4 +1,4 @@
-import Background from 'images/background-new.jpg';
+import Background from 'images/background2.png';
 import Logo from 'images/apkallu.png';
 
 export const navigation = {
@@ -10,7 +10,7 @@ export default {
     background: {
       color: '#333',
       image: `url(${Background})`,
-      position: '-76px 0',
+      position: '-156px -156px',
       repeat: 'no-repeat'
     },
     borderRight: {
@@ -34,7 +34,7 @@ export default {
     zIndex: 1
   },
   navigation: {
-    background: 'rgba(0,0,0,0.6)',
+    background: 'rgba(0,0,0,0.75)',
     boxSizing: 'border-box',
     display: 'block',
     height: '100%',

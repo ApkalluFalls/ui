@@ -38,7 +38,8 @@ export const localisation = {
       listMode: 'List mode'
     },
     info: {
-      fetchingList: 'Fetching {0} list...'
+      fetchingList: 'Fetching {0} list...',
+      noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.'
     },
     components: {
       language: {
