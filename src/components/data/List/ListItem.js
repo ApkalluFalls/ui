@@ -10,8 +10,8 @@ function ListItem({
   methodIconPositions,
   source
 }) {
-  const locale = useContext(LocalisationContext);
-  const text = localisation[locale];
+  // Contexts.
+  const { locale } = useContext(LocalisationContext);
 
   const hasKnownMethods = Array.isArray(data.m) && data.m.length > 0;
   const hasRoundedIcon = source === 'orchestrion';
@@ -89,13 +89,13 @@ function ListItem({
                                 className={classes.methodText}
                                 dangerouslySetInnerHTML={{
                                   __html: localeInject(
-                                    text.obtainMethods[localeKey],
+                                    locale.obtainMethods[localeKey],
                                     ...details
                                   )
                                 }}
                               />
                             ) : (
-                              <span className={classes.methodText}>{text.obtainMethods[localeKey]}</span>
+                              <span className={classes.methodText}>{locale.obtainMethods[localeKey]}</span>
                             )
                           }
                         </li>
@@ -105,7 +105,7 @@ function ListItem({
                 ) : (
                   <ol className={`${classes.methods} ${classes.methodUnknown}`}>
                     <li className={classes.method}>
-                      {text.info.noKnownObtainMethod}
+                      {locale.info.noKnownObtainMethod}
                     </li>
                   </ol>
                 )

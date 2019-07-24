@@ -6,26 +6,14 @@ export const navigation = {
 }
 
 export default {
-  backdrop: {
+  navigation: {
     background: {
-      color: '#333',
+      color: '#f2f2f2',
       image: `url(${Background})`,
       repeat: 'no-repeat',
       size: 'auto 100%'
     },
-    borderRight: {
-      color: '#333',
-      style: 'solid',
-      width: 1
-    },
-    boxShadow: {
-      x: 0,
-      y: 1,
-      blur: 2,
-      spread: null,
-      color: '#333'
-    },
-    boxSizing: 'border-box',
+    display: 'block',
     height: '100%',
     position: 'fixed',
       left: 0,
@@ -33,21 +21,31 @@ export default {
     width: navigation.width,
     zIndex: 1
   },
-  navigation: {
-    background: 'rgba(0,0,0,0.75)',
+  wrapper: {
+    background: 'linear-gradient(to right, rgba(242, 242, 242, 0.8) 0%, rgba(234, 234, 234, 1) 100%)',
     boxSizing: 'border-box',
-    display: 'block',
+    fallbacks: [
+      { background: '-moz-linear-gradient(left, rgba(242, 242, 242, 0.8) 0%, rgba(234, 234, 234, 1) 100%)' },
+      { background: '-webkit-linear-gradient(left, rgba(242, 242, 242, 0.8) 0%, rgba(234, 234, 234, 1) 100%)' }
+    ],
     height: '100%',
-    width: '100%'
+    padding: 12,
+    width: navigation.width
   },
   header: {
     alignItems: 'center',
-    color: '#ffef58',
+    color: '#333',
     display: 'flex',
     fontSize: 20,
     fontWeight: 'bold',
     height: 48,
     justifyContent: 'center',
+    textShadow: {
+      blur: 1,
+      color: '#fff',
+      x: 1,
+      y: 1
+    },
     width: '100%'
   },
   logo: {
@@ -55,9 +53,15 @@ export default {
       image: `url(${Logo})`,
       size: 'cover'
     },
+    boxShadow: {
+      x: 0,
+      y: 1,
+      blur: 2,
+      color: '#757575'
+    },
     display: 'block',
     height: 32,
-    marginRight: 10,
+    marginRight: 12,
     width: 32
   },
   links: {
@@ -69,34 +73,48 @@ export default {
     display: 'block'
   },
   link: {
-    borderBottom: {
-      color: 'rgba(255, 240, 87, 0.15)',
-      style: 'solid',
-      width: 1
-    },
-    color: '#fff',
+    background: 'transparent',
+    color: '#4E53B1',
     display: 'block',
-    padding: '8px 16px',
-    textDecoration: 'none',
-    transition: '.2s',
-
-    '&:first-child': {
-      borderTop: {
-        color: 'rgba(255, 240, 87, 0.15)',
-        style: 'solid',
-        width: 1
-      }
+    margin: {
+      top: 4
     },
+    padding: 8,
+    textDecoration: 'none',
+    transition: 'color .2s',
 
     '&:hover, &:focus': {
-      background: 'rgba(255, 240, 87, 0.1)'
+      '& h2': {
+        color: '#1E2485',
+        textDecoration: 'underline'
+      }
     }
   },
   linkActive: {
-    background: 'rgba(0, 0, 0, 0.6)',
+    background: '#eaeaea',
+    boxShadow: {
+      x: 0,
+      y: 0,
+      blur: 8,
+      color: '#eaeaea',
+      spread: 4
+    },
+    color: '#333',
+    fontWeight: 'bold',
+    overflow: 'hidden',
+
+    '& h2': {
+      fontWeight: 'bold'
+    },
 
     '&:hover, &:focus': {
-      background: 'rgba(0, 0, 0, 0.6)'
+      cursor: 'default',
+
+      '& h2': {
+        color: '#333',
+        fontWeight: 'bold',
+        textDecoration: 'none'
+      }
     }
   }
 };

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { LocalisationContext, localisation } from 'contexts/localisation';
+import { LocalisationContext } from 'contexts/localisation';
 import routes from 'js/routes';
 import pageRoutes from 'js/routes/pages';
 
@@ -11,8 +11,7 @@ import style from 'styles/Container';
 function Container({
   classes
 }) {
-  const locale = useContext(LocalisationContext);
-  const text = localisation[locale];
+  const { locale } = useContext(LocalisationContext);
 
   return (
     <section className={classes.container}>
@@ -33,7 +32,7 @@ function Container({
             }
 
             const pageRoute = pageRoutes[route.path];
-            const localeObj = text.pages[route.source];
+            const localeObj = locale.pages[route.source];
 
             return (
               <Route

@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LocalisationContext, localisation } from 'contexts/localisation';
+import { LocalisationContext } from 'contexts/localisation';
+import CharacterPortrait from 'components/content/CharacterPortrait';
+import ContentProgress from 'components/content/ContentProgress';
 
 // Theme.
 import injectSheet from 'react-jss';
@@ -10,39 +12,54 @@ import { paths } from 'js/routes';
 function Navigation({
   classes
 }) {
-  const locale = useContext(LocalisationContext);
-  const text = localisation[locale];
+    const { locale } = useContext(LocalisationContext);
 
   const {
     common: contentText
-  } = text;
+  } = locale;
 
   const contents = [{
-    path: paths.barding,
-    title: contentText.barding
+    api: 'achievements',
+    path: paths.achievements,
+    title: contentText.achievements,
+    fakeProgress: 4850
   }, {
-    path: paths.emotes,
-    title: contentText.emotes
-  }, {
+    api: 'minions',
     path: paths.minions,
-    title: contentText.minions
+    title: contentText.minions,
+    fakeProgress: 76
   }, {
+    api: 'mounts',
     path: paths.mounts,
-    title: contentText.mounts
+    title: contentText.mounts,
+    fakeProgress: 24
   }, {
+    api: 'emotes',
+    path: paths.emotes,
+    title: contentText.emotes,
+    fakeProgress: 94
+  }, {
+    api: 'orchestrion',
     path: paths.orchestrion,
-    title: contentText.orchestrionRolls
+    title: contentText.orchestrionRolls,
+    fakeProgress: 63
+  }, {
+    api: 'barding',
+    path: paths.barding,
+    title: contentText.barding,
+    fakeProgress: 12
   }]
 
   return (
-    <div className={classes.backdrop}>
-      <nav className={classes.navigation}>
+    <nav className={classes.navigation}>
+      <div className={classes.wrapper}>
         <header className={classes.header}>
           <span className={classes.logo} />
           <span className={classes.title}>
             Apkallu Falls
           </span>
         </header>
+        <CharacterPortrait />
         <ul className={classes.links}>
           {contents.map(content => (
             <li
@@ -54,15 +71,13 @@ function Navigation({
                 activeClassName={classes.linkActive}
                 to={content.path}
               >
-                <span className={classes.linkText}>
-                  {content.title}
-                </span>
+                <ContentProgress source={content} />
               </NavLink>
             </li>
           ))}
         </ul>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 }
 

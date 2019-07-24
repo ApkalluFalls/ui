@@ -35,7 +35,8 @@ export const localisation = {
     },
     actions: {
       iconsMode: 'Icons mode',
-      listMode: 'List mode'
+      listMode: 'List mode',
+      selectACharacterToTrack: 'Click here to select a character',
     },
     info: {
       fetchingList: 'Fetching {0} list...',
@@ -56,9 +57,8 @@ export const localisation = {
       home: {
         heading: 'Welcome to Apkallu Falls',
         about: 'Apkallu Falls is a character content tracking website which by default hides anything which is unobtainable, time-limited or promotional. It also provides details of how to obtain everything it tracks.',
-        whatIsHidden: 'What is hidden?',
         aboutExtra: 'For website-specific updates and notices, keep an eye on our {a0}, join our {a1} or click on the button below to follow us on Twitter!',
-        whatIsHiddenPopup: {
+        whatIsHidden: {
           heading: 'What content does Apkallu Falls hide?',
           intro: 'By default, Apkallu Falls hides any content which is unobtainable, time-limited or promotional. This is split into two categories, {i0} and {i1}, and includes:',
           li1: 'In-game events',
@@ -90,41 +90,42 @@ export const localisation = {
     },
     obtainMethods: {
       // Achievements
-      achievementShort: 'Unlock the {i0} achievement',
+      achievement: 'Unlock the {i0} achievement',
 
       // Crafting and gathering
-      craftShort: 'Crafted by a level {n0} {i1} {2}',
-      gatherShort: 'Gathered from a level {n0} {i1} node {2}',
+      craft: 'Crafted by a level {n0} {i1} {2}',
+      gather: 'Gathered from a level {n0} {i1} node {2}',
 
       // FATEs
-      fateShort: 'Achieve gold in the level {0} FATE {i1} in {2} (x: {3}, y: {4})',
-      instancedFATEShort: 'Achieve gold in the level {0} FATE {i1} within {2}',
+      fate: 'Achieve gold in the level {0} FATE {i1} in {2} (x: {3}, y: {4})',
+      instancedFATE: 'Achieve gold in the level {0} FATE {i1} within {2}',
 
       // Shops
-      gilAfterFateShort: 'Purchase for {n0} {i1} from {2} after completing the level {3} FATE {i4} in {5} (x: {6}, y: {7})',
-      gilShopShort: 'Purchase for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
-      specialShopShort: 'Exchange for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
+      gilAfterFate: 'Purchase for {n0} {i1} from {2} after completing the level {3} FATE {i4} in {5} (x: {6}, y: {7})',
+      gilShop: 'Purchase for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
+      specialShop: 'Exchange for {n0} {i1} from {2} in {3} (x: {4}, y: {5})',
 
       // Quests
-      eventQuestShort: 'Complete the level {n0} event quest {i1}',
-      msqShort: 'Complete the level {n0} main scenario quest {i1}',
-      questShort: 'Complete the level {n0} quest {i1} ({2})',
+      eventQuest: 'Complete the level {n0} event quest {i1}',
+      msq: 'Complete the level {n0} main scenario quest {i1}',
+      quest: 'Complete the level {n0} quest {i1} ({2})',
+      questInstant: 'Automatically unlocked after completing the level {n0} quest {i1} ({2})',
 
       // Misc
-      collectorsEditionShort: 'Purchase the Collectors Edition of {i0}',
-      defaultShort: 'Available by default',
-      fanFestShort: 'Attend the {i0} {i1} Fan Festival',
-      fanFestStreamShort: 'Purchase access to the {i0} {i1} Fan Festival live stream',
-      genericShort: '{0}',
-      instanceShort: 'Awarded randomly from {i1}',
-      itemExchangeShort: 'Randomly awarded when exchanging 1 {i0} with {1} in {2} (x: {3}, y: {4})',
-      legacyLevelGoalShort: 'Awarded for reaching level {i0} during {1}',
-      legacyStatusShort: 'Awarded for having at least {i0} cumulative days of subscription within the last {1} months of {2}',
-      mogStationShort: 'Purchase from the Mog Station',
-      promoShort: 'Promotion: "{i0}"',
-      recruitAFriendShort: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign',
-      treasureHuntShort: 'Randomly awarded from {i0}',
-      ventureShort: 'Randomly awarded from the level {0} {i1} retainer venture'
+      collectorsEdition: 'Purchase the Collectors Edition of {i0}',
+      byDefault: 'Available by default',
+      fanFest: 'Attend the {i0} {i1} Fan Festival',
+      fanFestStream: 'Purchase access to the {i0} {i1} Fan Festival live stream',
+      generic: '{0}',
+      instance: 'Awarded randomly from {i1}',
+      itemExchange: 'Randomly awarded when exchanging 1 {i0} with {1} in {2} (x: {3}, y: {4})',
+      legacyLevelGoal: 'Awarded for reaching level {i0} during {1}',
+      legacyStatus: 'Awarded for having at least {i0} cumulative days of subscription within the last {1} months of {2}',
+      mogStation: 'Purchase from the Mog Station',
+      promo: 'Promotion: "{i0}"',
+      recruitAFriend: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign',
+      treasureHunt: 'Randomly awarded from {i0}',
+      venture: 'Randomly awarded from the level {0} {i1} retainer venture'
     }
   }
 };
@@ -172,6 +173,7 @@ export const localeInject = (string, ...args) => {
 /**
  * `LocalisationContext` is the context API for localisation.
  */
-export const LocalisationContext = React.createContext(
-  localisation.en
-);
+export const LocalisationContext = React.createContext({
+  lang: 'en',
+  locale: localisation.en
+});

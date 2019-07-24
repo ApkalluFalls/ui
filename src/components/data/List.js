@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PageLoader from 'components/content/PageLoader';
 import Panel from 'components/content/Panel';
-import { localeInject, LocalisationContext, localisation } from 'contexts/localisation';
+import { localeInject, LocalisationContext } from 'contexts/localisation';
 import API from 'js/api';
 
 // Theme.
@@ -15,13 +15,18 @@ function List({
   classes,
   source
 }) {
-  const locale = useContext(LocalisationContext);
-  const text = localisation[locale];
+  // Contexts.
+  const {
+    language,
+    locale
+  } = useContext(LocalisationContext);
+
+  // State.
   const [data, setData] = useState({ loaded: false });
 
   useEffect(() => {
     (async () => {
-      const sourceData = await new API(locale).json(source);
+      const sourceData = await new API(language).json(source);
       const iconPositions = await new API('icons').json(source);
       const methodIconPositions = await new API('icons').json('methods');
 
@@ -79,7 +84,7 @@ function List({
       ) : (
         <article className={classes.patchList}>
           <PageLoader>
-            {localeInject(text.info.fetchingList, text.common[source])}
+            {localeInject(locale.info.fetchingList, locale.common[source])}
           </PageLoader>
         </article>
       )}

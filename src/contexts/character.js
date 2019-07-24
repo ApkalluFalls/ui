@@ -18,6 +18,7 @@ export const character = {
 /**
  * `CharacterContext` is the context API for characters.
  */
-export const CharacterContext = React.createContext(
-  character.none
-);
+export const CharacterContext = React.createContext({
+  data: character.none,
+  isCharacterSelected: false
+});

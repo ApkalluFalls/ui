@@ -1,8 +1,9 @@
 export default {
   panel: {
-    background: '#757575',
+    background: '#fafafa',
     border: {
-      color: '#bdbdbd',
+      color: '#ccc',
+      radius: 4,
       style: 'solid',
       width: 1
     },
@@ -10,11 +11,11 @@ export default {
       x: 0,
       y: 1,
       blur: 2,
-      spread: null,
-      color: '#333'
+      color: '#757575'
     },
-    color: '#fff',
+    color: '#333',
     marginBottom: 20,
+    overflow: 'hidden',
     padding: 16
   },
   heading: {

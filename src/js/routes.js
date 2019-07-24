@@ -4,6 +4,9 @@
  */
 export const paths = {
   home: '/',
+  characterSelect: '/character-select',
+
+  // Content lists.
   barding: '/barding',
   emotes: '/emotes',
   minions: '/minions',
@@ -35,4 +38,7 @@ export default [{
   path: paths.orchestrion,
   exact: true,
   source: 'orchestrion'
+}, {
+  path: paths.characterSelect,
+  exact: true
 }];

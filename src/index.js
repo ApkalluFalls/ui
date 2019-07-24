@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import { CharacterContext } from "contexts/character";
-import { LocalisationContext } from "contexts/localisation";
+import { LocalisationContext, localisation } from "contexts/localisation";
 import { ThemeContext } from "contexts/theme";
 
 import API from 'js/api';
@@ -50,10 +50,15 @@ const ApkalluFalls = injectSheet(style)(() => {
 
   return (
     <React.StrictMode>
-      <CharacterContext.Provider>
+      <CharacterContext.Provider value={{
+        isCharacterSelected: false
+      }}>
         <BrowserRouter>
           <ThemeContext.Provider value={'light'}>
-            <LocalisationContext.Provider value={language}>
+            <LocalisationContext.Provider value={{
+              language,
+              locale: localisation[language]
+            }}>
               <Navigation />
               <Container />
             </LocalisationContext.Provider>

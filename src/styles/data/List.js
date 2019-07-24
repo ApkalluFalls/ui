@@ -6,7 +6,6 @@ export default {
 
   },
   patchListItem: {
-    borderColor: '#333',
     overflow: 'hidden',
     padding: 0
   },
@@ -15,22 +14,21 @@ export default {
   },
   patchListItemHeading: {
     alignItems: 'center',
-    background: '#333',
+    background: '#f2f2f2',
     border: 0,
-    border: {
-      color: '#616161',
+    borderBottom: {
+      color: '#ccc',
       style: 'solid',
       width: 1
     },
+    boxSizing: 'border-box',
     boxShadow: {
-      blur: 0,
-      color: '#333',
+      color: '#f2f2f2',
+      inset: 'inset',
       spread: 1,
       x: 0,
-      y: 1
+      y: 0
     },
-    boxSizing: 'border-box',
-    color: '#f2f2f2',
     display: 'flex',
     height: 32,
     margin: 0,
@@ -40,7 +38,7 @@ export default {
   item: {
     alignItems: 'center',
     borderBottom: {
-      color: '#616161',
+      color: '#ccc',
       style: 'solid',
       width: 1
     },
@@ -87,7 +85,7 @@ export default {
     margin: 0,
     textShadow: {
       blur: 1,
-      color: '#424242',
+      color: '#fff',
       x: 1,
       y: 1
     },
@@ -97,19 +95,18 @@ export default {
     fontWeight: 'normal'
   },
   methods: {
-    background: '#7f7f7f',
+    background: '#f5f5f5',
     borderTop: {
-      color: '#6f6f6f',
+      color: '#ccc',
       style: 'solid',
       width: 1
     },
     boxShadow: {
-      blur: 1,
-      color: '#616161',
+      color: '#f2f2f2',
       inset: 'inset',
-      spread: 0,
+      spread: 1,
       x: 0,
-      y: 1
+      y: 0
     },
     listStyle: 'none',
     margin: {
@@ -127,16 +124,15 @@ export default {
     zIndex: 1
   },
   methodUnknown: {
-    background: '#777665'
+    background: '#fffcda'
   },
   method: {
     alignItems: 'center',
     borderBottom: {
-      color: '#616161',
+      color: '#bdbdbd',
       style: 'dotted',
       width: 1
     },
-    color: '#f2f2f2',
     display: 'flex',
     fontSize: 14,
     lineHeight: '14px',
@@ -151,7 +147,7 @@ export default {
     }
   },
   methodLoading: {
-    background: '#757575',
+    background: '#f2f2f2',
     display: 'block',
     height: 18,
     marginBottom: 5,
