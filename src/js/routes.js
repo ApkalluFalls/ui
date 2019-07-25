@@ -4,6 +4,7 @@
  */
 export const paths = {
   home: '/',
+  character: characterId => `/character/${characterId}`,
   characterSelect: '/character-select',
 
   // Content lists.
@@ -38,6 +39,8 @@ export default [{
   path: paths.orchestrion,
   exact: true,
   source: 'orchestrion'
+}, {
+  path: paths.character
 }, {
   path: paths.characterSelect,
   exact: true

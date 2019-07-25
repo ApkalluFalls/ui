@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProgressBar from 'components/content/ProgressBar';
+import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import API from 'js/api';
 
@@ -12,6 +13,7 @@ function ContentProgress({
   source = {}
 }) {
   // Context.
+  const { name: selectedCharacterName } = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
 
   // State.
@@ -40,7 +42,13 @@ function ContentProgress({
       <h2 className={classes.heading}>
         {source.title}
       </h2>
-      <ProgressBar value={source.fakeProgress} limit={total || undefined} />
+      {selectedCharacterName
+        ? (
+          <ProgressBar value={source.fakeProgress} limit={total || undefined} />
+        ) : (
+          <ProgressBar limit={total || undefined} />
+        )
+      }
     </section>
   )
 }

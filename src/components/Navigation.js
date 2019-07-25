@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
+import { ThemeContext } from 'contexts/theme';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss'
 import style from 'styles/Navigation';
 import { paths } from 'js/routes';
 
-function Navigation({
-  classes
-}) {
-    const { locale } = useContext(LocalisationContext);
+function Navigation() {
+  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const { locale } = useContext(LocalisationContext);
 
   const {
     common: contentText
@@ -81,4 +81,4 @@ function Navigation({
   );
 }
 
-export default injectSheet(style)(Navigation);
+export default Navigation;

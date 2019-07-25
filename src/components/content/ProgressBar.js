@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'contexts/theme';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss'
 import style from 'styles/content/ProgressBar';
 
 function ProgressBar({
-  classes,
   limit = 1,
   value = 0
 }) {
+  const classes = createUseStyles(style(useContext(ThemeContext)))();
   const percentage = `${Math.ceil(((100 / limit) * value) * 10) / 10}%`;
 
   return (
@@ -40,4 +41,4 @@ function ProgressBar({
   )
 }
 
-export default injectSheet(style)(ProgressBar);
+export default ProgressBar;

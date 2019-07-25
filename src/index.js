@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import { CharacterContext } from "contexts/character";
 import { LocalisationContext, localisation } from "contexts/localisation";
-import { ThemeContext } from "contexts/theme";
+import { ThemeContext, themes } from "contexts/theme";
 
 import API from 'js/api';
 
@@ -12,10 +12,17 @@ import Container from "components/Container";
 import Navigation from "components/Navigation";
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles, createTheming } from 'react-jss';
 import style from 'styles/global';
 
-const ApkalluFalls = injectSheet(style)(() => {
+const theme = themes[localStorage && JSON.parse(localStorage.getItem('theme')) || 'dark'];
+const useStyles = createUseStyles(style(theme));
+const { ThemeProvider } = createTheming(ThemeContext);
+
+function ApkalluFalls({}) {
+  // No classes here, but we do want the global styles applied.
+  useStyles();
+
   // Contexts.
   useContext(CharacterContext);
   useContext(LocalisationContext);
@@ -51,10 +58,14 @@ const ApkalluFalls = injectSheet(style)(() => {
   return (
     <React.StrictMode>
       <CharacterContext.Provider value={{
-        isCharacterSelected: false
+        avatar: 'https:\/\/img2.finalfantasyxiv.com\/f\/9d55d25fd7e4589bd66f8486aabc61e0_c274370774c6bc3483cc8740805f41bcfc0_96x96.jpg',
+        id: 10012596,
+        forename: 'Tequila',
+        name: 'Tequila Mockingbird',
+        surname: 'Mockingbird'
       }}>
         <BrowserRouter>
-          <ThemeContext.Provider value={'light'}>
+          <ThemeProvider theme={theme}>
             <LocalisationContext.Provider value={{
               language,
               locale: localisation[language]
@@ -62,12 +73,12 @@ const ApkalluFalls = injectSheet(style)(() => {
               <Navigation />
               <Container />
             </LocalisationContext.Provider>
-          </ThemeContext.Provider>
+          </ThemeProvider>
         </BrowserRouter>
       </CharacterContext.Provider>
     </React.StrictMode>
   );
-});
+};
 
 ReactDOM.render(
   (

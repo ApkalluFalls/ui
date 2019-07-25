@@ -34,9 +34,10 @@ export const localisation = {
       unavailable: 'Unavailable'
     },
     actions: {
+      changeCharacter: 'Change character',
       iconsMode: 'Icons mode',
       listMode: 'List mode',
-      selectACharacterToTrack: 'Click here to select a character',
+      selectACharacter: 'Select a character to track'
     },
     info: {
       fetchingList: 'Fetching {0} list...',

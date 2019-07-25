@@ -2,13 +2,16 @@ import Background from 'images/background2.png';
 import Logo from 'images/apkallu.png';
 
 export const navigation = {
-  width: 192
+  width: 204
 }
 
-export default {
+export default theme => {
+  const { navigation: navigationTheme } = theme;
+
+  return {
   navigation: {
     background: {
-      color: '#f2f2f2',
+      color: theme.background,
       image: `url(${Background})`,
       repeat: 'no-repeat',
       size: 'auto 100%'
@@ -22,11 +25,11 @@ export default {
     zIndex: 1
   },
   wrapper: {
-    background: 'linear-gradient(to right, rgba(242, 242, 242, 0.8) 0%, rgba(234, 234, 234, 1) 100%)',
+    background: `linear-gradient(to right, ${navigationTheme.gradientStart} 0%, ${navigationTheme.gradientEnd} 80%)`,
     boxSizing: 'border-box',
     fallbacks: [
-      { background: '-moz-linear-gradient(left, rgba(242, 242, 242, 0.8) 0%, rgba(234, 234, 234, 1) 100%)' },
-      { background: '-webkit-linear-gradient(left, rgba(242, 242, 242, 0.8) 0%, rgba(234, 234, 234, 1) 100%)' }
+      { background: `-moz-linear-gradient(left, ${navigationTheme.gradientStart} 0%, ${navigationTheme.gradientEnd} 80%)` },
+      { background: `-webkit-linear-gradient(left, ${navigationTheme.gradientStart} 0%, ${navigationTheme.gradientEnd} 80%)` }
     ],
     height: '100%',
     padding: 12,
@@ -34,7 +37,7 @@ export default {
   },
   header: {
     alignItems: 'center',
-    color: '#333',
+    color: theme.color,
     display: 'flex',
     fontSize: 20,
     fontWeight: 'bold',
@@ -42,7 +45,7 @@ export default {
     justifyContent: 'center',
     textShadow: {
       blur: 1,
-      color: '#fff',
+      color: theme.textShadow,
       x: 1,
       y: 1
     },
@@ -57,7 +60,7 @@ export default {
       x: 0,
       y: 1,
       blur: 2,
-      color: '#757575'
+      color: theme.shadow
     },
     display: 'block',
     height: 32,
@@ -74,47 +77,79 @@ export default {
   },
   link: {
     background: 'transparent',
-    color: '#4E53B1',
+    boxSizing: 'border-box',
+    color: theme.link,
     display: 'block',
     margin: {
       top: 4
     },
     padding: 8,
+    position: 'relative',
     textDecoration: 'none',
     transition: 'color .2s',
 
+    '&::before': {
+      border: {
+        color: 'transparent',
+        style: 'solid',
+        width: '29px 0 29px 8px'
+      },
+      content: '""',
+      height: 0,
+      opacity: 0.8,
+      position: 'absolute',
+        bottom: 0,
+        left: -12,
+        top: 0,
+      transition: '.2s',
+      width: 0,
+      zIndex: 2
+    },
+
     '&:hover, &:focus': {
       '& h2': {
-        color: '#1E2485',
+        color: theme.linkHoverFocus,
         textDecoration: 'underline'
+      },
+
+      '&::before': {
+        borderLeftColor: theme.link
       }
     }
   },
   linkActive: {
-    background: '#eaeaea',
+    background: theme.background,
     boxShadow: {
       x: 0,
       y: 0,
       blur: 8,
-      color: '#eaeaea',
+      color: theme.background,
       spread: 4
     },
-    color: '#333',
+    color: theme.color,
     fontWeight: 'bold',
-    overflow: 'hidden',
 
     '& h2': {
       fontWeight: 'bold'
+    },
+
+    '&::before': {
+      borderLeftColor: theme.color,
     },
 
     '&:hover, &:focus': {
       cursor: 'default',
 
       '& h2': {
-        color: '#333',
+        color: theme.color,
         fontWeight: 'bold',
         textDecoration: 'none'
+      },
+
+      '&::before': {
+        borderLeftColor: theme.color
       }
     }
   }
 };
+}

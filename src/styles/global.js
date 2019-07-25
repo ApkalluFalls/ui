@@ -1,8 +1,8 @@
-export default {
+export default theme => ({
   '@global': {
     'html, body': {
-      background: '#eaeaea',
-      color: '#333',
+      background: theme.background,
+      color: theme.color,
       fontFamily: `'PT Sans', sans-serif`
     },
 
@@ -21,16 +21,16 @@ export default {
     },
 
     'a, a:visited': {
-      color: '#4E53B1',
+      color: theme.link,
       textDecoration: 'none',
 
       '&:hover, &:focus': {
-        color: '#1E2485'
+        color: theme.linkHoverFocus
       },
 
       '&:active': {
-        color: '#760E7D'
+        color: theme.linkActive
       }
     }
   }
-}
+})

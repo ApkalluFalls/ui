@@ -6,64 +6,59 @@
  */
 import React from "react";
 
+const shared = {
+  brand: '#ffee58'
+};
+
 /**
  * The `themes` object contains style variables for each given theme.
  */
 export const themes = {
   light: {
-    brand: '#ffee58',
-    background: '#f5f5f5',
-    color: '#212121',
-    faded: '#bdbdbd',
-    link: '#337ab7',
-    linkHover: '#23527c',
-    shadow: '#bdbdbd',
-    subtleBackground: '#bdbdbd',
-    button: {
-      color: '#2196f3'
-    },
-    container: {
-      shadow: '#212121',
-      footer: {
-        border: '#e0e0e0',
-        color: '#424242'
-      }
-    },
+    ...shared,
+
+    // Primary theme colours.
+    background: '#eaeaea',
+    color: '#333',
+    link: '#4E53B1',
+    linkHoverFocus: '#1E2485',
+    linkActive: '#760E7D',
+    shadow: '#757575',
+    textShadow: '#fff',
+
+    // Layout sections.
     navigation: {
-      background: 'rgba(31, 21, 0, 0.7)',
-      color: '#fff',
-      link: {
-        border: 'rgba(255, 240, 87, 0.15)',
-        color: '#fff',
-        hoverBackground: 'rgba(255, 240, 87, 0.1)'
-      },
-      logo: {
-        shadow: '#212121'
-      },
-      progress: {
-        background: 'rgba(255, 253, 231, 0.5)',
-        border: '#212121',
-        color: '#e0e0e0'
-      }
+      gradientStart: 'rgba(242, 242, 242, 0.8)',
+      gradientEnd: 'rgba(234, 234, 234, 1)'
     },
-    panel: {
-      background: '#fff',
-      border: '#e0e0e0'
+
+    // Components.
+    progress: {
+      background: '#ccc',
+      bar: '#757575'
+    }
+  },
+  dark: {
+    ...shared,
+
+    // Primary theme colours.
+    background: '#333',
+    color: '#fff',
+    link: '#9EA1E1',
+    linkHoverFocus: '#fff',
+    linkActive: '#BB5EC2',
+    shadow: '#111',
+    textShadow: '#111',
+
+    // Specific sections.
+    navigation: {
+      gradientStart: 'rgba(33, 33, 33, 0.9)',
+      gradientEnd: 'rgba(51, 51, 51, 1)'
     },
-    popup: {
-      backdrop: 'rgba(21, 21, 21, 0.6)',
-      background: '#fafafa',
-      border: '#fff',
-      close: '#9e9e9e',
-      shadow: '#212121',
-      footer: {
-        border: '#e0e0e0'
-      }
-    },
-    progressBar: {
-      background: '#e0e0e0',
-      foreground: '#212121',
-      shadow: '#eee'
+
+    progress: {
+      background: '#616161',
+      bar: '#ccc'
     }
   }
 };
