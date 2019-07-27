@@ -1,16 +1,19 @@
 import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
+import { ThemeContext } from "contexts/theme";
 import routes from 'js/routes';
 import pageRoutes from 'js/routes/pages';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss';
 import style from 'styles/Container';
+import globalStyle from 'styles/global';
 
-function Container({
-  classes
-}) {
+function Container() {
+  const theme = useContext(ThemeContext);
+  createUseStyles(globalStyle(theme))();
+  const classes = createUseStyles(style(theme))();
   const { locale } = useContext(LocalisationContext);
 
   return (
@@ -63,4 +66,4 @@ function Container({
   );
 }
 
-export default injectSheet(style)(Container);
+export default Container;

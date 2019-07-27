@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { CharacterContext } from "contexts/character";
 import { LocalisationContext, localisation } from "contexts/localisation";
@@ -12,17 +12,11 @@ import Container from "components/Container";
 import Navigation from "components/Navigation";
 
 // Theme.
-import { createUseStyles, createTheming } from 'react-jss';
-import style from 'styles/global';
+import { createTheming } from 'react-jss';
 
-const theme = themes[localStorage && JSON.parse(localStorage.getItem('theme')) || 'dark'];
-const useStyles = createUseStyles(style(theme));
 const { ThemeProvider } = createTheming(ThemeContext);
 
 function ApkalluFalls({}) {
-  // No classes here, but we do want the global styles applied.
-  useStyles();
-
   // Contexts.
   useContext(CharacterContext);
   useContext(LocalisationContext);
@@ -30,6 +24,8 @@ function ApkalluFalls({}) {
 
   // State.
   const [version, setVersion] = useState(-1);
+
+  const theme = themes[localStorage && localStorage.getItem('theme') || 'light'];
 
   useEffect(() => {
     (async () => {
@@ -51,6 +47,8 @@ function ApkalluFalls({}) {
       <div>Loading</div>
     );
   }
+
+  console.info(theme);
 
   // Language is stored in local storage.
   const language = localStorage && JSON.parse(localStorage.getItem('lang')) || 'en';

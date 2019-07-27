@@ -2,19 +2,24 @@ import React, { useContext, useEffect, useState } from 'react';
 import PageLoader from 'components/content/PageLoader';
 import Panel from 'components/content/Panel';
 import { localeInject, LocalisationContext } from 'contexts/localisation';
+import { ThemeContext } from 'contexts/theme';
 import API from 'js/api';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss'
 import style from 'styles/data/List';
+import panelStyle from 'styles/content/Panel';
 
 // Children.
 import ListItem from './List/ListItem';
 
 function List({
-  classes,
   source
 }) {
+  const theme = useContext(ThemeContext);
+  const panelClasses = createUseStyles(panelStyle(theme))();
+  const classes = createUseStyles(style(theme))();
+
   // Contexts.
   const {
     language,
@@ -64,6 +69,7 @@ function List({
           return (
             <article className={classes.patchList}>
               <Panel
+                classesOverride={panelClasses}
                 className={classes.patchListItem}
                 heading={`Patch ${patch}`}
                 headingClassName={classes.patchListItemHeading}
@@ -92,4 +98,4 @@ function List({
   );
 }
 
-export default injectSheet(style)(List);
+export default List;

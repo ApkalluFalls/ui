@@ -1,6 +1,6 @@
 import { navigation } from './Navigation';
 
-export default {
+export default () => ({
   container: {
     padding: {
       bottom: 16,
@@ -9,4 +9,4 @@ export default {
       top: 16
     },
   }
-}
+});

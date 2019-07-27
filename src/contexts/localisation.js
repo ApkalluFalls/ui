@@ -39,9 +39,13 @@ export const localisation = {
       listMode: 'List mode',
       selectACharacter: 'Select a character to track'
     },
+    labels: {
+      darkMode: 'Dark mode'
+    },
     info: {
       fetchingList: 'Fetching {0} list...',
-      noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.'
+      noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
+      reloadsPage: 'reloads page'
     },
     components: {
       language: {

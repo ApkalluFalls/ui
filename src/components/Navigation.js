@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
-import { ThemeContext } from 'contexts/theme';
+import { ThemeContext, themes } from 'contexts/theme';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
 
@@ -13,6 +13,10 @@ import { paths } from 'js/routes';
 function Navigation() {
   const classes = createUseStyles(style(useContext(ThemeContext)))();
   const { locale } = useContext(LocalisationContext);
+
+  const [isDarkThemeEnabled, setIsDarkThemeEnabled] = useState((
+    localStorage && localStorage.getItem('theme') === 'dark'
+  ));
 
   const {
     common: contentText
@@ -48,7 +52,19 @@ function Navigation() {
     path: paths.barding,
     title: contentText.barding,
     fakeProgress: 12
-  }]
+  }];
+
+  const onThemeChange = event => {
+    if (isDarkThemeEnabled) {
+      localStorage && localStorage.setItem('theme', 'light');
+      setIsDarkThemeEnabled(false);
+    } else {
+      localStorage && localStorage.setItem('theme', 'dark');
+      setIsDarkThemeEnabled(true);
+    }
+
+    window.location.reload();
+  };
 
   return (
     <nav className={classes.navigation}>
@@ -59,7 +75,9 @@ function Navigation() {
             Apkallu Falls
           </span>
         </header>
-        <CharacterPortrait />
+        <div className={classes.character}>
+          <CharacterPortrait />
+        </div>
         <ul className={classes.links}>
           {contents.map(content => (
             <li
@@ -76,6 +94,40 @@ function Navigation() {
             </li>
           ))}
         </ul>
+        <form className={classes.options}>
+          <label
+            className={classes.label}
+            htmlFor="theme"
+          >
+            <span className={classes.control}>
+              <input
+                type="checkbox"
+                id="theme"
+                checked={isDarkThemeEnabled}
+                onChange={onThemeChange}
+              />
+            </span>
+            <span className={classes.labelText}>
+              {locale.labels.darkMode}
+              {' '}
+              <span className={classes.labelTextInfo}>
+                ({locale.info.reloadsPage})
+              </span>
+            </span>
+          </label>
+          <a
+            className={`${classes.externalLink} ${classes.discord}`}
+            href="https://discord.gg/VZ9BhKy"
+          >
+            Chat on Discord
+          </a>
+          <a
+            className={`${classes.externalLink} ${classes.patreon}`}
+            href="https://www.patreon.com/bePatron?u=8135445"
+          >
+            Become a Patron
+          </a>
+        </form>
       </div>
     </nav>
   );

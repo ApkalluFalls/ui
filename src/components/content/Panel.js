@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'contexts/theme';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss'
 import style from 'styles/content/Panel';
 
 function Panel({
   children,
+  classesOverride,
   className,
-  classes,
   heading,
   headingClassName
 }) {
+  const classes = classesOverride || createUseStyles(style(useContext(ThemeContext)))();
+
   return (
     <section className={`${classes.panel} ${className ? className : ''}`}>
       {heading && (
@@ -21,4 +24,4 @@ function Panel({
   )
 }
 
-export default injectSheet(style)(Panel);
+export default Panel;
