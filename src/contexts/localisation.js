@@ -45,7 +45,8 @@ export const localisation = {
     info: {
       fetchingList: 'Fetching {0} list...',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
-      reloadsPage: 'reloads page'
+      reloadsPage: 'reloads page',
+      trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
     },
     components: {
       language: {
@@ -76,6 +77,11 @@ export const localisation = {
           outro: 'This content is still accessible, take the {a0} for example, it just doesn\'t display within the content lists without first applying a filter, nor does this hidden content count towards character progress displayed in the sidebar when tracking a character.'
         },
         title: 'Home'
+      },
+      authentication: {
+        heading: 'Log in or Create an Account',
+        about: 'Creating an account will allow you to manually track content which isn\'t exposed by the Lodestone like Emotes and Orchestrion Rolls.',
+        title: 'Sign in'
       },
       barding: {
         title: 'Chocobo Barding'

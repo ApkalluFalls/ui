@@ -3,7 +3,11 @@
  * @module [{js}routes]
  */
 export const paths = {
+  // Core pages.
   home: '/',
+  authentication: '/sign-in',
+
+  // Character pages.
   character: characterId => `/character/${characterId}`,
   characterSelect: '/character-select',
 
@@ -19,6 +23,10 @@ export default [{
   path: paths.home,
   exact: true,
   source: 'home'
+}, {
+  path: paths.authentication,
+  exact: true,
+  source: 'authentication'
 }, {
   path: paths.barding,
   exact: true,

@@ -132,6 +132,11 @@ export default theme => {
         }
       }
     },
+    linkCollapsed: {
+      '&::before': {
+        borderWidth: '18px 0 18px 10px'
+      }
+    },
     linkActive: {
       background: theme.background,
       boxShadow: {

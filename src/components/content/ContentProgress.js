@@ -2,19 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import ProgressBar from 'components/content/ProgressBar';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
+import { ThemeContext } from 'contexts/theme';
 import API from 'js/api';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss'
 import style from 'styles/content/ContentProgress';
 
 function ContentProgress({
-  classes,
   source = {}
 }) {
   // Context.
   const { name: selectedCharacterName } = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
+  const classes = createUseStyles(style(useContext(ThemeContext)))();
 
   // State.
   const [total, setTotal] = useState(1);
@@ -37,20 +38,23 @@ function ContentProgress({
     })();
   }, [])
 
+  const hasProgressBar = window.signedInCharacter || !source.requiresSignIn;
+
   return (
     <section className={classes.container}>
       <h2 className={classes.heading}>
         {source.title}
       </h2>
-      {selectedCharacterName
-        ? (
-          <ProgressBar value={source.fakeProgress} limit={total || undefined} />
-        ) : (
-          <ProgressBar limit={total || undefined} />
-        )
-      }
+      {hasProgressBar && (
+        selectedCharacterName
+          ? (
+            <ProgressBar value={0 /* todo */} limit={total || undefined} />
+          ) : (
+            <ProgressBar limit={total || undefined} />
+          )
+      )}
     </section>
   )
 }
 
-export default injectSheet(style)(ContentProgress);
+export default ContentProgress;

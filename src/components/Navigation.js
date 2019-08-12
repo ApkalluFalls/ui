@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
-import { ThemeContext, themes } from 'contexts/theme';
+import { ThemeContext } from 'contexts/theme';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
 
@@ -25,33 +25,30 @@ function Navigation() {
   const contents = [{
     api: 'achievements',
     path: paths.achievements,
-    title: contentText.achievements,
-    fakeProgress: 4850
+    title: contentText.achievements
   }, {
     api: 'minions',
     path: paths.minions,
-    title: contentText.minions,
-    fakeProgress: 76
+    title: contentText.minions
   }, {
     api: 'mounts',
     path: paths.mounts,
-    title: contentText.mounts,
-    fakeProgress: 24
+    title: contentText.mounts
   }, {
     api: 'emotes',
     path: paths.emotes,
     title: contentText.emotes,
-    fakeProgress: 94
+    requiresSignIn: true
   }, {
     api: 'orchestrion',
     path: paths.orchestrion,
     title: contentText.orchestrionRolls,
-    fakeProgress: 63
+    requiresSignIn: true
   }, {
     api: 'barding',
     path: paths.barding,
     title: contentText.barding,
-    fakeProgress: 12
+    requiresSignIn: true
   }];
 
   const onThemeChange = event => {
@@ -69,12 +66,14 @@ function Navigation() {
   return (
     <nav className={classes.navigation}>
       <div className={classes.wrapper}>
-        <header className={classes.header}>
-          <span className={classes.logo} />
-          <span className={classes.title}>
-            Apkallu Falls
-          </span>
-        </header>
+        <Link to={paths.home}>
+          <header className={classes.header}>
+              <span className={classes.logo} />
+              <span className={classes.title}>
+                Apkallu Falls
+              </span>
+          </header>
+        </Link>
         <div className={classes.character}>
           <CharacterPortrait />
         </div>
@@ -85,7 +84,7 @@ function Navigation() {
               key={content.path}
             >
               <NavLink
-                className={classes.link}
+                className={`${classes.link} ${window.signedInCharacter || !content.requiresSignIn ? '' : classes.linkCollapsed}`}
                 activeClassName={classes.linkActive}
                 to={content.path}
               >
