@@ -5,6 +5,7 @@
 export const paths = {
   // Core pages.
   home: '/',
+  account: '/account',
   authentication: '/sign-in',
 
   // Character pages.
@@ -23,6 +24,10 @@ export default [{
   path: paths.home,
   exact: true,
   source: 'home'
+}, {
+  path: paths.account,
+  exact: true,
+  source: 'account'
 }, {
   path: paths.authentication,
   exact: true,

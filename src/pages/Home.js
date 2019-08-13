@@ -2,9 +2,7 @@ import React, { useContext } from 'react';
 import { LocalisationContext } from 'contexts/localisation';
 import Panel from 'components/content/Panel';
 
-function Home({
-  classes
-}) {
+function Home() {
   const { locale } = useContext(LocalisationContext);
   const { home: pageLocale } = locale.pages;
   const { whatIsHidden } = pageLocale;

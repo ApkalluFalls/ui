@@ -68,6 +68,8 @@ function initFirebase() {
         default:
           throw new Error('Unhandled login provider', user.providerData[0]);
       }
+
+      console.info(user);
       
       window.signedInUser = {
         data: {

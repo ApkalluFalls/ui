@@ -78,6 +78,24 @@ export const localisation = {
         },
         title: 'Home'
       },
+      account: {
+        heading: 'My Account',
+        about: 'On this page you can claim ownership of your characters and modify site-related settings.',
+        title: 'Account',
+        signOut: 'Sign out',
+
+        settings: {
+          manualTracking: {
+            heading: 'Manually-tracked content',
+            help: 'Here you can toggle which pieces of content you wish to enable manual tracking for. Disabled content will still appear in the sidebar as usual, but progress bars and checkboxes related to the content will no longer be displayed. Disabling these will not reset any of the entries you have already checked off for your characters.',
+            emotes: 'Emotes'
+          },
+          temporaryOrOldContent: {
+            heading: 'Reveal hidden content',
+            help: 'Apkallu Falls by default hides anything which isn\'t actively available in the game. Overriding these settings will increase the total counts for each piece of content which is affected and will apply to all characters you track, not only the ones you\'ve claimed ownership of.'
+          }
+        }
+      },
       authentication: {
         heading: 'Log in or Create an Account',
         about: 'Creating an account will allow you to manually track content which isn\'t exposed by the Lodestone like Emotes and Orchestrion Rolls. It also allows you to claim ownership of your character(s), allowing you to switch between devices without having to search for your character multiple times.',
@@ -85,13 +103,18 @@ export const localisation = {
         alternativeMethods: 'Alternatively, you can connect to Apkallu Falls with any of these other services:',
         emailAddress: 'Email address',
         emailAddressInvalid: 'The email address you have provided is not valid.',
+        emailResetSent: 'An email with steps on how to reset your password has been sent to the provided email address.',
         password: 'Password',
         passwordMismatch: 'The passwords you have entered do not match.',
         passwordTooShort: 'Your password must have at least 8 characters.',
         confirmPassword: 'Confirm password',
         createAccount: 'Create account',
         forgottenPassword: 'I\'ve forgotten my password...',
-        signIn: 'Sign in'
+        signIn: 'Sign in',
+
+        // Validation errors.
+        incorrectLoginDetails: 'The login details you have provided are incorrect. Please try again.',
+        unhandledFirebaseError: 'An unknown Firebase error occurred.'
       },
       barding: {
         title: 'Chocobo Barding'

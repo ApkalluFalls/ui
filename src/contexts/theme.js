@@ -46,6 +46,14 @@ export const themes = {
       inputBackground: '#fafafa',
       inputBorder: '#ccc',
       placeholder: '#9e9e9e',
+      switchBallBackground: '#bb5ec2',
+      switchBallBorder: '#760e7d',
+      switchBallBackgroundOff: '#bdbdbd',
+      switchBallBorderOff: '#757575',
+      switchTrackBackground: '#d891dd',
+      switchTrackBackgroundOff: '#eaeaea',
+      switchTrackBorder: '#bb5ec2',
+      switchTrackBorderOff: '#ccc',
       validationError: '#ff1d1d'
     },
 
@@ -107,8 +115,8 @@ export const themes = {
 
     // Components.
     panel: {
-      background: '#333',
-      headingBorder: '#616161'
+      background: '#222',
+      headingBorder: '#424242'
     },
     progress: {
       background: '#616161',

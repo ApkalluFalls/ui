@@ -2,6 +2,7 @@
  * This maps routes to a given page component for use within the `<Container />` component.
  * @module [{js/routes}pages]
  */
+import Account from "pages/Account";
 import Authentication from "pages/Authentication";
 import Home from "pages/Home";
 import List from "pages/List";
@@ -12,6 +13,9 @@ const routes = {
   // Core pages
   [paths.home]: {
     component: Home
+  },
+  [paths.account]: {
+    component: Account
   },
   [paths.authentication]: {
     component: Authentication
