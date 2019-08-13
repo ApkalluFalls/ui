@@ -88,6 +88,18 @@ export default theme => {
         cursor: 'default',
         opacity: 0.6
       }
+    },
+    inputValidationError: {
+      borderColor: formTheme.validationError
+    },
+    validationError: {
+      color: formTheme.validationError,
+      fontSize: 14,
+      lineHeight: '17px',
+      margin: {
+        bottom: 0,
+        top: 4
+      }
     }
   };
 }

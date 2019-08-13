@@ -46,6 +46,7 @@ export const themes = {
       inputBackground: '#fafafa',
       inputBorder: '#ccc',
       placeholder: '#9e9e9e',
+      validationError: '#ff1d1d'
     },
 
     // Components.
@@ -101,6 +102,7 @@ export const themes = {
       inputBackground: '#414141',
       inputBorder: '#222',
       placeholder: '#757575',
+      validationError: '#ff5a5a'
     },
 
     // Components.
