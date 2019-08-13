@@ -31,9 +31,7 @@ function initFirebase() {
       messagingSenderId: "1094535782464"
     });
 
-    firebase.firestore().settings({
-      timestampsInSnapshots: true
-    });
+    firebase.firestore();
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (!user) {

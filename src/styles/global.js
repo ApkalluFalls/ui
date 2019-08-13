@@ -6,6 +6,11 @@ export default theme => ({
       fontFamily: `'PT Sans', sans-serif`
     },
 
+    'button, input, textarea': {
+      color: theme.color,
+      fontFamily: `'PT Sans', sans-serif`
+    },
+
     'h1': {
       margin: {
         bottom: 8,

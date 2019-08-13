@@ -38,6 +38,16 @@ export const themes = {
       patreonHover: 'rgba(249, 104, 84, 0.9)'
     },
 
+    // Forms.
+    form: {
+      buttonBackground: '#ffd358',
+      buttonBorder: '#e9b932',
+      buttonColor: '#000',
+      inputBackground: '#fafafa',
+      inputBorder: '#ccc',
+      placeholder: '#9e9e9e',
+    },
+
     // Components.
     panel: {
       background: '#fafafa',
@@ -69,6 +79,7 @@ export const themes = {
     link: '#FFF6A7',
     linkHoverFocus: '#fff',
     linkActive: '#BB5EC2',
+    placeholder: '#9e9e9e',
     shadow: '#111',
     textShadow: '#111',
 
@@ -80,6 +91,16 @@ export const themes = {
       gradientEnd: 'rgba(51, 51, 51, 1)',
       patreon: 'rgba(249, 104, 84, 0.5)',
       patreonHover: 'rgba(249, 104, 84, 0.8)'
+    },
+
+    // Forms.
+    form: {
+      buttonBackground: '#A03BA7',
+      buttonBorder: '#BB5EC2',
+      buttonColor: '#fff',
+      inputBackground: '#414141',
+      inputBorder: '#222',
+      placeholder: '#757575',
     },
 
     // Components.

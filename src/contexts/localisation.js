@@ -80,8 +80,15 @@ export const localisation = {
       },
       authentication: {
         heading: 'Log in or Create an Account',
-        about: 'Creating an account will allow you to manually track content which isn\'t exposed by the Lodestone like Emotes and Orchestrion Rolls.',
-        title: 'Sign in'
+        about: 'Creating an account will allow you to manually track content which isn\'t exposed by the Lodestone like Emotes and Orchestrion Rolls. It also allows you to claim ownership of your character(s), allowing you to switch between devices without having to search for your character multiple times.',
+        title: 'Sign in',
+        alternativeMethods: 'Alternatively, you can connect to Apkallu Falls with any of these other services:',
+        emailAddress: 'Email address',
+        password: 'Password',
+        confirmPassword: 'Confirm password',
+        createAccount: 'Create account',
+        forgottenPassword: 'I\'ve forgotten my password...',
+        signIn: 'Sign in'
       },
       barding: {
         title: 'Chocobo Barding'
