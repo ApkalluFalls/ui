@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from "contexts/theme";
+import UserBox from 'components/data/UserBox';
 import routes from 'js/routes';
 import pageRoutes from 'js/routes/pages';
 
@@ -62,6 +63,7 @@ function Container() {
           })}
         </Switch>
       </main>
+      <UserBox />
     </section>
   );
 }

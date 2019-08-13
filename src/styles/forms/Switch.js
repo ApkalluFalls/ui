@@ -66,7 +66,8 @@ export default (theme) => {
       ...labelStyle,
       cursor: 'pointer',
       paddingLeft: 48,
-      transition: 'color .2s'
+      transition: 'color .2s',
+      userSelect: 'none'
     },
     labelOn: {
       fontWeight: 'bold'

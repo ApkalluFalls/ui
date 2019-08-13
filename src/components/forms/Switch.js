@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ThemeContext } from 'contexts/theme';
 
 // Theme.
@@ -14,8 +14,14 @@ function Switch({
   const classes = createUseStyles(style(useContext(ThemeContext)))();
 
   const [checked, setChecked] = useState(on);
+  const isLoading = useRef(true);
 
   useEffect(() => {
+    if (isLoading.current) {
+      isLoading.current = false;
+      return;
+    }
+
     onChange(checked);
   }, [checked])
 

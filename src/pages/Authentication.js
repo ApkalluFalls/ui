@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
+import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
@@ -12,7 +13,8 @@ import style from 'styles/pages/Authentication';
 
 function Authentication({ history }) {
   // If the user is already signed in, redirect them to their account page.
-  if (window.signedInUser) {
+  const character = useContext(CharacterContext);
+  if (!character.loading && character.type) {
     history.push(paths.account);
   }
 
@@ -62,6 +64,15 @@ function Authentication({ history }) {
     }
 
     setLoading(true);
+
+    firebase.auth().createUserWithEmailAndPassword(emailAddress, password)
+      .then(response => {
+        console.info(response);
+      })
+      .catch(error => {
+        parseFirebaseError(error.code);
+        setLoading(false);
+      });
   }
 
   /**
@@ -75,8 +86,8 @@ function Authentication({ history }) {
     setLoading(true);
 
     firebase.auth().signInWithEmailAndPassword(emailAddress, password)
-      .then(response => {
-        console.info(response);
+      .then(() => {
+        history.push(paths.account);
       })
       .catch(error => {
         parseFirebaseError(error.code);
@@ -98,6 +109,42 @@ function Authentication({ history }) {
 
     setResetEmailSent(true);
     firebase.auth().sendPasswordResetEmail(emailAddress);
+  }
+
+  /**
+   * Attempt sign in through the specified provider.
+   * @param {String} source - The provider to use.
+   */
+  function handleProviderSignIn(source) {
+    let provider;
+
+    switch (source) {
+      case 'facebook':
+        provider = new firebase.auth.FacebookAuthProvider();
+        break;
+
+      case 'google':
+        provider = new firebase.auth.GoogleAuthProvider();
+        break;
+
+      case 'twitter':
+        provider = new firebase.auth.TwitterAuthProvider();
+        break;
+
+      default:
+        return;
+    }
+
+    setLoading(true);
+
+    firebase.auth().signInWithPopup(provider)
+      .then(() => {
+        history.push(paths.account);
+      })
+      .catch(error => {
+        parseFirebaseError(error.code);
+        setLoading(false);
+      });
   }
 
   /**
@@ -149,6 +196,10 @@ function Authentication({ history }) {
     setIsPasswordTooShort(passwordTooShort);
 
     return passwordMismatch || passwordTooShort;
+  }
+
+  if (character.loading) {
+    return <React.Fragment />;
   }
 
   return (
@@ -213,7 +264,7 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={classes.button}
-              disabled={!(emailAddress && password)}
+              disabled={loading || !(emailAddress && password)}
             >
               {pageLocale.signIn}
             </button>
@@ -266,7 +317,10 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={`${classes.button} ${classes.google}`}
+              type="button"
               disabled={loading}
+              onClick={() => handleProviderSignIn('google')}
+              onKeyDown={(event) => event.which === 13 && handleProviderSignIn('google')}
             >
               Google
             </button>
@@ -274,7 +328,10 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={`${classes.button} ${classes.facebook}`}
+              type="button"
               disabled={loading}
+              onClick={() => handleProviderSignIn('facebook')}
+              onKeyDown={(event) => event.which === 13 && handleProviderSignIn('facebook')}
             >
               Facebook
             </button>
@@ -282,7 +339,10 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={`${classes.button} ${classes.twitter}`}
+              type="button"
               disabled={loading}
+              onClick={() => handleProviderSignIn('twitter')}
+              onKeyDown={(event) => event.which === 13 && handleProviderSignIn('twitter')}
             >
               Twitter
             </button>

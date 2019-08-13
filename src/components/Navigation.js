@@ -118,13 +118,13 @@ function Navigation() {
             className={`${classes.externalLink} ${classes.discord}`}
             href="https://discord.gg/VZ9BhKy"
           >
-            Chat on Discord
+            <span class="fab fa-discord" /> Chat on Discord
           </a>
           <a
             className={`${classes.externalLink} ${classes.patreon}`}
             href="https://www.patreon.com/bePatron?u=8135445"
           >
-            Become a Patron
+            <span class="fab fa-patreon" /> Become a Patron
           </a>
         </form>
       </div>

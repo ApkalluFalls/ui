@@ -21,68 +21,64 @@ import { createTheming } from 'react-jss';
 const { ThemeProvider } = createTheming(ThemeContext);
 
 function initFirebase() {
-  return new Promise(resolve => {
-    firebase.initializeApp({
-      apiKey: "AIzaSyA5P0r1Iur1bGtXm7nLwwz1JNDa2YhHZ18",
-      authDomain: "aetheryte.apkallufalls.com",
-      databaseURL: "https://apkallu-falls.firebaseio.com",
-      projectId: "apkallu-falls",
-      storageBucket: "apkallu-falls.appspot.com",
-      messagingSenderId: "1094535782464"
-    });
-
-    firebase.firestore();
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (!user) {
-        delete window.signedInUser;
-        return resolve();
-      }
-
-      let type;
-
-      const {
-        photoUrl: avatar,
-        displayName,
-        email,
-        uid
-      } = user;
-
-      switch (user.providerData[0].providerId) {
-        case 'facebook.com':
-          type = 'Facebook';
-          break;
-
-        case 'google.com':
-          type = 'Google';
-          break;
-
-        case 'password':
-          type = 'Email';
-          break;
-
-        case 'twitter.com':
-          type = 'Twitter';
-          break;
-        
-        default:
-          throw new Error('Unhandled login provider', user.providerData[0]);
-      }
-
-      console.info(user);
-      
-      window.signedInUser = {
-        data: {
-          avatar,
-          displayName: displayName || email,
-          uid
-        },
-        type
-      };
-
-      resolve();
-    });
+  firebase.initializeApp({
+    apiKey: "AIzaSyA5P0r1Iur1bGtXm7nLwwz1JNDa2YhHZ18",
+    authDomain: "aetheryte.apkallufalls.com",
+    databaseURL: "https://apkallu-falls.firebaseio.com",
+    projectId: "apkallu-falls",
+    storageBucket: "apkallu-falls.appspot.com",
+    messagingSenderId: "1094535782464"
   });
+
+  firebase.firestore();
+}
+
+function parseFirebaseUserObject(user) {
+  if (!user) {
+    return {};
+  }
+
+  let type;
+
+  const {
+    photoUrl: avatar,
+    displayName,
+    email,
+    uid
+  } = user;
+
+  switch (user.providerData[0].providerId) {
+    case 'facebook.com':
+      type = 'Facebook';
+      break;
+
+    case 'google.com':
+      type = 'Google';
+      break;
+
+    case 'password':
+      type = 'Email';
+      break;
+
+    case 'twitter.com':
+      type = 'Twitter';
+      break;
+    
+    default:
+      throw new Error(`Unhandled login provider ${user.providerData[0]}.`);
+  }
+
+  const character = {
+    data: {
+      avatar,
+      displayName: displayName || email,
+      uid
+    },
+    type
+  };
+  
+  window.signedInUser = character;
+  return character;
 }
 
 function ApkalluFalls({}) {
@@ -93,7 +89,7 @@ function ApkalluFalls({}) {
 
   // State.
   const [version, setVersion] = useState(-1);
-  const [character, setCharacter] = useState();
+  const [character, setCharacter] = useState({ loading: true });
 
   const theme = themes[localStorage && localStorage.getItem('theme') || 'light'];
 
@@ -107,9 +103,9 @@ function ApkalluFalls({}) {
       if (cachedVersion !== undefined && cachedVersion !== apiVersion) {
         localStorage.setItem('api', `{"misc":{"version":${apiVersion}}}`);
       }
-      
-      await initFirebase();
-      setCharacter(window.signedInUser && window.signedInUser.data);
+
+      initFirebase();
+      const firebaseUnsubscribe = firebase.auth().onAuthStateChanged(onFirebaseAuthChange);
 
       // {
       //   avatar: 'https:\/\/img2.finalfantasyxiv.com\/f\/9d55d25fd7e4589bd66f8486aabc61e0_c274370774c6bc3483cc8740805f41bcfc0_96x96.jpg',
@@ -120,8 +116,14 @@ function ApkalluFalls({}) {
       // }
 
       setVersion(apiVersion);
+
+      return () => firebaseUnsubscribe();
     })();
   }, [])
+
+  function onFirebaseAuthChange(user) {
+    setCharacter(parseFirebaseUserObject(user));
+  }
 
   if (version === -1) {
     return (

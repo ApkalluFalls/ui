@@ -64,6 +64,11 @@ export default theme => {
       '&:hover, &:focus': {
         background: brandStyles.facebookAlt,
         borderColor: brandStyles.facebookAlt
+      },
+
+      '&:disabled': {
+        background: brandStyles.facebook,
+        borderColor: brandStyles.facebook
       }
     },
     google: {
@@ -75,6 +80,11 @@ export default theme => {
       '&:hover, &:focus': {
         background: brandStyles.googleAlt,
         borderColor: brandStyles.googleAlt,
+      },
+
+      '&:disabled': {
+        background: brandStyles.google,
+        borderColor: brandStyles.google
       }
     },
     twitter: {
@@ -86,6 +96,11 @@ export default theme => {
       '&:hover, &:focus': {
         background: brandStyles.twitterAlt,
         borderColor: brandStyles.twitterAlt
+      },
+
+      '&:disabled': {
+        background: brandStyles.twitter,
+        borderColor: brandStyles.twitter
       }
     }
   };

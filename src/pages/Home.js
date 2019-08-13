@@ -1,8 +1,14 @@
 import React, { useContext } from 'react';
 import { LocalisationContext } from 'contexts/localisation';
+import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
 
+// Theme.
+import { createUseStyles } from 'react-jss'
+import style from 'styles/pages/Home';
+
 function Home() {
+  const classes = createUseStyles(style(useContext(ThemeContext)))();
   const { locale } = useContext(LocalisationContext);
   const { home: pageLocale } = locale.pages;
   const { whatIsHidden } = pageLocale;

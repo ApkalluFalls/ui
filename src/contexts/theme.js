@@ -7,7 +7,8 @@
 import React from "react";
 
 const shared = {
-  brand: '#ffee58'
+  brand: '#ffee58',
+  brandDarker: '#bfae13'
 };
 
 /**

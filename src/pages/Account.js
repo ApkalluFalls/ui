@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
+import firebase from 'firebase/app';
+import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
@@ -14,7 +16,8 @@ function Account({
   history
 }) {
   // If the user is not signed in, redirect them to the sign in page.
-  if (!window.signedInUser) {
+  const character = useContext(CharacterContext);
+  if (!character.loading && !character.type) {
     history.push(paths.authentication);
   }
 
@@ -32,9 +35,12 @@ function Account({
    */
   function handleSignOut() {
     firebase.auth().signOut().then(() => {
-      delete window.signedInUser;
-      history.navigate(paths.home);
-    });
+      history.push(paths.home);
+    }).catch(error => console.warn(error));
+  }
+
+  if (character.loading) {
+    return <React.Fragment />;
   }
 
   return (
@@ -144,7 +150,7 @@ function Account({
           className={classes.button}
           type="button"
           onClick={handleSignOut}
-          onKeyDown={(event) => event.which === 13 && handleSignOut()}
+          onKeyDown={(event) => { return event.which === 13 && handleSignOut() }}
         >
           {pageLocale.signOut}
         </button>
