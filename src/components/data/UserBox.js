@@ -35,16 +35,20 @@ function UserBox() {
     );
   }
 
+  const { avatar } = character.data;
+
   return (
     <div className={classes.userBox}>
       <React.Fragment>
-        <span className={classes.avatar}>
-          {character.data.avatar
-            ? undefined
-            : (
-              <span class={`fas fa-user ${classes.icon}`} />
-            )
-          }
+        <span
+          className={classes.avatar}
+          style={avatar && {
+            backgroundImage: `url(${avatar})`
+          }}
+        >
+          {!avatar && (
+            <span class={`fas fa-user ${classes.icon}`} />
+          )}
         </span>
       </React.Fragment>
     </div>

@@ -159,6 +159,9 @@ function Authentication({ history }) {
         case 'auth/wrong-password':
           return pageLocale.incorrectLoginDetails;
 
+        case 'auth/popup-closed-by-user':
+          return pageLocale.authenticationPopupClosed;
+
         default:
           console.warn(`Unhandled Firebase error code: ${code}.`)
           return pageLocale.unhandledFirebaseError;
@@ -264,7 +267,10 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={classes.button}
+              type="button"
               disabled={loading || !(emailAddress && password)}
+              onClick={handleSignIn}
+              onKeyDown={(event) => event.which === 13 && handleSignIn()}
             >
               {pageLocale.signIn}
             </button>
@@ -295,7 +301,10 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={classes.button}
+              type="button"
               disabled={loading || !(emailAddress && password && passwordConfirmation)}
+              onClick={handleCreateAccount}
+              onKeyDown={(event) => event.which === 13 && handleCreateAccount()}
             >
               {pageLocale.createAccount}
             </button>

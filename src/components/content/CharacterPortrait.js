@@ -9,7 +9,7 @@ import { paths } from 'js/routes';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/CharacterPortrait';
 
-function ContentProgress() {
+function CharacterPortrait() {
   const classes = createUseStyles(style(useContext(ThemeContext)))();
 
   // Context.
@@ -64,4 +64,4 @@ function ContentProgress() {
   )
 }
 
-export default ContentProgress;
+export default CharacterPortrait;

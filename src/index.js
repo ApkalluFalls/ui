@@ -41,7 +41,7 @@ function parseFirebaseUserObject(user) {
   let type;
 
   const {
-    photoUrl: avatar,
+    photoURL: avatar,
     displayName,
     email,
     uid

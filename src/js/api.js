@@ -10,10 +10,12 @@ class API {
   }
 
   /**
-   * @param {String} dir - The directory to pull data from (e.g. `"icons"`)
+   * @param {String} [dir] - The directory to pull data from (e.g. `"icons"`)
+   * @param {String} [uid] - The signed in user's UID.
    */
-  constructor(dir = 'misc') {
+  constructor(dir = 'misc', uid = '') {
     this.dir = dir;
+    this.uid = uid;
   }
 
   async fromCache(resource) {
@@ -224,18 +226,15 @@ class API {
    * @returns {Object} Returns the data requested or stored.
    */
   async db(resource, data, bypassCacheCheck, saveAll) {
-    // Get the user's UID. This is the most important part - without it nothing will happen.
-    const uid = window.signedInUser && window.signedInUser.data && window.signedInUser.data.uid;
-
     // If the user is not logged in, do nothing.
-    if (!uid)
+    if (!this.uid)
       return;
 
     // Grab cached entry from API (if it exists).
     let cachedDb = (localStorage && JSON.parse(localStorage.getItem('store'))) || {};
 
     // If we're not ignoring the cache, attempt to return cached data.
-    if (((window.config && window.config.offline) || !bypassCacheCheck) && cachedDb.uid === uid) {
+    if (((window.config && window.config.offline) || !bypassCacheCheck) && cachedDb.uid === this.uid) {
       const cachedData = cachedDb[resource];
 
       // If an entry exists in the cache, return that instead of making a new DB call.
@@ -248,10 +247,12 @@ class API {
       return;
 
     // Wipe the currently-stored data (if any).
-    cachedDb = { uid };
+    cachedDb = {
+      uid: this.uid
+    };
 
     // Get a reference to the Firebase store.
-    const document = firebase.firestore().doc('data/' + uid);
+    const document = firebase.firestore().doc('data/' + this.uid);
 
     // If there's data, it's a set request.
     if (data) {

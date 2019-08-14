@@ -29,11 +29,13 @@ function Navigation() {
   }, {
     api: 'minions',
     path: paths.minions,
-    title: contentText.minions
+    title: contentText.minions,
+    requiresSignIn: true
   }, {
     api: 'mounts',
     path: paths.mounts,
-    title: contentText.mounts
+    title: contentText.mounts,
+    requiresSignIn: true
   }, {
     api: 'emotes',
     path: paths.emotes,

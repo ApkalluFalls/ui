@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
+import UserCharacters from 'components/data/UserCharacters';
 import Switch from 'components/forms/Switch';
 import { paths } from 'js/routes';
+import API from 'js/api';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
@@ -30,6 +32,20 @@ function Account({
     temporaryOrOldContent: temporaryOrOldContent
   } = pageLocale.settings;
 
+  const [verifiedCharacters, setVerifiedCharacters] = useState();
+
+  useEffect(() => {
+    if (character.loading) {
+      return;
+    }
+
+    (async () => {
+      const api = new API(undefined, character.data.uid);
+      const verifiedCharacters = await api.db('verified');
+      setVerifiedCharacters(verifiedCharacters)
+    })();
+  }, [character.loading])
+
   /**
    * Log the user out and navigate them back to the home page.
    */
@@ -47,6 +63,9 @@ function Account({
     <React.Fragment>
       <h1>{pageLocale.heading}</h1>
       <p>{pageLocale.about}</p>
+      <Panel heading={pageLocale.yourCharacters}>
+        <UserCharacters characters={verifiedCharacters} />
+      </Panel>
       <Panel heading={manuallyTrackedContent.heading}>
         <p className={classes.help}>
           {manuallyTrackedContent.help}

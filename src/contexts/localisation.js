@@ -44,6 +44,7 @@ export const localisation = {
     },
     info: {
       fetchingList: 'Fetching {0} list...',
+      loading: 'Loading...',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
       reloadsPage: 'reloads page',
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
@@ -54,6 +55,10 @@ export const localisation = {
       },
       progress: {
         nOfN2: '{n0} of {n1}'
+      },
+      userCharacters: {
+        loading: 'Fetching your verified characters...',
+        noVerifiedCharacters: 'You have no verified characters. To verify ownership of a character, visit the profile page of the character you wish to verify and click on the "Verify Ownership" button.'
       }
     },
     content: {
@@ -83,6 +88,7 @@ export const localisation = {
         about: 'On this page you can claim ownership of your characters and modify site-related settings.',
         title: 'Account',
         signOut: 'Sign out',
+        yourCharacters: 'Your characters',
 
         settings: {
           manualTracking: {
@@ -113,6 +119,7 @@ export const localisation = {
         signIn: 'Sign in',
 
         // Validation errors.
+        authenticationPopupClosed: 'The authentication popup was closed unexpectedly. Please try again.',
         incorrectLoginDetails: 'The login details you have provided are incorrect. Please try again.',
         unhandledFirebaseError: 'An unknown Firebase error occurred.'
       },

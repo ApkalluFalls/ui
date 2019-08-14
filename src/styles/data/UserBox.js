@@ -38,6 +38,20 @@ export default (theme) => {
     },
     icon: {
       fontSize: 24
+    },
+    avatar: {
+      alignItems: 'inherit',
+      background: {
+        repeat: 'no-repeat',
+        size: 'cover'
+      },
+      borderRadius: 'inherit',
+      display: 'flex',
+      flex: {
+        grow: 1
+      },
+      height: '100%',
+      justifyContent: 'inherit',
     }
   };
 }
