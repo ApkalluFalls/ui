@@ -4,12 +4,19 @@
  */
 import Account from "pages/Account";
 import Authentication from "pages/Authentication";
+import CharacterSearch from "pages/CharacterSearch";
+import Error404 from "pages/Error404";
 import Home from "pages/Home";
 import List from "pages/List";
 
 import { paths } from '../routes';
 
 const routes = {
+  // 404
+  notFound: {
+    component: Error404
+  },
+
   // Core pages
   [paths.home]: {
     component: Home
@@ -36,7 +43,12 @@ const routes = {
   },
   [paths.orchestrion]: {
     component: List
-  }
+  },
+
+  // Character pages
+  [paths.characterSearch]: {
+    component: CharacterSearch
+  },
 };
 
 export default routes;

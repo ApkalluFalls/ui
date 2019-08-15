@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
-import { CharacterContext } from 'contexts/character';
+import { UserContext } from 'contexts/user';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
@@ -19,8 +19,8 @@ function Account({
   history
 }) {
   // If the user is not signed in, redirect them to the sign in page.
-  const character = useContext(CharacterContext);
-  if (!character.loading && !character.type) {
+  const user = useContext(UserContext);
+  if (!user.loading && !user.type) {
     history.push(paths.authentication);
   }
 
@@ -36,16 +36,16 @@ function Account({
   const [verifiedCharacters, setVerifiedCharacters] = useState();
 
   useEffect(() => {
-    if (character.loading) {
+    if (user.loading) {
       return;
     }
 
     (async () => {
-      const api = new API(undefined, character.data.uid);
+      const api = new API(undefined, user.data.uid);
       const verifiedCharacters = await api.db('verified');
       setVerifiedCharacters(verifiedCharacters)
     })();
-  }, [character.loading])
+  }, [user.loading])
 
   /**
    * Log the user out and navigate them back to the home page.
@@ -56,7 +56,7 @@ function Account({
     }).catch(error => console.warn(error));
   }
 
-  if (character.loading) {
+  if (user.loading) {
     return <React.Fragment />;
   }
 

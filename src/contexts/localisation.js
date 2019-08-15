@@ -46,8 +46,10 @@ export const localisation = {
     info: {
       fetchingList: 'Fetching {0} list...',
       loading: 'Loading...',
+      lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
       reloadsPage: 'reloads page',
+      talkingToFirebase: 'Talking to Firebase',
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
     },
     components: {
@@ -62,13 +64,18 @@ export const localisation = {
       },
       userCharacters: {
         loading: 'Fetching your verified characters...',
-        noVerifiedCharacters: 'You have no verified characters. To verify ownership of a character, visit the profile page of the character you wish to verify and click on the "Verify Ownership" button.'
+        noVerifiedCharacters: 'You have no verified characters. To verify ownership of a character, visit the profile page of the character you wish to verify and click on the "Verify Ownership" button.',
+        verifyMoreCharacters: 'To verify ownership of another character, visit the profile page of the character you wish to verify and click on the "Verify Ownership" button.'
       }
     },
     content: {
       caitSithDoll: 'Cait Sith Doll'
     },
     pages: {
+      error404: {
+        heading: 'Page Not Found',
+        about: 'The page you were looking for could not be found.'
+      },
       home: {
         heading: 'Welcome to Apkallu Falls',
         about: 'Apkallu Falls is a character content tracking website which by default hides anything which is unobtainable, time-limited or promotional. It also provides details of how to obtain everything it tracks.',
@@ -141,6 +148,12 @@ export const localisation = {
       },
       orchestrion: {
         title: 'Orchestrion Rolls'
+      },
+      characterSearch: {
+        heading: 'Search for a Character',
+        about: 'Searching for a character will allow you to see tracking data and statistics associated with them.',
+        title: 'Character Search',
+        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.'
       }
     },
     obtainMethods: {

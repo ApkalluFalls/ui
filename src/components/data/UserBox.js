@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { CharacterContext } from "contexts/character";
+import { NavLink, withRouter } from 'react-router-dom';
+import { UserContext } from "contexts/user";
 import { ThemeContext } from 'contexts/theme';
 import { paths } from 'js/routes';
 
@@ -10,47 +10,50 @@ import style from 'styles/data/UserBox';
 
 function UserBox() {
   const classes = createUseStyles(style(useContext(ThemeContext)))();
-  const character = useContext(CharacterContext);
+  const user = useContext(UserContext);
 
-  console.warn(character);
+  console.warn(user);
 
-  if (character.loading) {
+  if (user.loading) {
     return (
-      <div className={classes.userBox}>
-        <span className={classes.avatar}>
+      <div className={classes.wrapper}>
+        <div className={`${classes.userBox} ${classes.userBoxLoading}`}>
           <span class={`fas fa-cog fa-spin ${classes.icon}`} />
-        </span>
+        </div>
       </div>
     );
   }
 
-  if (!character.data) {
+  if (!user.data) {
     return (
-      <Link
-        className={`${classes.userBox} ${classes.userBoxAnonymous}`}
-        to={paths.authentication}
-      >
-        <span class={`fal fa-user-plus ${classes.icon}`} />
-      </Link>
+      <div className={classes.wrapper}>
+        <NavLink
+          className={`${classes.userBox} ${classes.userBoxAnonymous}`}
+          activeClassName={classes.pageActive}
+          to={paths.authentication}
+        >
+          <span class={`fal fa-user-plus ${classes.icon}`} />
+        </NavLink>
+      </div>
     );
   }
 
-  const { avatar } = character.data;
+  const { avatar } = user.data;
 
   return (
-    <div className={classes.userBox}>
-      <React.Fragment>
-        <span
-          className={classes.avatar}
-          style={avatar && {
-            backgroundImage: `url(${avatar})`
-          }}
-        >
-          {!avatar && (
-            <span class={`fas fa-user ${classes.icon}`} />
-          )}
-        </span>
-      </React.Fragment>
+    <div className={classes.wrapper}>
+      <NavLink
+        className={classes.userBox}
+        activeClassName={classes.pageActive}
+        to={paths.account}
+        style={avatar && {
+          backgroundImage: `url(${avatar})`
+        }}
+      >
+        {!avatar && (
+          <span class={`fas fa-user ${classes.icon}`} />
+        )}
+      </NavLink>
     </div>
   );
 }

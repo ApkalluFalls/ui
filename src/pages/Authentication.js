@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
-import { CharacterContext } from 'contexts/character';
+import { UserContext } from 'contexts/user';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
@@ -13,8 +13,8 @@ import style from 'styles/pages/Authentication';
 
 function Authentication({ history }) {
   // If the user is already signed in, redirect them to their account page.
-  const character = useContext(CharacterContext);
-  if (!character.loading && character.type) {
+  const user = useContext(UserContext);
+  if (!user.loading && user.type) {
     history.push(paths.account);
   }
 
@@ -201,7 +201,7 @@ function Authentication({ history }) {
     return passwordMismatch || passwordTooShort;
   }
 
-  if (character.loading) {
+  if (user.loading) {
     return <React.Fragment />;
   }
 
@@ -267,8 +267,8 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={classes.button}
-              type="button"
-              disabled={loading || !(emailAddress && password)}
+              type="submit"
+              disabled={loading || !(emailAddress && password) || passwordConfirmation}
               onClick={handleSignIn}
               onKeyDown={(event) => event.which === 13 && handleSignIn()}
             >
@@ -301,7 +301,7 @@ function Authentication({ history }) {
           <div className={classes.control}>
             <button
               className={classes.button}
-              type="button"
+              type="submit"
               disabled={loading || !(emailAddress && password && passwordConfirmation)}
               onClick={handleCreateAccount}
               onKeyDown={(event) => event.which === 13 && handleCreateAccount()}

@@ -40,13 +40,13 @@ function CharacterPortrait() {
             </Link>
             <Link
               className={classes.changeCharacter}
-              to={paths.characterSelect}
+              to={paths.characterSearch}
             >
               {locale.actions.changeCharacter}
             </Link>
           </React.Fragment>
         ) : (
-          <Link to={paths.characterSelect}>
+          <Link to={paths.characterSearch}>
             <figure className={classes.character}>
               <div className={classes.imageWrapper}>
                 <span className={classes.image}>

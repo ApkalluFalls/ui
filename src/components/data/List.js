@@ -89,9 +89,7 @@ function List({
         })
       ) : (
         <article className={classes.patchList}>
-          <PageLoader>
-            {localeInject(locale.info.fetchingList, locale.common[source])}
-          </PageLoader>
+          <PageLoader text={localeInject(locale.info.fetchingList, locale.common[source])} />
         </article>
       )}
     </section>

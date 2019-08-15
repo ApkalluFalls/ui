@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { CharacterContext } from "contexts/character";
 import { LocalisationContext, localisation } from "contexts/localisation";
 import { ThemeContext, themes } from "contexts/theme";
+import { UserContext } from "contexts/user";
 
 import API from 'js/api';
 
@@ -12,11 +13,13 @@ import firebase from "firebase/app";
 import 'firebase/auth';
 import 'firebase/firestore';
 
+import PageLoader from 'components/content/PageLoader';
 import Container from "components/Container";
 import Navigation from "components/Navigation";
 
 // Theme.
-import { createTheming } from 'react-jss';
+import { createTheming, createUseStyles } from 'react-jss';
+import globalStyle from 'styles/global';
 
 const { ThemeProvider } = createTheming(ThemeContext);
 
@@ -86,12 +89,17 @@ function ApkalluFalls({}) {
   useContext(CharacterContext);
   useContext(LocalisationContext);
   useContext(ThemeContext);
+  useContext(UserContext);
 
   // State.
   const [version, setVersion] = useState(-1);
   const [character, setCharacter] = useState({ loading: true });
+  const [user, setUser] = useState({ loading: true });
 
   const theme = themes[localStorage && localStorage.getItem('theme') || 'light'];
+
+  // Apply global styles.
+  createUseStyles(globalStyle(theme))();
 
   useEffect(() => {
     (async () => {
@@ -107,14 +115,6 @@ function ApkalluFalls({}) {
       initFirebase();
       const firebaseUnsubscribe = firebase.auth().onAuthStateChanged(onFirebaseAuthChange);
 
-      // {
-      //   avatar: 'https:\/\/img2.finalfantasyxiv.com\/f\/9d55d25fd7e4589bd66f8486aabc61e0_c274370774c6bc3483cc8740805f41bcfc0_96x96.jpg',
-      //   id: 10012596,
-      //   forename: 'Tequila',
-      //   name: 'Tequila Mockingbird',
-      //   surname: 'Mockingbird'
-      // }
-
       setVersion(apiVersion);
 
       return () => firebaseUnsubscribe();
@@ -122,37 +122,37 @@ function ApkalluFalls({}) {
   }, [])
 
   function onFirebaseAuthChange(user) {
-    setCharacter(parseFirebaseUserObject(user));
+    setUser(parseFirebaseUserObject(user));
   }
 
   if (version === -1) {
     return (
-      <div>Loading</div>
+      <PageLoader />
     );
   }
-
-  console.info(theme);
 
   // Language is stored in local storage.
   const language = localStorage && JSON.parse(localStorage.getItem('lang')) || 'en';
 
   return (
     <React.StrictMode>
-      <CharacterContext.Provider value={{
-        ...character
-      }}>
-        <BrowserRouter>
-          <ThemeProvider theme={theme}>
-            <LocalisationContext.Provider value={{
-              language,
-              locale: localisation[language]
-            }}>
-              <Navigation />
-              <Container />
-            </LocalisationContext.Provider>
-          </ThemeProvider>
-        </BrowserRouter>
-      </CharacterContext.Provider>
+      <UserContext.Provider value={{...user}}>
+        <CharacterContext.Provider value={{
+          ...character
+        }}>
+          <BrowserRouter>
+            <ThemeProvider theme={theme}>
+              <LocalisationContext.Provider value={{
+                language,
+                locale: localisation[language]
+              }}>
+                <Navigation />
+                <Container />
+              </LocalisationContext.Provider>
+            </ThemeProvider>
+          </BrowserRouter>
+        </CharacterContext.Provider>
+      </UserContext.Provider>
     </React.StrictMode>
   );
 };

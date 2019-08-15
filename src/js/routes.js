@@ -10,7 +10,7 @@ export const paths = {
 
   // Character pages.
   character: characterId => `/character/${characterId}`,
-  characterSelect: '/character-select',
+  characterSearch: '/character-search',
 
   // Content lists.
   barding: '/barding',
@@ -53,8 +53,8 @@ export default [{
   exact: true,
   source: 'orchestrion'
 }, {
-  path: paths.character
+  path: paths.character(':characterId')
 }, {
-  path: paths.characterSelect,
+  path: paths.characterSearch,
   exact: true
 }];

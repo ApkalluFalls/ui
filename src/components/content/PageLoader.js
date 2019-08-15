@@ -5,15 +5,21 @@ import injectSheet from 'react-jss';
 import style from 'styles/content/PageLoader';
 
 function PageLoader({
-  children,
+  text,
   classes
 }) {
   return (
-    <figure className={classes.loader}>
-      <figcaption className={classes.caption}>
-        {children}
-      </figcaption>
-    </figure>
+    <section className={classes.loader}>
+      <p className={`${classes.caption} ${text ? '' : classes.iconOnly}`}>
+        <span class="fal fa-spinner-third fa-spin" />
+        {text && (
+          <React.Fragment>
+            {' '}
+            {text}
+          </React.Fragment>
+        )}
+      </p>
+    </section>
   )
 }
 

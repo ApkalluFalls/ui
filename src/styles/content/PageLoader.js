@@ -14,5 +14,8 @@ export default {
     fontSize: 20,
     margin: 0,
     padding: 0
+  },
+  iconOnly: {
+    fontSize: 96
   }
 }

@@ -2,9 +2,21 @@ export default (theme) => {
   const { form: formTheme } = theme;
 
   return {
+    wrapper: {
+      height: 60,
+      position: 'fixed',
+        bottom: 12,
+        right: 12,
+      width: 60,
+      zIndex: 9
+    },
     userBox: {
       alignItems: 'center',
-      background: theme.color,
+      background: {
+        color: theme.color,
+        repeat: 'no-repeat',
+        size: 'cover'
+      },
       border: {
         color: theme.color,
         radius: '100%',
@@ -17,16 +29,21 @@ export default (theme) => {
       height: 60,
       justifyContent: 'center',
       opacity: 0.7,
-      position: 'fixed',
-        bottom: 12,
-        right: 12,
       transition: 'opacity .2s',
       width: 60,
-      zIndex: 9,
 
       '&:hover, &:focus': {
         opacity: 1
+      },
+
+      '& > *': {
+        color: theme.brand
       }
+    },
+    pageActive: {
+      cursor: 'default',
+      opacity: 1,
+      pointerEvents: 'none',
     },
     userBoxAnonymous: {
       background: theme.brand,
@@ -36,22 +53,16 @@ export default (theme) => {
         color: theme.color
       }
     },
+    userBoxLoading: {
+      background: 'transparent',
+      borderColor: 'transparent',
+
+      '& > *': {
+        color: theme.colorUnimportant
+      }
+    },
     icon: {
       fontSize: 24
-    },
-    avatar: {
-      alignItems: 'inherit',
-      background: {
-        repeat: 'no-repeat',
-        size: 'cover'
-      },
-      borderRadius: 'inherit',
-      display: 'flex',
-      flex: {
-        grow: 1
-      },
-      height: '100%',
-      justifyContent: 'inherit',
     }
   };
 }
