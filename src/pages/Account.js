@@ -5,6 +5,7 @@ import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
+import PatreonSettings from 'components/data/PatreonSettings';
 import UserCharacters from 'components/data/UserCharacters';
 import Switch from 'components/forms/Switch';
 import { paths } from 'js/routes';
@@ -65,6 +66,15 @@ function Account({
       <p>{pageLocale.about}</p>
       <Panel heading={pageLocale.yourCharacters}>
         <UserCharacters characters={verifiedCharacters} />
+      </Panel>
+      <Panel heading={(
+        <React.Fragment>
+          <span className="fab fa-patreon" />
+          {' '}
+          {locale.common.connectWithPatreon}
+        </React.Fragment>
+      )}>
+        <PatreonSettings inheritedClasses={classes} />
       </Panel>
       <Panel heading={manuallyTrackedContent.heading}>
         <p className={classes.help}>

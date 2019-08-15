@@ -22,6 +22,7 @@ export const localisation = {
       barding: 'Chocobo Barding',
       clickForHelp: 'Click for help',
       close: 'Close',
+      connectWithPatreon: 'Connect with Patreon',
       discordServer: 'Discord server',
       donate: 'Donate',
       emotes: 'Emotes',
@@ -52,6 +53,9 @@ export const localisation = {
     components: {
       language: {
         change: 'Change language'
+      },
+      patreonSettings: {
+        about: 'If you\'re a supporter of Apkallu Falls you can connect your Patreon account below to access supporter perk settings like custom URLs and character badges for everyone else to use and see. If you\'re not already a supporter, hit the "Become a Patron" button in the bottom left of the site to find out more.' 
       },
       progress: {
         nOfN2: '{n0} of {n1}'
