@@ -5,11 +5,13 @@ import { ThemeContext } from 'contexts/theme';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/ProgressBar';
 
+const useStyles = createUseStyles(style);
+
 function ProgressBar({
   limit = 1,
   value = 0
 }) {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const percentage = `${Math.ceil(((100 / limit) * value) * 10) / 10}%`;
 
   return (

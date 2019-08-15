@@ -9,13 +9,15 @@ import API from 'js/api';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/ContentProgress';
 
+const useStyles = createUseStyles(style);
+
 function ContentProgress({
   source = {}
 }) {
   // Context.
   const { name: selectedCharacterName } = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
 
   // State.
   const [total, setTotal] = useState(1);

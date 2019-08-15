@@ -9,12 +9,29 @@ import { paths } from 'js/routes';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/CharacterPortrait';
 
+const useStyles = createUseStyles(style);
+
 function CharacterPortrait() {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
 
   // Context.
   const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
+
+  if (character.loading) {
+    return (
+      <figure className={classes.character}>
+        <div className={classes.imageWrapper}>
+          <span className={classes.image}>
+            <span className="fas fa-cog fa-spin" />
+          </span>
+        </div>
+        <figcaption className={`${classes.caption} ${classes.captionCharacterLoading}`}>
+          {locale.info.loading}
+        </figcaption>
+      </figure>
+    )
+  }
 
   return (
     <section className={classes.container}>

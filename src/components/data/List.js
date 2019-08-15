@@ -13,12 +13,15 @@ import panelStyle from 'styles/content/Panel';
 // Children.
 import ListItem from './List/ListItem';
 
+const usePanelStyles = createUseStyles(panelStyle);
+const useStyles = createUseStyles(style);
+
 function List({
   source
 }) {
   const theme = useContext(ThemeContext);
-  const panelClasses = createUseStyles(panelStyle(theme))();
-  const classes = createUseStyles(style(theme))();
+  const panelClasses = usePanelStyles(theme);
+  const classes = useStyles(theme);
 
   // Contexts.
   const {

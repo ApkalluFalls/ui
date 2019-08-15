@@ -8,8 +8,10 @@ import { paths } from 'js/routes';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/data/UserBox';
 
+const useStyles = createUseStyles(style);
+
 function UserBox() {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const user = useContext(UserContext);
 
   console.warn(user);
@@ -18,7 +20,7 @@ function UserBox() {
     return (
       <div className={classes.wrapper}>
         <div className={`${classes.userBox} ${classes.userBoxLoading}`}>
-          <span class={`fas fa-cog fa-spin ${classes.icon}`} />
+          <span className={`fas fa-cog fa-spin ${classes.icon}`} />
         </div>
       </div>
     );
@@ -32,7 +34,7 @@ function UserBox() {
           activeClassName={classes.pageActive}
           to={paths.authentication}
         >
-          <span class={`fal fa-user-plus ${classes.icon}`} />
+          <span className={`fal fa-user-plus ${classes.icon}`} />
         </NavLink>
       </div>
     );
@@ -51,7 +53,7 @@ function UserBox() {
         }}
       >
         {!avatar && (
-          <span class={`fas fa-user ${classes.icon}`} />
+          <span className={`fas fa-user ${classes.icon}`} />
         )}
       </NavLink>
     </div>

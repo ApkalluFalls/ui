@@ -11,12 +11,11 @@ import pageRoutes from 'js/routes/pages';
 // Theme.
 import { createUseStyles } from 'react-jss';
 import style from 'styles/Container';
-import globalStyle from 'styles/global';
+
+const useStyles = createUseStyles(style);
 
 function Container() {
-  const theme = useContext(ThemeContext);
-  createUseStyles(globalStyle(theme))();
-  const classes = createUseStyles(style(theme))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const user = useContext(UserContext);
 

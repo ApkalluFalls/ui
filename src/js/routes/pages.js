@@ -4,6 +4,7 @@
  */
 import Account from "pages/Account";
 import Authentication from "pages/Authentication";
+import Character from "pages/Character";
 import CharacterSearch from "pages/CharacterSearch";
 import Error404 from "pages/Error404";
 import Home from "pages/Home";
@@ -46,6 +47,9 @@ const routes = {
   },
 
   // Character pages
+  [paths.character()]: {
+    component: Character
+  },
   [paths.characterSearch]: {
     component: CharacterSearch
   },

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
-import { ThemeContext } from 'contexts/theme';
+import { ThemeContext, themes } from 'contexts/theme';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
 
@@ -10,8 +10,11 @@ import { createUseStyles } from 'react-jss'
 import style from 'styles/Navigation';
 import { paths } from 'js/routes';
 
+const useStyles = createUseStyles(style);
+
 function Navigation() {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const theme = useContext(ThemeContext);
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
 
   const [isDarkThemeEnabled, setIsDarkThemeEnabled] = useState((
@@ -54,15 +57,23 @@ function Navigation() {
   }];
 
   const onThemeChange = event => {
+    /**
+     * The commented out `theme.change` calls here do not cause JSS to regenerate classes. For now
+     * we need to reload the page to update the theme instead. This isn't ideal, but requires
+     * further investigation before it can be resolved.
+     */
     if (isDarkThemeEnabled) {
       localStorage && localStorage.setItem('theme', 'light');
       setIsDarkThemeEnabled(false);
-    } else {
-      localStorage && localStorage.setItem('theme', 'dark');
-      setIsDarkThemeEnabled(true);
+      theme.change(themes.light);
+      // window.location.reload();
+      return;
     }
 
-    window.location.reload();
+    localStorage && localStorage.setItem('theme', 'dark');
+    setIsDarkThemeEnabled(true);
+    theme.change(themes.dark);
+    // window.location.reload();
   };
 
   return (
@@ -120,13 +131,13 @@ function Navigation() {
             className={`${classes.externalLink} ${classes.discord}`}
             href="https://discord.gg/VZ9BhKy"
           >
-            <span class="fab fa-discord" /> Chat on Discord
+            <span className="fab fa-discord" /> Chat on Discord
           </a>
           <a
             className={`${classes.externalLink} ${classes.patreon}`}
             href="https://www.patreon.com/bePatron?u=8135445"
           >
-            <span class="fab fa-patreon" /> Become a Patron
+            <span className="fab fa-patreon" /> Become a Patron
           </a>
         </form>
       </div>

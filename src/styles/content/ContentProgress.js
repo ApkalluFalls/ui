@@ -1,4 +1,4 @@
-export default theme => ({
+export default {
   container: {
     color: 'inherit'
   },
@@ -11,7 +11,7 @@ export default theme => ({
       top: 0
     }
   },
-  requiresSignIn: {
+  requiresSignIn: theme => ({
     color: theme.colorSubtle,
     fontSize: 12,
     lineHeight: '15px',
@@ -19,5 +19,5 @@ export default theme => ({
       bottom: 0,
       top: -4
     }
-  }
-})
+  })
+}

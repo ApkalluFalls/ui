@@ -5,6 +5,8 @@ import { ThemeContext } from 'contexts/theme';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/Panel';
 
+const useStyles = createUseStyles(style);
+
 function Panel({
   children,
   classesOverride,
@@ -12,7 +14,7 @@ function Panel({
   heading,
   headingClassName
 }) {
-  const classes = classesOverride || createUseStyles(style(useContext(ThemeContext)))();
+  const classes = classesOverride || useStyles(useContext(ThemeContext));
 
   return (
     <section className={`${classes.panel} ${className ? className : ''}`}>

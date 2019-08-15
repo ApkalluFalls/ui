@@ -42,7 +42,7 @@ export const localisation = {
       iconsMode: 'Icons mode',
       listMode: 'List mode',
       search: 'Search',
-      selectACharacter: 'Select a character to track'
+      selectACharacter: 'Search for a character to track'
     },
     labels: {
       darkMode: 'Dark mode'

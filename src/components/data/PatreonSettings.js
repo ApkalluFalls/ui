@@ -6,8 +6,10 @@ import { ThemeContext } from 'contexts/theme';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/data/PatreonSettings';
 
+const useStyles = createUseStyles(style);
+
 function PatreonSettings({ inheritedClasses }) {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { patreonSettings: componentLocale } = locale.components;
 

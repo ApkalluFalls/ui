@@ -1,7 +1,7 @@
 import brandStyles from '../brands';
 import formStyles from '../forms';
 
-export default theme => {
+export default () => {
   const noticeDefaults = {
     borderStyle: 'solid',
     borderWidth: 1,
@@ -15,8 +15,8 @@ export default theme => {
   };
 
   return {
-    ...formStyles(theme),
-    help: {
+    ...formStyles(),
+    help: theme => ({
       borderBottom: {
         color: theme.border,
         style: 'solid',
@@ -24,17 +24,17 @@ export default theme => {
       },
       marginBottom: 16,
       paddingBottom: 16
-    },
-    firebaseValidationError: {
+    }),
+    firebaseValidationError: theme => ({
       ...noticeDefaults,
       borderColor: theme.form.validationError,
       color: theme.form.validationError
-    },
-    emailResetNotice: {
+    }),
+    emailResetNotice: theme => ({
       ...noticeDefaults,
       borderColor: theme.border,
       color: theme.color
-    },
+    }),
     formArea: {
       margin: {
         bottom: 0,
@@ -44,7 +44,7 @@ export default theme => {
       },
       maxWidth: 360
     },
-    alternativeMethods: {
+    alternativeMethods: theme => ({
       borderTop: {
         color: theme.border,
         style: 'dotted',
@@ -54,8 +54,8 @@ export default theme => {
       fontSize: 14,
       marginTop: 8,
       paddingTop: 12,
-    },
-    facebook: {
+    }),
+    facebook: () => ({
       background: brandStyles.facebook,
       borderColor: brandStyles.facebook,
       color: '#fff',
@@ -70,8 +70,8 @@ export default theme => {
         background: brandStyles.facebook,
         borderColor: brandStyles.facebook
       }
-    },
-    google: {
+    }),
+    google: () => ({
       background: brandStyles.google,
       borderColor: brandStyles.google,
       color: '#fff',
@@ -86,8 +86,8 @@ export default theme => {
         background: brandStyles.google,
         borderColor: brandStyles.google
       }
-    },
-    twitter: {
+    }),
+    twitter: () => ({
       background: brandStyles.twitter,
       borderColor: brandStyles.twitter,
       color: '#fff',
@@ -102,6 +102,6 @@ export default theme => {
         background: brandStyles.twitter,
         borderColor: brandStyles.twitter
       }
-    }
+    })
   };
 }

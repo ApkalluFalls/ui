@@ -5,14 +5,14 @@ export const navigation = {
   width: 204
 }
 
-export default theme => {
-  const { navigation: navigationTheme } = theme;
+export default () => {
+  const background = `url(${Background})`;
 
   return {
-    navigation: {
+    navigation: theme => ({
       background: {
         color: theme.background,
-        image: `url(${Background})`,
+        image: background,
         repeat: 'no-repeat',
         size: 'auto 100%'
       },
@@ -23,19 +23,19 @@ export default theme => {
         top: 0,
       width: navigation.width,
       zIndex: 1
-    },
-    wrapper: {
-      background: `linear-gradient(to right, ${navigationTheme.gradientStart} 0%, ${navigationTheme.gradientEnd} 80%)`,
+    }),
+    wrapper: theme => ({
+      background: `linear-gradient(to right, ${theme.navigation.gradientStart} 0%, ${theme.navigation.gradientEnd} 80%)`,
       boxSizing: 'border-box',
       fallbacks: [
-        { background: `-moz-linear-gradient(left, ${navigationTheme.gradientStart} 0%, ${navigationTheme.gradientEnd} 80%)` },
-        { background: `-webkit-linear-gradient(left, ${navigationTheme.gradientStart} 0%, ${navigationTheme.gradientEnd} 80%)` }
+        { background: `-moz-linear-gradient(left, ${theme.navigation.gradientStart} 0%, ${theme.navigation.gradientEnd} 80%)` },
+        { background: `-webkit-linear-gradient(left, ${theme.navigation.gradientStart} 0%, ${theme.navigation.gradientEnd} 80%)` }
       ],
       height: '100%',
       padding: 12,
       width: navigation.width
-    },
-    header: {
+    }),
+    header: theme => ({
       alignItems: 'center',
       color: theme.color,
       display: 'flex',
@@ -50,8 +50,8 @@ export default theme => {
         y: 1
       },
       width: '100%'
-    },
-    logo: {
+    }),
+    logo: theme => ({
       background: {
         image: `url(${Logo})`,
         size: 'cover'
@@ -66,7 +66,7 @@ export default theme => {
       height: 32,
       marginRight: 12,
       width: 32
-    },
+    }),
     character: {
       position: 'relative',
       zIndex: 2
@@ -82,7 +82,7 @@ export default theme => {
     linkItem: {
       display: 'block'
     },
-    link: {
+    link: theme => ({
       background: 'transparent',
       boxSizing: 'border-box',
       color: theme.link,
@@ -131,13 +131,13 @@ export default theme => {
           borderLeftColor: theme.link
         }
       }
-    },
+    }),
     linkCollapsed: {
       '&::before': {
         borderWidth: '18px 0 18px 10px'
       }
     },
-    linkActive: {
+    linkActive: theme => ({
       background: theme.background,
       boxShadow: {
         x: 0,
@@ -170,7 +170,7 @@ export default theme => {
           borderLeftColor: theme.color
         }
       }
-    },
+    }),
     options: {
       display: 'block',
       margin: {
@@ -197,11 +197,11 @@ export default theme => {
         grow: 1
       }
     },
-    labelTextInfo: {
+    labelTextInfo: theme => ({
       color: theme.colorSubtle,
       fontSize: 12
-    },
-    externalLink: {
+    }),
+    externalLink: theme => ({
       border: {
         radius: 4
       },
@@ -223,22 +223,22 @@ export default theme => {
       },
       textAlign: 'center',
       transition: 'background .2s'
-    },
-    discord: {
-      background: navigationTheme.discord,
+    }),
+    discord: theme => ({
+      background: theme.navigation.discord,
 
       '&:hover, &:focus': {
-        background: navigationTheme.discordHover,
+        background: theme.navigation.discordHover,
         color: '#fff'
       }
-    },
-    patreon: {
-      background: navigationTheme.patreon,
+    }),
+    patreon: theme => ({
+      background: theme.navigation.patreon,
 
       '&:hover, &:focus': {
-        background: navigationTheme.patreonHover,
+        background: theme.navigation.patreonHover,
         color: '#fff'
       }
-    }
-  };
+    })
+  }
 }

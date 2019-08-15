@@ -1,20 +1,20 @@
 import formStyles from '../forms';
 
-export default theme => ({
-  ...formStyles(theme),
-  help: {
+export default {
+  ...formStyles(),
+  help: theme => ({
     color: theme.colorSubtle,
     fontSize: 14,
     lineHeight: '17px',
     marginTop: 12
-  },
-  helpIndented: {
+  }),
+  helpIndented: theme => ({
     color: theme.colorUnimportant,
     fontSize: 14,
     lineHeight: '17px',
     marginLeft: 8,
     marginTop: 12
-  },
+  }),
   section: {
     marginBottom: 24,
 
@@ -44,10 +44,10 @@ export default theme => ({
     marginBottom: 8,
     textAlign: 'center'
   },
-  buttonsIcon: {
+  buttonsIcon: theme => ({
     color: theme.colorUnimportant,
     verticalAlign: 'middle'
-  },
+  }),
   buttonWrapper: {
     flex: {
       basis: 136,
@@ -60,7 +60,7 @@ export default theme => ({
       marginRight: 0
     }
   },
-  buttonActive: {
+  buttonActive: theme => ({
     background: theme.color,
     borderColor: theme.color,
     color: theme.background,
@@ -71,7 +71,7 @@ export default theme => ({
       borderColor: theme.color,
       color: theme.background,
     }
-  },
+  }),
   inputField: {
     flex: {
       grow: 1,
@@ -89,18 +89,30 @@ export default theme => ({
     marginTop: 12,
     overflow: 'hidden',
     paddingTop: 12,
-    transition: 'height .2s'
+    transition: 'height .2s, background .2s, padding .2s'
   },
-  resultsSearchingOrNoMatches: {
+  resultsSearchingOrNoMatches: theme => ({
     borderTopColor: theme.border,
     height: 20
-  },
-  resultsWithMatches: {
-
-  },
-  noResultsFound: {
+  }),
+  resultsWithMatches: theme => ({
+    background: theme.background,
+    borderTopColor: theme.border,
+    display: 'flex',
+    flexWrap: 'wrap',
+    height: 256,
+    justifyContent: 'space-between',
+    margin: {
+      bottom: -16,
+      left: -16,
+      right: -16
+    },
+    overflowY: 'scroll',
+    padding: 16
+  }),
+  noResultsFound: theme => ({
     color: theme.colorSubtle,
     fontSize: 14,
     lineHeight: '20px'
-  }
-});
+  })
+};

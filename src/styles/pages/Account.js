@@ -1,7 +1,7 @@
 import formStyles from '../forms';
 
-export default theme => ({
-  ...formStyles(theme),
+export default {
+  ...formStyles(),
   help: {
     fontSize: 14,
     lineHeight: '17px',
@@ -10,4 +10,4 @@ export default theme => ({
       top: 0
     }
   }
-});
+};

@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
+import CharacterCard from 'components/content/CharacterCard';
 import Panel from 'components/content/Panel';
 import InlineLoader from 'components/content/InlineLoader';
+import Character from 'js/character';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
 import style from 'styles/pages/CharacterSearch';
+
+const useStyles = createUseStyles(style);
 
 const dataCenters = [{
   region: 'Japan',
@@ -63,13 +67,13 @@ const dataCenters = [{
 }];
 
 function CharacterSearch() {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { characterSearch: pageLocale } = locale.pages;
 
-  const [characterName, setCharacterName] = useState();
-  const [activeDataCenter, setActiveDataCenter] = useState();
-  const [activeServer, setActiveServer] = useState();
+  const [characterName, setCharacterName] = useState('Tequila');
+  const [activeDataCenter, setActiveDataCenter] = useState('Light');
+  const [activeServer, setActiveServer] = useState('Zodiark');
   const [searching, setSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState([]);
@@ -77,14 +81,18 @@ function CharacterSearch() {
   /**
    * Search for the character.
    */
-  function handleSearch() {
+  async function handleSearch() {
     setSearching(true);
+    setResults([]);
 
-    setTimeout(() => {
-      setHasSearched(true);
-      setResults([]);
-      setSearching(false);
-    }, 2000)
+    const results = await new Character({}, {
+      name: characterName,
+      server: activeServer
+    }).search();
+
+    setHasSearched(true);
+    setResults(results);
+    setSearching(false);
   }
 
   return (
@@ -234,7 +242,7 @@ function CharacterSearch() {
                 </article>
               ) : (
                 <p className={classes.helpIndented}>
-                  <span class="fal fa-info-circle" />
+                  <span className="fal fa-info-circle" />
                   {' '}
                   {pageLocale.selectADataCenterFirst}
                 </p>
@@ -260,9 +268,13 @@ function CharacterSearch() {
           )}
           {!searching && hasSearched && (
             results.length
-              ? (
-                <div>Foobar</div>
-              ) : (
+              ? results.map(character => (
+                <CharacterCard
+                  key={character.id}
+                  setActiveOnClick={true}
+                  {...character}
+                />
+              )) : (
                 <p className={classes.noResultsFound}>
                   {pageLocale.noCharactersFound}
                 </p>

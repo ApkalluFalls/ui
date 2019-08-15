@@ -15,6 +15,8 @@ import API from 'js/api';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/pages/Account';
 
+const useStyles = createUseStyles(style);
+
 function Account({
   history
 }) {
@@ -24,7 +26,7 @@ function Account({
     history.push(paths.authentication);
   }
 
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { account: pageLocale } = locale.pages;
   const { whatIsHidden: hiddenContent } = locale.pages.home;
@@ -36,9 +38,11 @@ function Account({
   const [verifiedCharacters, setVerifiedCharacters] = useState();
 
   useEffect(() => {
-    if (user.loading) {
+    if (user.loading || !user.type) {
       return;
     }
+
+    console.info(user);
 
     (async () => {
       const api = new API(undefined, user.data.uid);
@@ -56,7 +60,7 @@ function Account({
     }).catch(error => console.warn(error));
   }
 
-  if (user.loading) {
+  if (user.loading || !user.type) {
     return <React.Fragment />;
   }
 

@@ -19,7 +19,7 @@
     "firebase": "^6.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-jss": "10.0.0-alpha.23",
+    "react-jss": "10.0.0-alpha.24",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-visibility-sensor": "^5.0.2"

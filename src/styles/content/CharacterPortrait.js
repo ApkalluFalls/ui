@@ -1,6 +1,6 @@
 import CharacterBackground from 'images/character-background.png';
 
-export default theme => ({
+export default {
   container: {
     margin: {
       bottom: 12,
@@ -22,7 +22,7 @@ export default theme => ({
     },
     marginRight: 12
   },
-  image: {
+  image: theme => ({
     background: {
       image: `url(${CharacterBackground})`,
       repeat: 'no-repeat',
@@ -44,8 +44,8 @@ export default theme => ({
     paddingTop: 4,
     textAlign: 'center',
     width: 60
-  },
-  caption: {
+  }),
+  caption: theme => ({
     alignSelf: 'flex-start',
     color: theme.color,
     flex: {
@@ -53,13 +53,19 @@ export default theme => ({
     },
     fontSize: 16,
     lineHeight: '19px'
-  },
-  captionNoCharacterSelected: {
+  }),
+  captionNoCharacterSelected: theme => ({
     alignSelf: 'center',
     color: theme.link,
     fontSize: 13,
     lineHeight: '16px'
-  },
+  }),
+  captionCharacterLoading: theme => ({
+    alignSelf: 'center',
+    color: theme.colorUnimportant,
+    fontSize: 13,
+    lineHeight: '16px'
+  }),
   changeCharacter: {
     display: 'block',
     fontSize: 13,
@@ -68,4 +74,4 @@ export default theme => ({
       bottom: 0,
       left: 72
   }
-});
+};

@@ -5,10 +5,12 @@ import { ThemeContext } from 'contexts/theme';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/InlineLoader';
 
+const useStyles = createUseStyles(style);
+
 function InlineLoader({
   text
 }) {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
 
   return (
     <div className={classes.inlineLoader}>

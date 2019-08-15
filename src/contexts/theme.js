@@ -17,6 +17,7 @@ const shared = {
  */
 export const themes = {
   light: {
+    key: 'light',
     ...shared,
 
     // Primary theme colours.
@@ -61,6 +62,11 @@ export const themes = {
     },
 
     // Components.
+    characterCard: {
+      background: '#f5f5f5',
+      backgroundHover: '#fff6a7',
+      color: '#333'
+    },
     panel: {
       background: '#fafafa',
       headingBorder: '#bdbdbd'
@@ -81,6 +87,7 @@ export const themes = {
     }
   },
   dark: {
+    key: 'dark',
     ...shared,
 
     // Primary theme colours.
@@ -150,6 +157,7 @@ export const themes = {
 /**
  * `ThemeContext` is the context API for themes.
  */
-export const ThemeContext = React.createContext(
-  themes.light
-);
+export const ThemeContext = React.createContext({
+  ...themes.light,
+  changeTheme: () => {}
+});

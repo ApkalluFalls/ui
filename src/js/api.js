@@ -295,8 +295,6 @@ class API {
           ...data
         }));
 
-        window.config.updateUserCounts();
-
         if (!data)
           return;
 

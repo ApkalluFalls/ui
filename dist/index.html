@@ -6,6 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap&subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-y++enYq9sdV7msNmXr08kJdkX4zEI1gMjjkw0l9ttOepH7fMdhb7CePwuRQCfwCr" crossorigin="anonymous">
+    <script type="text/javascript">
+      (function(l) {
+        if (l.search) {
+          var q = {};
+          l.search.slice(1).split('&').forEach(function(v) {
+            var a = v.split('=');
+            q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+          });
+          if (q.p !== undefined) {
+            window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + (q.p || '') +
+              (q.q ? ('?' + q.q) : '') +
+              l.hash
+            );
+          }
+        }
+      }(window.location))
+    </script>
+    <!-- Light Theme -->
+    <style type="text/css">
+      html, body {
+        background: #eaeaea;
+        color: #333;
+        font-family: 'PT Sans', sans-serif;
+        margin: 0;
+      }
+
+      button, input, textarea {
+        color: #333;
+        font-family: 'PT Sans', sans-serif;
+      }
+
+      h1, p {
+        margin: 0 0 8px;
+      }
+
+      a, a:visited {
+        color: #4E53B1;
+        text-decoration: none;
+      }
+
+      a:hover, a:focus {
+        color: #1E2485;
+      }
+
+      a:active {
+        color: #760E7D;
+      }
+    </style>
+    <!-- Dark Theme -->
+    <style type="text/css">
+      body.dark {
+        background: #333;
+        color: #fff;
+      }
+
+      .dark a, .dark a:visited {
+        color: #FFF6A7;
+      }
+
+      .dark a:hover, .dark a:focus {
+        color: #fff;
+      }
+
+      .dark a:active {
+        color: #BB5EC2;
+      }
+    </style>
   </head>
   <body>
     <section id="ApkalluFalls"></section>

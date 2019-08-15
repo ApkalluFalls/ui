@@ -11,6 +11,8 @@ import { paths } from 'js/routes';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/pages/Authentication';
 
+const useStyles = createUseStyles(style);
+
 function Authentication({ history }) {
   // If the user is already signed in, redirect them to their account page.
   const user = useContext(UserContext);
@@ -18,7 +20,7 @@ function Authentication({ history }) {
     history.push(paths.account);
   }
 
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { authentication: pageLocale } = locale.pages;
 

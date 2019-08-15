@@ -1,18 +1,23 @@
 import React, { useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
-import style from 'styles/pages/Error404';
+import style from 'styles/pages/Character';
 
 const useStyles = createUseStyles(style);
 
-function Error404() {
+function Character({
+  ...rest
+}) {
   const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
-  const { error404: pageLocale } = locale.pages;
+  const { character: pageLocale } = locale.pages;
+
+  console.warn(rest);
 
   return (
     <React.Fragment>
@@ -26,4 +31,4 @@ function Error404() {
   )
 }
 
-export default Error404;
+export default withRouter(Character);

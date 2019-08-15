@@ -1,8 +1,5 @@
-export default (theme) => {
-  const { panel: panelTheme } = theme;
-  return {
-    inlineLoader: {
-      color: theme.colorUnimportant
-    }
-  };
+export default {
+  inlineLoader: theme => ({
+    color: theme.colorUnimportant
+  })
 }

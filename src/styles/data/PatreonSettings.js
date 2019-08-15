@@ -1,23 +1,19 @@
 import brandStyles from '../brands';
 import formStyles from '../forms';
 
-export default (theme) => {
-  const { form: formTheme } = theme;
+export default {
+  ...formStyles(),
+  connectButton: () => ({
+    background: brandStyles.patreon,
+    border: {
+      color: brandStyles.patreonAlt,
+      style: 'solid',
+      width: 1
+    },
+    color: '#fff',
 
-  return {
-    ...formStyles(theme),
-    connectButton: {
-      background: brandStyles.patreon,
-      border: {
-        color: brandStyles.patreonAlt,
-        style: 'solid',
-        width: 1
-      },
-      color: '#fff',
-
-      '&:hover, &:focus': {
-        background: brandStyles.patreonAlt
-      }
+    '&:hover, &:focus': {
+      background: brandStyles.patreonAlt
     }
-  };
+  })
 }

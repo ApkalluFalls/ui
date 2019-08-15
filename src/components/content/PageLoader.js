@@ -11,7 +11,7 @@ function PageLoader({
   return (
     <section className={classes.loader}>
       <p className={`${classes.caption} ${text ? '' : classes.iconOnly}`}>
-        <span class="fal fa-spinner-third fa-spin" />
+        <span className="fal fa-spinner-third fa-spin" />
         {text && (
           <React.Fragment>
             {' '}

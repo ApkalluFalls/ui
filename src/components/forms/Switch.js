@@ -5,13 +5,15 @@ import { ThemeContext } from 'contexts/theme';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/forms/Switch';
 
+const useStyles = createUseStyles(style);
+
 function Switch({
   id = 'switch',
   label,
   on = false,
   onChange = () => {}
 }) {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
 
   const [checked, setChecked] = useState(on);
   const isLoading = useRef(true);

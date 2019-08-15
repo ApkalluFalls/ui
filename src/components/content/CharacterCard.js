@@ -9,25 +9,48 @@ import { paths } from 'js/routes';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/content/CharacterCard';
 
+const useStyles = createUseStyles(style);
+
 function CharacterCard({
   avatar,
   dc,
   id,
+  forename,
   name,
+  surname,
   world,
-  ...rest
+  ...props
 }) {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
 
   // Context.
   const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
 
-  console.info(rest);
+  /**
+   * This function fires whilst navigating to the selected character.
+   * Its purpose is to update the active character if `props.setActiveOnClick` is set.
+   */
+  async function onNavigate() {
+    if (!props.setActiveOnClick) {
+      return;
+    }
+
+    character.change({
+      avatar,
+      forename,
+      name,
+      settingAsActive: true,
+      surname,
+      world
+    });
+  }
 
   return (
     <Link
       key={id}
+      onClick={onNavigate}
+      onKeyDown={(event) => event.which === 13 && onNavigate()}
       to={paths.character(id)}
       className={classes.characterCard}
     >
@@ -41,9 +64,11 @@ function CharacterCard({
         <span className={classes.name}>
           {name}
         </span>
-        <span className={classes.server}>
-          {world} ({dc})
-        </span>
+        {world && (
+          <span className={classes.server}>
+            {world} ({dc})
+          </span>
+        )}
       </span>
     </Link>
   )

@@ -19,7 +19,6 @@ import Navigation from "components/Navigation";
 
 // Theme.
 import { createTheming, createUseStyles } from 'react-jss';
-import globalStyle from 'styles/global';
 
 const { ThemeProvider } = createTheming(ThemeContext);
 
@@ -88,18 +87,23 @@ function ApkalluFalls({}) {
   // Contexts.
   useContext(CharacterContext);
   useContext(LocalisationContext);
-  useContext(ThemeContext);
   useContext(UserContext);
+  useContext(ThemeContext);
 
   // State.
   const [version, setVersion] = useState(-1);
   const [character, setCharacter] = useState({ loading: true });
   const [user, setUser] = useState({ loading: true });
 
-  const theme = themes[localStorage && localStorage.getItem('theme') || 'light'];
+  const cachedTheme = localStorage.getItem('theme') || 'light';
 
-  // Apply global styles.
-  createUseStyles(globalStyle(theme))();
+  if (cachedTheme === 'dark') {
+    document.body.className = 'dark';
+  }
+
+  const [theme, setTheme] = useState((
+    themes[cachedTheme]
+  ));
 
   useEffect(() => {
     (async () => {
@@ -116,13 +120,39 @@ function ApkalluFalls({}) {
       const firebaseUnsubscribe = firebase.auth().onAuthStateChanged(onFirebaseAuthChange);
 
       setVersion(apiVersion);
+      setCharacter(JSON.parse(localStorage.getItem('character')) || {});
 
       return () => firebaseUnsubscribe();
     })();
   }, [])
 
+  /**
+   * Update the user context (via state) when Firebase detects an authentication change.
+   * @param {Object} user - The user object from Firebase.
+   */
   function onFirebaseAuthChange(user) {
     setUser(parseFirebaseUserObject(user));
+  }
+
+  /**
+   * Update the theme context (via state).
+   */
+  function handleCharacterChange(character) {
+    if (character.name) {
+      localStorage.setItem('character', JSON.stringify(character));
+    } else {
+      localStorage.removeItem('character');
+    }
+
+    setCharacter(character);
+  }
+
+  /**
+   * Update the theme context (via state).
+   */
+  function handleThemeChange(theme) {
+    document.body.className = theme.key;
+    setTheme(theme);
   }
 
   if (version === -1) {
@@ -138,10 +168,14 @@ function ApkalluFalls({}) {
     <React.StrictMode>
       <UserContext.Provider value={{...user}}>
         <CharacterContext.Provider value={{
-          ...character
+          ...character,
+          change: handleCharacterChange
         }}>
           <BrowserRouter>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={{
+              ...theme,
+              change: handleThemeChange
+            }}>
               <LocalisationContext.Provider value={{
                 language,
                 locale: localisation[language]

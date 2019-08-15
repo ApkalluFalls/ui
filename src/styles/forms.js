@@ -1,6 +1,4 @@
-export default theme => {
-  const { form: formTheme } = theme;
-
+export default () => {
   const controlDefaults = {
     borderStyle: 'solid',
     borderWidth: 1,
@@ -27,7 +25,7 @@ export default theme => {
         top: -8
       },
     },
-    label: {
+    label: theme => ({
       color: theme.color,
       display: 'block',
       fontSize: 16,
@@ -36,47 +34,47 @@ export default theme => {
         bottom: 4,
         top: 0
       }
-    },
-    input: {
+    }),
+    input: theme => ({
       ...controlDefaults,
-      background: formTheme.inputBackground,
-      borderColor: formTheme.inputBorder,
+      background: theme.form.inputBackground,
+      borderColor: theme.form.inputBorder,
 
       '&::placeholder': {
-        color: formTheme.placeholder
+        color: theme.form.placeholder
       },
 
       '&:disabled': {
         cursor: 'default',
         opacity: 0.6
       }
-    },
-    button: {
+    }),
+    button: theme => ({
       ...controlDefaults,
-      background: formTheme.buttonBackground,
-      borderColor: formTheme.buttonBorder,
+      background: theme.form.buttonBackground,
+      borderColor: theme.form.buttonBorder,
       boxShadow: {
         blur: 2,
         color: theme.shadow,
         x: 1,
         y: 1
       },
-      color: formTheme.buttonColor,
+      color: theme.form.buttonColor,
       cursor: 'pointer',
       transition: 'background .1s',
 
       '&:hover, &:focus': {
-        background: formTheme.buttonBorder
+        background: theme.form.buttonBorder
       },
 
       '&:disabled': {
-        background: formTheme.buttonBackground,
+        background: theme.form.buttonBackground,
         boxShadow: 'initial',
         cursor: 'default',
         opacity: 0.6
       }
-    },
-    linkButton: {
+    }),
+    linkButton: theme => ({
       ...controlDefaults,
       background: 'transparent',
       borderColor: 'transparent',
@@ -93,18 +91,18 @@ export default theme => {
         cursor: 'default',
         opacity: 0.6
       }
-    },
-    inputValidationError: {
-      borderColor: formTheme.validationError
-    },
-    validationError: {
-      color: formTheme.validationError,
+    }),
+    inputValidationError: theme => ({
+      borderColor: theme.form.validationError
+    }),
+    validationError: theme => ({
+      color: theme.form.validationError,
       fontSize: 14,
       lineHeight: '17px',
       margin: {
         bottom: 0,
         top: 4
       }
-    }
+    })
   };
 }

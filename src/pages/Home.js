@@ -7,8 +7,10 @@ import Panel from 'components/content/Panel';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/pages/Home';
 
+const useStyles = createUseStyles(style);
+
 function Home() {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { home: pageLocale } = locale.pages;
   const { whatIsHidden } = pageLocale;

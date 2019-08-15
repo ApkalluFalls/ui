@@ -12,10 +12,12 @@ import { paths } from 'js/routes';
 import { createUseStyles } from 'react-jss'
 import style from 'styles/data/UserCharacters';
 
+const useStyles = createUseStyles(style);
+
 function UserCharacters({
-  characters: charactersDataFromFirebase
+  characters: charactersDataFromFirebase = []
 }) {
-  const classes = createUseStyles(style(useContext(ThemeContext)))();
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { userCharacters: componentLocale } = locale.components;
   
@@ -23,8 +25,6 @@ function UserCharacters({
   const [characters, setCharacters] = useState();
 
   useEffect(() => {
-    console.info(charactersDataFromFirebase);
-
     if (!Array.isArray(charactersDataFromFirebase)) {
       setLoading(true);
       return;
@@ -63,7 +63,7 @@ function UserCharacters({
     return (
       <div className={classes.userCharacters}>
         <p className={classes.help}>
-          <span class="fal fa-user-slash" />
+          <span className="fal fa-user-slash" />
           {' '}
           {componentLocale.noVerifiedCharacters}
         </p>
