@@ -44,6 +44,11 @@ export default theme => {
 
       '&::placeholder': {
         color: formTheme.placeholder
+      },
+
+      '&:disabled': {
+        cursor: 'default',
+        opacity: 0.6
       }
     },
     button: {

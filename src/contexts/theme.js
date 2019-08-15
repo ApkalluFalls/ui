@@ -8,6 +8,7 @@ import React from "react";
 
 const shared = {
   brand: '#ffee58',
+  brandColor: '#333',
   brandDarker: '#bfae13'
 };
 

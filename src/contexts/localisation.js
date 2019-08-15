@@ -26,8 +26,11 @@ export const localisation = {
       discordServer: 'Discord server',
       donate: 'Donate',
       emotes: 'Emotes',
+      european: 'European',
+      japanese: 'Japanese',
       minions: 'Minions',
       mounts: 'Mounts',
+      northAmerican: 'North American',
       orchestrionRolls: 'Orchestrion Rolls',
       patreonBlog: 'Patreon blog',
       promotional: 'Promotional',
@@ -38,6 +41,7 @@ export const localisation = {
       changeCharacter: 'Change character',
       iconsMode: 'Icons mode',
       listMode: 'List mode',
+      search: 'Search',
       selectACharacter: 'Select a character to track'
     },
     labels: {
@@ -49,6 +53,7 @@ export const localisation = {
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
       reloadsPage: 'reloads page',
+      searching: 'Searching...',
       talkingToFirebase: 'Talking to Firebase',
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
     },
@@ -149,11 +154,20 @@ export const localisation = {
       orchestrion: {
         title: 'Orchestrion Rolls'
       },
+      character: {
+        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.'
+      },
       characterSearch: {
         heading: 'Search for a Character',
         about: 'Searching for a character will allow you to see tracking data and statistics associated with them.',
         title: 'Character Search',
-        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.'
+        enterCharacterName: 'What is the character\'s name?',
+        noCharactersFound: 'No characters were be found.',
+        placeholderCharacterName: 'Tequila Mockingbird',
+        searchByServer: 'Search by server',
+        selectADataCenterFirst: 'Server selection will appear here after first selecting a data center from the choices above.',
+        selectDataCenter: 'Which data center is the character on?',
+        selectServer: 'Which server is the character on?'
       }
     },
     obtainMethods: {

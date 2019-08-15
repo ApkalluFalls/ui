@@ -50,7 +50,7 @@ export default (theme) => {
       borderColor: theme.brandDarker,
 
       '& > *': {
-        color: theme.color
+        color: theme.brandColor
       }
     },
     userBoxLoading: {
