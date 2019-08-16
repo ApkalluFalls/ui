@@ -22,7 +22,7 @@ function Account({
 }) {
   // If the user is not signed in, redirect them to the sign in page.
   const user = useContext(UserContext);
-  if (!user.loading && !user.type) {
+  if (!user.loading && !user.isLoggedIn) {
     history.push(paths.authentication);
   }
 
@@ -46,7 +46,7 @@ function Account({
     }).catch(error => console.warn(error));
   }
 
-  if (user.loading || !user.type) {
+  if (user.loading || !user.isLoggedIn) {
     return <React.Fragment />;
   }
 

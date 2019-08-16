@@ -28,7 +28,7 @@ function UserBox() {
    * Firebase, then fetch each character's data from XIVAPI.
    */
   useEffect(() => {
-    if (user.loading || !user.type || user.verifiedCharacters) {
+    if (user.loading || !user.isLoggedIn || user.verifiedCharacters) {
       return;
     }
 
@@ -39,6 +39,8 @@ function UserBox() {
       const fetchedCharacters = [];
 
       for (const characterData of verifiedCharacters) {
+        console.warn(characterData);
+
         fetchedCharacters.push({
           ...characterData,
           ...await new Character(characterData).getData()

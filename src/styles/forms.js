@@ -66,6 +66,7 @@ export default () => {
       },
       color: theme.form.buttonColor,
       cursor: 'pointer',
+      textAlign: 'center',
       transition: 'background .1s',
 
       '&:hover, &:focus': {

@@ -60,6 +60,7 @@ export default {
   }),
   label: theme => ({
     ...formStyles().label(theme),
+    color: theme.color,
     cursor: 'pointer',
     paddingLeft: 48,
     transition: 'color .2s',

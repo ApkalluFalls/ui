@@ -17,6 +17,10 @@ const shared = {
 export const localisation = {
   en: {
     shared,
+    links: {
+      lodestone: 'https://eu.finalfantasyxiv.com/lodestone',
+      lodestoneProfileEdit: 'https://eu.finalfantasyxiv.com/lodestone/my/setting/profile'
+    },
     common: {
       achievements: 'Achievements',
       barding: 'Chocobo Barding',
@@ -39,15 +43,18 @@ export const localisation = {
     },
     actions: {
       changeCharacter: 'Change character',
+      checkForVerificationCode: 'Check for Verification Code',
       iconsMode: 'Icons mode',
       listMode: 'List mode',
       search: 'Search',
-      selectACharacter: 'Search for a character to track'
+      selectACharacter: 'Search for a character to track',
+      signInOrCreateAccount: 'Sign In or Create an Account'
     },
     labels: {
       darkMode: 'Dark mode'
     },
     info: {
+      copied: 'Copied to clipboard.',
       fetchingList: 'Fetching {0} list...',
       loading: 'Loading...',
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
@@ -158,10 +165,18 @@ export const localisation = {
         title: 'Orchestrion Rolls'
       },
       character: {
+        accountRequired: 'You\'ll need to sign in or create an Apkallu Falls account before you can begin the character verification process.',
         communicatingWithXIVAPI: 'Communicating with XIVAPI...',
         fetchingCharacterAchievements: 'Fetching character achievements...',
+        howToVerifyOwnership: 'To verify that this character is yours, please follow the below steps:',
         lodestoneBio: 'Lodestone bio',
-        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.'
+        lodestoneEditProfile: 'Navigate to your character\'s profile page, scroll down and click to edit your bio (Character Profile).',
+        lodestoneSignIn: 'Sign in to your account on the official Final Fantasy XIV website.',
+        lodestoneVerificationCode: 'Copy the unique code below anywhere into the edit box and click Confirm twice to save it.',
+        setActive: 'Set Active',
+        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.',
+        verifyOwnership: 'Verify ownership',
+        whyVerifyOwnership: 'If this is your character you can verify ownership of it and unlock all of Apkallu Falls tracking abilities.'
       },
       characterSearch: {
         heading: 'Search for a Character',

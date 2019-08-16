@@ -16,7 +16,7 @@ const useStyles = createUseStyles(style);
 function Authentication({ history }) {
   // If the user is already signed in, redirect them to their account page.
   const user = useContext(UserContext);
-  if (!user.loading && user.type) {
+  if (!user.loading && user.isLoggedIn) {
     history.push(paths.account);
   }
 

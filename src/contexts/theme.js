@@ -33,6 +33,7 @@ export const themes = {
     linkActive: '#760E7D',
     shadow: '#757575',
     textShadow: '#fff',
+    verificationCode: '#7046ad',
 
     // Layout sections.
     navigation: {
@@ -105,6 +106,7 @@ export const themes = {
     linkActive: '#BB5EC2',
     shadow: '#111',
     textShadow: '#111',
+    verificationCode: '#9ea1e1',
 
     // Layout sections.
     navigation: {

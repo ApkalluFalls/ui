@@ -37,7 +37,9 @@ function initFirebase() {
 
 function parseFirebaseUserObject(user) {
   if (!user) {
-    return {};
+    return {
+      isLoggedIn: false
+    };
   }
 
   let type;
@@ -76,6 +78,7 @@ function parseFirebaseUserObject(user) {
       displayName: displayName || email,
       uid
     },
+    isLoggedIn: true,
     type
   };
   

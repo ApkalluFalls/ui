@@ -125,7 +125,9 @@ export default class Character {
       world: Character.Server
     }
 
-    if (FreeCompany && FreeCompany.name) {
+    console.info(FreeCompany);
+
+    if (FreeCompany && FreeCompany.Name) {
       response.freeCompany = {
         crestParts: FreeCompany.Crest,
         name: FreeCompany.Name,
