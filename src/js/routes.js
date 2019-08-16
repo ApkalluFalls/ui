@@ -13,6 +13,7 @@ export const paths = {
   characterSearch: '/character-search',
 
   // Content lists.
+  achievements: '/achievements',
   barding: '/barding',
   emotes: '/emotes',
   minions: '/minions',
