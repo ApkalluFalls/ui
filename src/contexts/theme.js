@@ -49,6 +49,7 @@ export const themes = {
       buttonColor: '#000',
       inputBackground: '#fafafa',
       inputBorder: '#ccc',
+      inputColor: '#333',
       placeholder: '#9e9e9e',
       switchBallBackground: '#bb5ec2',
       switchBallBorder: '#760e7d',
@@ -120,6 +121,7 @@ export const themes = {
       buttonColor: '#fff',
       inputBackground: '#414141',
       inputBorder: '#222',
+      inputColor: '#fff',
       placeholder: '#757575',
       switchBallBackground: '#ffee58',
       switchBallBorder: '#333',
@@ -133,6 +135,11 @@ export const themes = {
     },
 
     // Components.
+    characterCard: {
+      background: '#424242',
+      backgroundHover: '#760e7d',
+      color: '#fff'
+    },
     panel: {
       background: '#222',
       headingBorder: '#424242'

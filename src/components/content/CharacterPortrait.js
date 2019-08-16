@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
@@ -33,12 +33,18 @@ function CharacterPortrait() {
     )
   }
 
+  console.warn(character);
+
   return (
     <section className={classes.container}>
       {character.name
         ? (
           <React.Fragment>
-            <Link to={paths.character(character.id)}>
+            <NavLink
+              className={classes.link}
+              activeClassName={classes.linkActive}
+              to={paths.character(character.id)}
+            >
               <figure className={classes.character}>
                 <div className={classes.imageWrapper}>
                   <span
@@ -54,7 +60,7 @@ function CharacterPortrait() {
                   {character.surname}
                 </figcaption>
               </figure>
-            </Link>
+            </NavLink>
             <Link
               className={classes.changeCharacter}
               to={paths.characterSearch}
@@ -63,7 +69,11 @@ function CharacterPortrait() {
             </Link>
           </React.Fragment>
         ) : (
-          <Link to={paths.characterSearch}>
+          <NavLink
+            className={classes.link}
+            activeClassName={classes.linkActive}
+            to={paths.characterSearch}
+          >
             <figure className={classes.character}>
               <div className={classes.imageWrapper}>
                 <span className={classes.image}>
@@ -74,7 +84,7 @@ function CharacterPortrait() {
                 {locale.actions.selectACharacter}
               </figcaption>
             </figure>
-          </Link>
+          </NavLink>
         )
       }
     </section>

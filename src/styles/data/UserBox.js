@@ -9,11 +9,9 @@ export default {
   },
   userBox: theme => ({
     alignItems: 'center',
-    background: {
-      color: theme.color,
-      repeat: 'no-repeat',
-      size: 'cover'
-    },
+    backgroundColor: theme.color,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
     border: {
       color: theme.color,
       radius: '100%',

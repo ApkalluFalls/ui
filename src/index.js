@@ -98,7 +98,7 @@ function ApkalluFalls({}) {
   const cachedTheme = localStorage.getItem('theme') || 'light';
 
   if (cachedTheme === 'dark') {
-    document.body.className = 'dark';
+    document.documentElement.className = 'dark';
   }
 
   const [theme, setTheme] = useState((
@@ -151,7 +151,8 @@ function ApkalluFalls({}) {
    * Update the theme context (via state).
    */
   function handleThemeChange(theme) {
-    document.body.className = theme.key;
+    localStorage.setItem('theme', theme.key);
+    document.documentElement.className = theme.key;
     setTheme(theme);
   }
 

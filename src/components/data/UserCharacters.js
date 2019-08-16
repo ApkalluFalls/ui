@@ -22,7 +22,7 @@ function UserCharacters({
   const { userCharacters: componentLocale } = locale.components;
   
   const [loading, setLoading] = useState(!Array.isArray(characters));
-  const [characters, setCharacters] = useState();
+  const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
     if (!Array.isArray(charactersDataFromFirebase)) {
@@ -35,8 +35,10 @@ function UserCharacters({
       return;
     }
 
+    setLoading(true);
+
     (async () => {
-      let fetchedCharacters = [];
+      const fetchedCharacters = [];
 
       for (const characterData of charactersDataFromFirebase) {
         fetchedCharacters.push(await new Character(characterData).getData());

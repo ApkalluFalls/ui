@@ -1,16 +1,37 @@
 import CharacterBackground from 'images/character-background.png';
+import { navigation } from 'styles/Navigation';
 
 export default {
   container: {
     margin: {
-      bottom: 12,
-      top: 12
+      bottom: 4,
+      top: 4
     },
     position: 'relative'
   },
+  link: theme => ({
+    display: 'block',
+    padding: '8px 0',
+
+    '&::before': {
+      ...navigation.linkArrow(theme)
+    },
+
+    '&:hover, &:focus': {
+      ...navigation.linkHoverFocus(theme)
+    },
+  }),
+  linkActive: theme => ({
+    ...navigation.linkActive(theme),
+
+    '&:hover, &:focus': {
+      ...navigation.linkActive(theme)
+    }
+  }),
   character: {
     alignItems: 'center',
     display: 'flex',
+    fontWeight: 'normal',
     height: 60,
     margin: 0,
     padding: 0
@@ -23,11 +44,9 @@ export default {
     marginRight: 12
   },
   image: theme => ({
-    background: {
-      image: `url(${CharacterBackground})`,
-      repeat: 'no-repeat',
-      size: '100%'
-    },
+    backgroundImage: `url(${CharacterBackground})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100%',
     borderRadius: '4px',
     boxShadow: {
       blur: 2,
@@ -71,7 +90,7 @@ export default {
     fontSize: 13,
     lineHeight: '16px',
     position: 'absolute',
-      bottom: 0,
+      bottom: 8,
       left: 72
   }
 };

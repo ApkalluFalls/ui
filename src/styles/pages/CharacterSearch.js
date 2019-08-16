@@ -86,9 +86,9 @@ export default {
       width: 1
     },
     height: 0,
-    marginTop: 12,
+    marginTop: 16,
     overflow: 'hidden',
-    paddingTop: 12,
+    paddingTop: 16,
     transition: 'height .2s, background .2s, padding .2s'
   },
   resultsSearchingOrNoMatches: theme => ({
@@ -105,7 +105,8 @@ export default {
     margin: {
       bottom: -16,
       left: -16,
-      right: -16
+      right: -16,
+      top: 16
     },
     overflowY: 'scroll',
     padding: 16

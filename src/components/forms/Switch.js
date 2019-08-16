@@ -30,28 +30,24 @@ function Switch({
   /**
    * When the checkbox changes, toggle the switch.
    */
-  function handleCheckboxChange() {
+  function handleSwitchChange() {
     setChecked(!checked);
   }
 
   return (
     <div className={classes.switch}>
-      <input
-        type="checkbox"
-        className={classes.checkbox}
-        id={id}
-        checked={checked}
-        onChange={handleCheckboxChange}
-      />
       <span className={`${classes.track} ${checked ? classes.trackOn : ''}`}>
         <span className={`${classes.ball} ${checked ? classes.ballOn : ''}`} />
       </span>
-      <label
-        htmlFor={id}
+      <div
         className={`${classes.label} ${checked ? classes.labelOn : ''}`}
+        role="button"
+        tabIndex={0}
+        onClick={handleSwitchChange}
+        onKeyDown={(event) => { return event.which === 13 && handleSwitchChange() }}
       >
         {label}
-      </label>
+      </div>
     </div>
   )
 }

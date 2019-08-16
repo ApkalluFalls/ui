@@ -2,20 +2,85 @@ import Background from 'images/background2.png';
 import Logo from 'images/apkallu.png';
 
 export const navigation = {
+  linkActive: theme => ({
+    background: theme.background,
+    boxShadow: {
+      x: 0,
+      y: 0,
+      blur: 8,
+      color: theme.background,
+      spread: 4
+    },
+    color: theme.color,
+    cursor: 'default',
+    fontWeight: 'bold',
+
+    '& h2': {
+      fontWeight: 'bold'
+    },
+
+    '&::before': {
+      borderLeftColor: theme.color,
+    },
+
+    '&:hover, &:focus': {
+      cursor: 'default',
+
+      '& h2': {
+        color: theme.color,
+        fontWeight: 'bold',
+        textDecoration: 'none'
+      },
+
+      '&::before': {
+        borderLeftColor: theme.color
+      }
+    }
+  }),
+  linkArrow: theme => ({
+    border: {
+      color: 'transparent',
+      style: 'solid',
+      width: '18px 0 18px 10px'
+    },
+    content: '""',
+    height: 0,
+    opacity: 0.8,
+    position: 'absolute',
+      left: -12,
+      top: 'calc(50% - 18px)',
+    transition: '.2s',
+    width: 0,
+    zIndex: 2
+  }),
+  linkHoverFocus: theme => ({
+    background: theme.background,
+    boxShadow: {
+      x: 0,
+      y: 0,
+      blur: 16,
+      color: theme.background,
+      spread: 8
+    },
+
+    '& h2': {
+      color: theme.linkHoverFocus
+    },
+
+    '&::before': {
+      borderLeftColor: theme.link
+    }
+  }),
   width: 204
 }
 
 export default () => {
-  const background = `url(${Background})`;
-
   return {
     navigation: theme => ({
-      background: {
-        color: theme.background,
-        image: background,
-        repeat: 'no-repeat',
-        size: 'auto 100%'
-      },
+      backgroundColor: theme.background,
+      backgroundImage: `url(${Background})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'auto 100%',
       display: 'block',
       height: '100%',
       position: 'fixed',
@@ -52,10 +117,8 @@ export default () => {
       width: '100%'
     }),
     logo: theme => ({
-      background: {
-        image: `url(${Logo})`,
-        size: 'cover'
-      },
+      backgroundImage: `url(${Logo})`,
+      backgroundSize: 'cover',
       boxShadow: {
         x: 0,
         y: 1,
@@ -65,7 +128,8 @@ export default () => {
       display: 'block',
       height: 32,
       marginRight: 12,
-      width: 32
+      width: 32,
+      zIndex: 2
     }),
     character: {
       position: 'relative',
@@ -96,80 +160,24 @@ export default () => {
       transition: 'color .2s',
 
       '&::before': {
-        border: {
-          color: 'transparent',
-          style: 'solid',
-          width: '29px 0 29px 10px'
-        },
-        content: '""',
-        height: 0,
-        opacity: 0.8,
-        position: 'absolute',
-          bottom: 0,
-          left: -12,
-          top: 0,
-        transition: '.2s',
-        width: 0,
-        zIndex: 2
+        ...navigation.linkArrow(theme)
       },
 
       '&:hover, &:focus': {
-        background: theme.background,
-        boxShadow: {
-          x: 0,
-          y: 0,
-          blur: 16,
-          color: theme.background,
-          spread: 8
-        },
+        ...navigation.linkHoverFocus(theme)
+      },
 
-        '& h2': {
-          color: theme.linkHoverFocus
-        },
-
-        '&::before': {
-          borderLeftColor: theme.link
-        }
+      '&:active': {
+        ...navigation.linkActive(theme)
       }
     }),
-    linkCollapsed: {
+    linkCollapsed: () => ({
       '&::before': {
         borderWidth: '18px 0 18px 10px'
       }
-    },
+    }),
     linkActive: theme => ({
-      background: theme.background,
-      boxShadow: {
-        x: 0,
-        y: 0,
-        blur: 8,
-        color: theme.background,
-        spread: 4
-      },
-      color: theme.color,
-      fontWeight: 'bold',
-
-      '& h2': {
-        fontWeight: 'bold'
-      },
-
-      '&::before': {
-        borderLeftColor: theme.color,
-      },
-
-      '&:hover, &:focus': {
-        cursor: 'default',
-
-        '& h2': {
-          color: theme.color,
-          fontWeight: 'bold',
-          textDecoration: 'none'
-        },
-
-        '&::before': {
-          borderLeftColor: theme.color
-        }
-      }
+      ...navigation.linkActive(theme)
     }),
     options: {
       display: 'block',

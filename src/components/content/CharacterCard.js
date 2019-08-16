@@ -39,6 +39,7 @@ function CharacterCard({
     character.change({
       avatar,
       forename,
+      id,
       name,
       settingAsActive: true,
       surname,

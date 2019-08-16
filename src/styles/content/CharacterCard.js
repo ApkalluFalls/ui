@@ -17,6 +17,7 @@ export default {
     height: 48,
     margin: 8,
     overflow: 'hidden',
+    transition: 'background .1s',
     width: 256,
 
     '&:hover, &:focus': {
@@ -28,9 +29,7 @@ export default {
     }
   }),
   avatar: {
-    background: {
-      size: 'cover'
-    },
+    backgroundSize: 'cover',
     border: {
       radius: '100%'
     },

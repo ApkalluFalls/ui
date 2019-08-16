@@ -13,13 +13,8 @@ import { paths } from 'js/routes';
 const useStyles = createUseStyles(style);
 
 function Navigation() {
-  const theme = useContext(ThemeContext);
   const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
-
-  const [isDarkThemeEnabled, setIsDarkThemeEnabled] = useState((
-    localStorage && localStorage.getItem('theme') === 'dark'
-  ));
 
   const {
     common: contentText
@@ -56,26 +51,6 @@ function Navigation() {
     requiresSignIn: true
   }];
 
-  const onThemeChange = event => {
-    /**
-     * The commented out `theme.change` calls here do not cause JSS to regenerate classes. For now
-     * we need to reload the page to update the theme instead. This isn't ideal, but requires
-     * further investigation before it can be resolved.
-     */
-    if (isDarkThemeEnabled) {
-      localStorage && localStorage.setItem('theme', 'light');
-      setIsDarkThemeEnabled(false);
-      theme.change(themes.light);
-      // window.location.reload();
-      return;
-    }
-
-    localStorage && localStorage.setItem('theme', 'dark');
-    setIsDarkThemeEnabled(true);
-    theme.change(themes.dark);
-    // window.location.reload();
-  };
-
   return (
     <nav className={classes.navigation}>
       <div className={classes.wrapper}>
@@ -106,27 +81,7 @@ function Navigation() {
             </li>
           ))}
         </ul>
-        <form className={classes.options}>
-          <label
-            className={classes.label}
-            htmlFor="theme"
-          >
-            <span className={classes.control}>
-              <input
-                type="checkbox"
-                id="theme"
-                checked={isDarkThemeEnabled}
-                onChange={onThemeChange}
-              />
-            </span>
-            <span className={classes.labelText}>
-              {locale.labels.darkMode}
-              {' '}
-              <span className={classes.labelTextInfo}>
-                ({locale.info.reloadsPage})
-              </span>
-            </span>
-          </label>
+        <section className={classes.options}>
           <a
             className={`${classes.externalLink} ${classes.discord}`}
             href="https://discord.gg/VZ9BhKy"
@@ -139,7 +94,7 @@ function Navigation() {
           >
             <span className="fab fa-patreon" /> Become a Patron
           </a>
-        </form>
+        </section>
       </div>
     </nav>
   );

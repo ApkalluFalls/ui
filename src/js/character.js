@@ -29,7 +29,7 @@ export default class Character {
     }
 
     const characterInfo = await fetch(
-      `https://xivapi.com/character/${this.id}?data=FC&columns=Character.Avatar,Character.Bio,Character.DC,Character.Name,Character.Server,FreeCompany.Name,FreeCompany.Crest,FreeCompany.Tag&af=${+new Date()}`
+      `https://xivapi.com/character/${this.id}?data=FC&columns=Character.Avatar,Character.Bio,Character.DC,Character.ID,Character.Name,Character.Server,FreeCompany.Name,FreeCompany.Crest,FreeCompany.Tag&af=${+new Date()}`
     )
       .then(response => response.json())
       .catch((error) => {

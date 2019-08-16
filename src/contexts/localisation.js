@@ -52,7 +52,6 @@ export const localisation = {
       loading: 'Loading...',
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
-      reloadsPage: 'reloads page',
       searching: 'Searching...',
       talkingToFirebase: 'Talking to Firebase',
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
@@ -107,6 +106,10 @@ export const localisation = {
         yourCharacters: 'Your characters',
 
         settings: {
+          lookAndFeel: {
+            heading: 'Look and Feel Settings',
+            help: 'With these settings you can change the way the site displays.'
+          },
           manualTracking: {
             heading: 'Manually-tracked content',
             help: 'Here you can toggle which pieces of content you wish to enable manual tracking for. Disabled content will still appear in the sidebar as usual, but progress bars and checkboxes related to the content will no longer be displayed. Disabling these will not reset any of the entries you have already checked off for your characters.',

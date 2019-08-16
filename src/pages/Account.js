@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
 import { UserContext } from 'contexts/user';
 import { LocalisationContext } from 'contexts/localisation';
-import { ThemeContext } from 'contexts/theme';
+import { ThemeContext, themes } from 'contexts/theme';
 import Panel from 'components/content/Panel';
 import PatreonSettings from 'components/data/PatreonSettings';
 import UserCharacters from 'components/data/UserCharacters';
@@ -26,11 +26,13 @@ function Account({
     history.push(paths.authentication);
   }
 
-  const classes = useStyles(useContext(ThemeContext));
+  const theme = useContext(ThemeContext);
+  const classes = useStyles(theme);
   const { locale } = useContext(LocalisationContext);
   const { account: pageLocale } = locale.pages;
   const { whatIsHidden: hiddenContent } = locale.pages.home;
   const {
+    lookAndFeel: lookAndFeelSettings,
     manualTracking: manuallyTrackedContent,
     temporaryOrOldContent: temporaryOrOldContent
   } = pageLocale.settings;
@@ -41,8 +43,6 @@ function Account({
     if (user.loading || !user.type) {
       return;
     }
-
-    console.info(user);
 
     (async () => {
       const api = new API(undefined, user.data.uid);
@@ -79,6 +79,19 @@ function Account({
         </React.Fragment>
       )}>
         <PatreonSettings inheritedClasses={classes} />
+      </Panel>
+      <Panel heading={lookAndFeelSettings.heading}>
+        <p className={classes.help}>
+          {lookAndFeelSettings.help}
+        </p>
+        <div className={classes.control}>
+          <Switch
+            id="look-and-feel-dark-mode"
+            label={locale.labels.darkMode}
+            on={theme.key === 'dark'}
+            onChange={(checked) => theme.change(themes[theme.key === 'light' ? 'dark' : 'light'])}
+          />
+        </div>
       </Panel>
       <Panel heading={manuallyTrackedContent.heading}>
         <p className={classes.help}>

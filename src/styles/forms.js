@@ -17,6 +17,10 @@ export default () => {
       margin: {
         bottom: 16,
         top: 0
+      },
+
+      '&:last-child': {
+        marginBottom: 0
       }
     },
     controlCollapsed: {
@@ -39,6 +43,7 @@ export default () => {
       ...controlDefaults,
       background: theme.form.inputBackground,
       borderColor: theme.form.inputBorder,
+      color: theme.form.inputColor,
 
       '&::placeholder': {
         color: theme.form.placeholder

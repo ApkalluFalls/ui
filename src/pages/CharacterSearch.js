@@ -71,9 +71,9 @@ function CharacterSearch() {
   const { locale } = useContext(LocalisationContext);
   const { characterSearch: pageLocale } = locale.pages;
 
-  const [characterName, setCharacterName] = useState('Tequila');
-  const [activeDataCenter, setActiveDataCenter] = useState('Light');
-  const [activeServer, setActiveServer] = useState('Zodiark');
+  const [characterName, setCharacterName] = useState();
+  const [activeDataCenter, setActiveDataCenter] = useState();
+  const [activeServer, setActiveServer] = useState();
   const [searching, setSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [results, setResults] = useState([]);
