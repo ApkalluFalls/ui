@@ -21,11 +21,79 @@ export default class Character {
   }
 
   /**
-   * Get Character data from XIVAPI.
+   * Get Character achievement data from XIVAPI or returned cached data.
+   * This function caches retrieved data within session storage with an expiry of 24 hours.
+   */
+  async getAchievements() {
+    if (!this.id) {
+      throw new Error('Cannot call getAchievements without an ID being specified.');
+    }
+
+    const cacheKey = `character/${this.id}/achievements`;
+    const fromCache = JSON.parse(sessionStorage.getItem(cacheKey));
+
+    if (fromCache && fromCache.cacheExpires > Number(new Date())) {
+      return fromCache;
+    }
+
+    const characterAchievements = await fetch(
+      `https://xivapi.com/character/${this.id}?data=AC&columns=Achievements,AchievementsPublic&af=${+new Date()}`
+    )
+      .then(response => response.json())
+      .catch((error) => {
+        console.error(error);
+        return {
+          error: true
+        }
+      });
+
+    if (characterAchievements.error) {
+      return characterAchievements;
+    }
+
+    // Return if the character's achievements are not public.
+    if (!characterAchievements.AchievementsPublic) {
+      const responseIfPrivate = {
+        cacheExpires: Number(new Date()) + 300000,
+        private: true
+      }
+
+      sessionStorage.setItem(cacheKey, JSON.stringify(responseIfPrivate));
+  
+      return responseIfPrivate;
+    }
+
+    const {
+      List
+    } = characterAchievements.Achievements;
+
+    const response = {
+      cacheExpires: Number(new Date()) + 86400000,
+      list: List.map(achievement => ({
+        date: achievement.Date,
+        id: achievement.ID
+      }))
+    }
+
+    sessionStorage.setItem(cacheKey, JSON.stringify(response));
+
+    return response;
+  }
+
+  /**
+   * Get Character data from XIVAPI or returned cached data.
+   * This function caches retrieved data within session storage with an expiry of 24 hours.
    */
   async getData() {
     if (!this.id) {
       throw new Error('Cannot call getData without an ID being specified.');
+    }
+
+    const cacheKey = `character/${this.id}`;
+    const fromCache = JSON.parse(sessionStorage.getItem(cacheKey));
+
+    if (fromCache && fromCache.cacheExpires > Number(new Date())) {
+      return fromCache;
     }
 
     const characterInfo = await fetch(
@@ -52,17 +120,20 @@ export default class Character {
       ...this.parseRawCharacterData(Character),
       bio: Character.Bio,
       claimed: !!this.timeClaimed,
+      cacheExpires: Number(new Date()) + 86400000,
       dc: Character.DC,
       world: Character.Server
     }
 
-    if (FreeCompany) {
+    if (FreeCompany && FreeCompany.name) {
       response.freeCompany = {
         crestParts: FreeCompany.Crest,
         name: FreeCompany.Name,
         tag: FreeCompany.Tag
       }
     }
+
+    sessionStorage.setItem(cacheKey, JSON.stringify(response));
 
     return response;
   }

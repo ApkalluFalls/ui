@@ -94,6 +94,7 @@ function ApkalluFalls({}) {
   const [version, setVersion] = useState(-1);
   const [character, setCharacter] = useState({ loading: true });
   const [user, setUser] = useState({ loading: true });
+  const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
 
   const cachedTheme = localStorage.getItem('theme') || 'light';
 
@@ -167,7 +168,11 @@ function ApkalluFalls({}) {
 
   return (
     <React.StrictMode>
-      <UserContext.Provider value={{...user}}>
+      <UserContext.Provider value={{
+        ...user,
+        verifiedCharacters: userVerifiedCharacters,
+        setVerifiedCharacters: setUserVerifiedCharacters
+      }}>
         <CharacterContext.Provider value={{
           ...character,
           change: handleCharacterChange

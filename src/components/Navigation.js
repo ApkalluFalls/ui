@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
-import { ThemeContext, themes } from 'contexts/theme';
+import { ThemeContext } from 'contexts/theme';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
 
@@ -14,6 +15,7 @@ const useStyles = createUseStyles(style);
 
 function Navigation() {
   const classes = useStyles(useContext(ThemeContext));
+  const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
 
   const {

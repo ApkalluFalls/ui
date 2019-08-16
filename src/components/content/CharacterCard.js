@@ -31,7 +31,7 @@ function CharacterCard({
    * This function fires whilst navigating to the selected character.
    * Its purpose is to update the active character if `props.setActiveOnClick` is set.
    */
-  async function onNavigate() {
+  function onNavigate() {
     if (!props.setActiveOnClick) {
       return;
     }
@@ -41,7 +41,6 @@ function CharacterCard({
       forename,
       id,
       name,
-      settingAsActive: true,
       surname,
       world
     });

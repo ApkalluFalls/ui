@@ -158,6 +158,9 @@ export const localisation = {
         title: 'Orchestrion Rolls'
       },
       character: {
+        communicatingWithXIVAPI: 'Communicating with XIVAPI...',
+        fetchingCharacterAchievements: 'Fetching character achievements...',
+        lodestoneBio: 'Lodestone bio',
         signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.'
       },
       characterSearch: {

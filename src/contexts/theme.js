@@ -9,7 +9,8 @@ import React from "react";
 const shared = {
   brand: '#ffee58',
   brandColor: '#333',
-  brandDarker: '#bfae13'
+  brandDarker: '#bfae13',
+  colorMid: '#757575'
 };
 
 /**
@@ -22,6 +23,7 @@ export const themes = {
 
     // Primary theme colours.
     background: '#eaeaea',
+    backgroundSubtle: '#f5f5f5',
     border: '#ccc',
     color: '#333',
     colorSubtle: '#424242',
@@ -93,6 +95,7 @@ export const themes = {
 
     // Primary theme colours.
     background: '#333',
+    backgroundSubtle: '#222',
     border: '#414141',
     color: '#fff',
     colorSubtle: '#ccc',

@@ -3,9 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { CharacterContext } from "contexts/character";
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
+import { UserContext } from 'contexts/user';
 import CharacterCard from 'components/content/CharacterCard';
 import InlineLoader from 'components/content/InlineLoader';
-import Character from 'js/character';
 import { paths } from 'js/routes';
 
 // Theme.
@@ -14,42 +14,17 @@ import style from 'styles/data/UserCharacters';
 
 const useStyles = createUseStyles(style);
 
-function UserCharacters({
-  characters: charactersDataFromFirebase = []
-}) {
+function UserCharacters() {
   const classes = useStyles(useContext(ThemeContext));
+  const user = useContext(UserContext);
   const { locale } = useContext(LocalisationContext);
   const { userCharacters: componentLocale } = locale.components;
-  
-  const [loading, setLoading] = useState(!Array.isArray(characters));
-  const [characters, setCharacters] = useState([]);
 
-  useEffect(() => {
-    if (!Array.isArray(charactersDataFromFirebase)) {
-      setLoading(true);
-      return;
-    }
+  const {
+    verifiedCharacters
+  } = user;
 
-    if (!charactersDataFromFirebase.length) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-
-    (async () => {
-      const fetchedCharacters = [];
-
-      for (const characterData of charactersDataFromFirebase) {
-        fetchedCharacters.push(await new Character(characterData).getData());
-      }
-
-      setCharacters(fetchedCharacters);
-      setLoading(false);
-    })();
-  }, [charactersDataFromFirebase]);
-
-  if (loading) {
+  if (!verifiedCharacters) {
     return <InlineLoader text={(
       <React.Fragment>
         {componentLocale.loading}
@@ -61,7 +36,7 @@ function UserCharacters({
      )} />;
   }
 
-  if (!charactersDataFromFirebase.length) {
+  if (!verifiedCharacters.length) {
     return (
       <div className={classes.userCharacters}>
         <p className={classes.help}>
@@ -75,7 +50,7 @@ function UserCharacters({
 
   return (
     <div className={classes.userCharacters}>
-      {characters.map(character => (
+      {verifiedCharacters.map(character => (
         <CharacterCard
           key={character.id}
           {...character}

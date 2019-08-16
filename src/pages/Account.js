@@ -37,20 +37,6 @@ function Account({
     temporaryOrOldContent: temporaryOrOldContent
   } = pageLocale.settings;
 
-  const [verifiedCharacters, setVerifiedCharacters] = useState();
-
-  useEffect(() => {
-    if (user.loading || !user.type) {
-      return;
-    }
-
-    (async () => {
-      const api = new API(undefined, user.data.uid);
-      const verifiedCharacters = await api.db('verified');
-      setVerifiedCharacters(verifiedCharacters)
-    })();
-  }, [user.loading])
-
   /**
    * Log the user out and navigate them back to the home page.
    */
@@ -69,7 +55,7 @@ function Account({
       <h1>{pageLocale.heading}</h1>
       <p>{pageLocale.about}</p>
       <Panel heading={pageLocale.yourCharacters}>
-        <UserCharacters characters={verifiedCharacters} />
+        <UserCharacters />
       </Panel>
       <Panel heading={(
         <React.Fragment>
