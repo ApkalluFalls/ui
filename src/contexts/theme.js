@@ -103,7 +103,6 @@ export const themes = {
     link: '#FFF6A7',
     linkHoverFocus: '#fff',
     linkActive: '#BB5EC2',
-    placeholder: '#9e9e9e',
     shadow: '#111',
     textShadow: '#111',
 
@@ -125,7 +124,7 @@ export const themes = {
       inputBackground: '#414141',
       inputBorder: '#222',
       inputColor: '#fff',
-      placeholder: '#757575',
+      placeholder: '#9e9e9e',
       switchBallBackground: '#ffee58',
       switchBallBorder: '#333',
       switchBallBackgroundOff: '#bdbdbd',
