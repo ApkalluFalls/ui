@@ -14,6 +14,10 @@
 <dl>
 <dt><a href="#API">API</a></dt>
 <dd></dd>
+<dt><a href="#API">API</a></dt>
+<dd></dd>
+<dt><a href="#Character">Character</a></dt>
+<dd></dd>
 <dt><a href="#Character">Character</a></dt>
 <dd></dd>
 </dl>
@@ -83,6 +87,20 @@ This stores the character ID in the tracked characters object within localStorag
 This function checks XIVAPI&#39;s cache, then either returns a fresh set of data
 from XIVAPI&#39;s API or returns the cached data from localStorage.</p>
 </dd>
+<dt><a href="#getAchievements">getAchievements()</a></dt>
+<dd><p>Get Character achievement data from XIVAPI or returned cached data.
+This function caches retrieved data within session storage with an expiry of 24 hours.</p>
+</dd>
+<dt><a href="#getData">getData()</a></dt>
+<dd><p>Get Character data from XIVAPI or returned cached data.
+This function caches retrieved data within session storage with an expiry of 24 hours.</p>
+</dd>
+<dt><a href="#parseRawCharacterData">parseRawCharacterData(character)</a></dt>
+<dd><p>Normalise the raw Character object returned by XIVAPI.</p>
+</dd>
+<dt><a href="#search">search()</a></dt>
+<dd><p>Search for a Character using XIVAPI.</p>
+</dd>
 </dl>
 
 <a name="module_[routes]"></a>
@@ -101,14 +119,23 @@ This maps routes to a given page component for use within the `<Container />` co
 **Kind**: global class  
 
 * [API](#API)
-    * [.json(resource, bypassCacheCheck, xivdbApiVersion)](#API+json) ⇒ <code>Promise</code>
-    * [.consolidate(resource, subresource, id, xivdbApiVersion)](#API+consolidate) ⇒ <code>Promise</code>
+    * [new API([dir], [uid])](#new_API_new)
+    * [.json(resource, bypassCacheCheck)](#API+json) ⇒ <code>Promise</code>
+    * [.consolidate(resource, subresource, id)](#API+consolidate) ⇒ <code>Promise</code>
     * [.db(resource, data, bypassCacheCheck, saveAll)](#API+db) ⇒ <code>Object</code>
-    * [.getRefInfo(ref)](#API+getRefInfo) ⇒ <code>Object</code>
+
+<a name="new_API_new"></a>
+
+### new API([dir], [uid])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [dir] | <code>String</code> | <code>misc</code> | The directory to pull data from (e.g. `"icons"`) |
+| [uid] | <code>String</code> |  | The signed in user's UID. |
 
 <a name="API+json"></a>
 
-### apI.json(resource, bypassCacheCheck, xivdbApiVersion) ⇒ <code>Promise</code>
+### apI.json(resource, bypassCacheCheck) ⇒ <code>Promise</code>
 Get data from https://apiv2.apkallufalls.com.
 This function either fetches new data or grabs cached data from the user's
 browser localStorage.
@@ -120,7 +147,6 @@ browser localStorage.
 | --- | --- | --- |
 | resource | <code>string</code> | the filepath of the resource to fetch. |
 | bypassCacheCheck | <code>bool</code> | don't try to fetch a cached version. |
-| xivdbApiVersion | <code>string</code> | the version of the API to use (null = v2). |
 
 **Example**  
 ```js
@@ -135,7 +161,7 @@ json('version', true);
 ```
 <a name="API+consolidate"></a>
 
-### apI.consolidate(resource, subresource, id, xivdbApiVersion) ⇒ <code>Promise</code>
+### apI.consolidate(resource, subresource, id) ⇒ <code>Promise</code>
 Consolidate resources from https://apiv2.apkallufalls.com.
 This function returns consolidated information about a given id from a
 given resource to return a fully-fledged data object.
@@ -148,7 +174,6 @@ given resource to return a fully-fledged data object.
 | resource | <code>string</code> | the name of the directory file. |
 | subresource | <code>string</code> | the name of the directory subfolder. |
 | id | <code>number</code> | the id of the piece of data to retrieve. |
-| xivdbApiVersion | <code>string</code> | the version of the API to use (null = v2). |
 
 **Example**  
 ```js
@@ -183,20 +208,105 @@ Fetch data from and store data to the Firebase database.
 // }
 db('minions', { ... }, false, true);
 ```
-<a name="API+getRefInfo"></a>
+<a name="API"></a>
 
-### apI.getRefInfo(ref) ⇒ <code>Object</code>
-This function normalises ref objects contained in data returned from the API.
-The cases here represent keys contained within the localisation objects from both
-http://apiv2.apkallufalls.com/minions.json and http://apiv2.apkallufalls.com/mounts.json.
+## API
+**Kind**: global class  
+
+* [API](#API)
+    * [new API([dir], [uid])](#new_API_new)
+    * [.json(resource, bypassCacheCheck)](#API+json) ⇒ <code>Promise</code>
+    * [.consolidate(resource, subresource, id)](#API+consolidate) ⇒ <code>Promise</code>
+    * [.db(resource, data, bypassCacheCheck, saveAll)](#API+db) ⇒ <code>Object</code>
+
+<a name="new_API_new"></a>
+
+### new API([dir], [uid])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [dir] | <code>String</code> | <code>misc</code> | The directory to pull data from (e.g. `"icons"`) |
+| [uid] | <code>String</code> |  | The signed in user's UID. |
+
+<a name="API+json"></a>
+
+### apI.json(resource, bypassCacheCheck) ⇒ <code>Promise</code>
+Get data from https://apiv2.apkallufalls.com.
+This function either fetches new data or grabs cached data from the user's
+browser localStorage.
 
 **Kind**: instance method of [<code>API</code>](#API)  
-**Returns**: <code>Object</code> - - The normalised representation.  
+**Returns**: <code>Promise</code> - Returns the parsed API response.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ref | <code>Object</code> | The ref object. |
+| resource | <code>string</code> | the filepath of the resource to fetch. |
+| bypassCacheCheck | <code>bool</code> | don't try to fetch a cached version. |
 
+**Example**  
+```js
+// returns data from https://apiv2.apkallufalls.com/minion/40.json OR
+// localStorage.getItem('api')['minion/40'] if that exists already.
+json('minion/40');
+```
+**Example**  
+```js
+// returns data from https://apiv2.apkallufalls.com/version.json.
+json('version', true);
+```
+<a name="API+consolidate"></a>
+
+### apI.consolidate(resource, subresource, id) ⇒ <code>Promise</code>
+Consolidate resources from https://apiv2.apkallufalls.com.
+This function returns consolidated information about a given id from a
+given resource to return a fully-fledged data object.
+
+**Kind**: instance method of [<code>API</code>](#API)  
+**Returns**: <code>Promise</code> - Returns the consilidated API responses.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>string</code> | the name of the directory file. |
+| subresource | <code>string</code> | the name of the directory subfolder. |
+| id | <code>number</code> | the id of the piece of data to retrieve. |
+
+**Example**  
+```js
+// returns {
+//   ...minions.json entry,
+//   ...minion/40.json,
+//   ...patches.json entry
+// }
+consolidate('minions', 'minion', 40);
+```
+<a name="API+db"></a>
+
+### apI.db(resource, data, bypassCacheCheck, saveAll) ⇒ <code>Object</code>
+Fetch data from and store data to the Firebase database.
+
+**Kind**: instance method of [<code>API</code>](#API)  
+**Returns**: <code>Object</code> - Returns the data requested or stored.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resource | <code>string</code> | the name of the directory file. |
+| data | <code>Object</code> | the data to send. |
+| bypassCacheCheck | <code>boolean</code> | should get requests ignore the cache? |
+| saveAll | <code>boolean</code> | does this need to save the entire data set? |
+
+**Example**  
+```js
+// returns {
+//   ...minions.json entry,
+//   ...minion/40.json,
+//   ...patches.json entry
+// }
+db('minions', { ... }, false, true);
+```
+<a name="Character"></a>
+
+## Character
+**Kind**: global class  
 <a name="Character"></a>
 
 ## Character
@@ -311,5 +421,36 @@ This stores the character ID in the tracked characters object within localStorag
 Get character data from the XIVAPI API.
 This function checks XIVAPI's cache, then either returns a fresh set of data
 from XIVAPI's API or returns the cached data from localStorage.
+
+**Kind**: global function  
+<a name="getAchievements"></a>
+
+## getAchievements()
+Get Character achievement data from XIVAPI or returned cached data.
+This function caches retrieved data within session storage with an expiry of 24 hours.
+
+**Kind**: global function  
+<a name="getData"></a>
+
+## getData()
+Get Character data from XIVAPI or returned cached data.
+This function caches retrieved data within session storage with an expiry of 24 hours.
+
+**Kind**: global function  
+<a name="parseRawCharacterData"></a>
+
+## parseRawCharacterData(character)
+Normalise the raw Character object returned by XIVAPI.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| character | <code>Object</code> | A Character object as returned by XIVAPI. |
+
+<a name="search"></a>
+
+## search()
+Search for a Character using XIVAPI.
 
 **Kind**: global function  
