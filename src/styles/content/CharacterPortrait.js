@@ -1,6 +1,6 @@
-import CharacterBackground from 'images/character-background.png';
 import { navigation } from 'styles/Navigation';
 import textStyles from 'styles/text';
+import CharacterBackground from 'images/character-background.png';
 
 export default {
   ...textStyles,

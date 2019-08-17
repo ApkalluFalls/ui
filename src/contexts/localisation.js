@@ -18,11 +18,13 @@ export const localisation = {
   en: {
     shared,
     links: {
-      lodestone: 'https://eu.finalfantasyxiv.com/lodestone',
-      lodestoneProfileEdit: 'https://eu.finalfantasyxiv.com/lodestone/my/setting/profile'
+      lodestone: 'https://na.finalfantasyxiv.com/lodestone',
+      lodestoneProfileEdit: 'https://na.finalfantasyxiv.com/lodestone/my/setting/profile',
+      lodestoneAccountManagement: 'https://na.finalfantasyxiv.com/lodestone/my/setting/account'
     },
     common: {
       achievements: 'Achievements',
+      anUnknownErrorOccurred: 'An unknown error occurred.',
       barding: 'Chocobo Barding',
       clickForHelp: 'Click for help',
       close: 'Close',
@@ -37,24 +39,29 @@ export const localisation = {
       northAmerican: 'North American',
       orchestrionRolls: 'Orchestrion Rolls',
       patreonBlog: 'Patreon blog',
+      pleaseTryAgain: 'Please try again later.',
       promotional: 'Promotional',
+      lodestoneSignIn: 'Sign in to your account on the official Final Fantasy XIV website.',
       titles: 'Titles',
       unavailable: 'Unavailable'
     },
     actions: {
       changeCharacter: 'Change character',
-      checkForVerificationCode: 'Check for Verification Code',
       iconsMode: 'Icons mode',
       listMode: 'List mode',
       search: 'Search',
       selectACharacter: 'Search for a character to track',
-      signInOrCreateAccount: 'Sign In or Create an Account'
+      signInOrCreateAccount: 'Sign In or Create an Account',
+      unverifyCharacter: 'Unverify ownership',
+      verifyOwnership: 'Verify ownership'
     },
     labels: {
       darkMode: 'Dark mode',
       hideVerifyCharacterSection: 'Hide "Verify ownership" section on character profiles'
     },
     info: {
+      addingCharacter: 'Adding character...',
+      checkingLodestoneBio: 'Checking Lodestone bio...',
       copied: 'Copied to clipboard.',
       fetchingList: 'Fetching {0} list...',
       loading: 'Loading...',
@@ -62,9 +69,17 @@ export const localisation = {
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
       searching: 'Searching...',
       talkingToFirebase: 'Talking to Firebase',
-      trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
+      trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account',
+      unverifyCharacter: 'Are you sure you want to remove this character from your Apkallu Falls account?',
+      unverifyingCharacter: 'Unverifying...'
     },
     components: {
+      characterStats: {
+        achievementsPrivate: 'This character\'s stats are private and cannot be accessed by Apkallu Falls.',
+        howToMakeAchievementsPublic: 'If this is your character and you would like to make your achievements public, please follow the below steps:',
+        lodestoneAccountManagement: 'Navigate to your Lodestone Account Management page.',
+        lodestoneAchievementsPublic: 'Make sure the option next to Achievements is set to Public, then click Confirm.'
+      },
       fullPageError: {
         heading: 'Something went wrong!',
         about: 'Apkallu Falls was unable to retrieve any data. This could be because your network has changed or because you\'ve lost internet connection. Please reload the page and try again.',
@@ -83,7 +98,17 @@ export const localisation = {
         loading: 'Fetching your verified characters...',
         noVerifiedCharacters: 'You have no verified characters. To verify ownership of a character, visit the profile page of the character you wish to verify and click on the "Verify Ownership" button.',
         verifyMoreCharacters: 'To verify ownership of another character, visit the profile page of the character you wish to verify and click on the "Verify Ownership" button.'
-      }
+      },
+      verifyCharacter: {
+        accountRequired: 'You\'ll need to sign in or create an Apkallu Falls account before you can begin the character verification process.',
+        codeMissing: 'The code could not be found. Make sure the code was saved to your character\'s bio and try again.',
+        howToVerifyOwnership: 'To verify that this character is yours, please follow the below steps:',
+        lodestoneEditProfile: 'Navigate to your character\'s profile page, scroll down and click to edit your bio (Character Profile).',
+        lodestoneVerificationCode: 'Copy the unique code below anywhere into the edit box and click Confirm twice to save it.',
+        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.',
+        verifyOwnership: 'Verify ownership',
+        whyVerifyOwnership: 'If this is your character you can verify ownership of it and unlock all of Apkallu Falls tracking abilities.'
+      },
     },
     content: {
       caitSithDoll: 'Cait Sith Doll'
@@ -171,18 +196,16 @@ export const localisation = {
         title: 'Orchestrion Rolls'
       },
       character: {
-        accountRequired: 'You\'ll need to sign in or create an Apkallu Falls account before you can begin the character verification process.',
+        characterErrorHeading: 'Oops, something went wrong',
+        characterErrorName: 'Corrupted Aether',
+        characterErrorServer: 'Lost in the Lifestream',
+        characterNotFound: 'We looked, but found nothing...',
+        characterNotFoundDescription: 'This character was likely claimed by The Calamity.',
         communicatingWithXIVAPI: 'Communicating with XIVAPI...',
         fetchingCharacterAchievements: 'Fetching character achievements...',
-        howToVerifyOwnership: 'To verify that this character is yours, please follow the below steps:',
+        howToUnverifyCharacter: 'This is one of your characters. If you\'d like to remove this character from your profile, you can do so by clicking on the button below. You can re-verify ownership of the character at any time, and any manual tracking you may have done will be automatically restored for you.',
         lodestoneBio: 'Lodestone bio',
-        lodestoneEditProfile: 'Navigate to your character\'s profile page, scroll down and click to edit your bio (Character Profile).',
-        lodestoneSignIn: 'Sign in to your account on the official Final Fantasy XIV website.',
-        lodestoneVerificationCode: 'Copy the unique code below anywhere into the edit box and click Confirm twice to save it.',
         setActive: 'Set Active',
-        signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.',
-        verifyOwnership: 'Verify ownership',
-        whyVerifyOwnership: 'If this is your character you can verify ownership of it and unlock all of Apkallu Falls tracking abilities.'
       },
       characterSearch: {
         heading: 'Search for a Character',

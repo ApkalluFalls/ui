@@ -85,7 +85,6 @@ class API {
       return { error: true };
     });
 
-    console.info(data);
     if (data.error) {
       return data;
     }
@@ -131,7 +130,7 @@ class API {
     let cachedDb = (localStorage && JSON.parse(localStorage.getItem('store'))) || {};
 
     // If we're not ignoring the cache, attempt to return cached data.
-    if (!bypassCacheCheck && cachedDb.uid === this.uid) {
+    if (!data && !bypassCacheCheck && cachedDb.uid === this.uid) {
       const cachedData = cachedDb[resource];
 
       // If an entry exists in the cache, return that instead of making a new DB call.
@@ -151,7 +150,7 @@ class API {
     if (data) {
       // Generate the request object, updating the updated timestamp.
       let requestObj = {
-        "@": +new Date()
+        "@": Number(new Date())
       }
 
       if (saveAll)
@@ -172,6 +171,7 @@ class API {
             ...cachedDb,
             ...requestObj
           }));
+
           return response;
         });
     }

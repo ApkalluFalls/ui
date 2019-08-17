@@ -33,6 +33,8 @@ function CharacterPortrait() {
     )
   }
 
+  console.warn(character);
+
   return (
     <section className={classes.container}>
       {character.name
@@ -75,7 +77,7 @@ function CharacterPortrait() {
             <figure className={classes.character}>
               <div className={classes.imageWrapper}>
                 <span className={classes.image}>
-                  ?
+                  <span className="fal fa-search-plus" />
                 </span>
               </div>
               <figcaption className={`${classes.caption} ${classes.captionNoCharacterSelected}`}>

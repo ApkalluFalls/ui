@@ -94,11 +94,11 @@ export default () => {
       borderRadius: '100%',
       display: 'block',
 
-      '&:nth-chilD(odd)': {
+      '&:nth-last-child(even)': {
         marginLeft: -8
       },
 
-      '&:nth-chilD(even)': {
+      '&:nth-last-child(odd)': {
         marginRight: -4
       }
     })

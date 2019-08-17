@@ -118,6 +118,7 @@ function ApkalluFalls({}) {
   // State.
   const [version, setVersion] = useState(-1);
   const [character, setCharacter] = useState({ loading: true });
+  const [characterAchievements, setCharacterAchievements] = useState();
   const [user, setUser] = useState({ loading: true });
   const [userSettings, setUserSettings] = useState(defaultUserSettings);
   const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
@@ -188,6 +189,7 @@ function ApkalluFalls({}) {
       localStorage.removeItem('character');
     }
 
+    setCharacterAchievements(undefined);
     setCharacter(character);
   }
 
@@ -236,7 +238,9 @@ function ApkalluFalls({}) {
       }}>
         <CharacterContext.Provider value={{
           ...character,
-          change: handleCharacterChange
+          achievements: characterAchievements,
+          change: handleCharacterChange,
+          setAchievements: setCharacterAchievements
         }}>
           <BrowserRouter>
             <ThemeProvider theme={{

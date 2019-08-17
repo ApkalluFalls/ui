@@ -28,7 +28,7 @@ function Navigation() {
     api: 'achievements',
     path: paths.achievements,
     title: contentText.achievements,
-    hasVisibleProgressBar: true,
+    hasVisibleProgressBar: character && character.achievements,
   }, {
     api: 'minions',
     path: paths.minions,

@@ -1,33 +1,10 @@
 import formStyles from 'styles/forms';
 import textStyles from 'styles/text';
+import CharacterBackground from 'images/character-background.png';
 
 export default {
   ...formStyles(),
   ...textStyles,
-  help: theme => ({
-    color: theme.colorSubtle,
-    fontSize: 14,
-
-    '&:last-child': {
-      marginBottom: 0
-    }
-  }),
-  list: theme => ({
-    marginTop: 0,
-
-    '&:last-child': {
-      marginBottom: 0
-    }
-  }),
-  listItem: theme => ({
-    color: theme.colorSubtle,
-    fontSize: 14,
-    marginBottom: 8,
-
-    '&:last-child': {
-      marginBottom: 0
-    }
-  }),
   header: {
     alignItems: 'center',
     display: 'flex',
@@ -35,6 +12,7 @@ export default {
     width: '100%'
   },
   avatar: theme => ({
+    backgroundImage: `url(${CharacterBackground})`,
     backgroundSize: 'cover',
     borderRadius: '100%',
     boxShadow: {
@@ -72,9 +50,7 @@ export default {
     color: theme.colorUnimportant,
     marginBottom: 0
   }),
-  bioWrapper: theme => ({
-    background: 'transparent',
-    border: 'none',
+  section: {
     marginBottom: 16,
     padding: {
       bottom: 4,
@@ -82,15 +58,15 @@ export default {
       right: 16,
       top: 4
     }
-  }),
+  },
   bioHeading: theme => ({
-    color: theme.colorUnimportant,
+    color: theme.colorSubtle,
     fontSize: 14,
     lineHeight: '17px',
     margin: '0 0 4px'
   }),
   bio: theme => ({
-    color: theme.colorMid,
+    color: theme.colorUnimportant,
     fontSize: 14,
     fontStyle: 'italic',
     lineHeight: '17px',
@@ -104,56 +80,13 @@ export default {
     marginRight: 8,
     verticalAlign: 'top'
   }),
-  verifyCharacter: theme => ({
-    background: theme.panel.background,
-    boxShadow: {
-      blur: 4,
-      color: theme.panel.background,
-      spread: 4,
-      x: 0,
-      y: 0
-    },
-    margin: '8px 0 0',
-    padding: 16
-  }),
-  verifyCharacterHeading: theme => ({
-    fontSize: 20,
-    margin: {
-      bottom: 8,
-      top: 0
-    }
-  }),
-  verificationCode: theme => ({
-    border: {
-      color: theme.verificationCode,
-      radius: 4,
-      style: 'dashed',
+  unverify: theme => ({
+    borderTop: {
+      color: theme.border,
+      style: 'dotted',
       width: 1
     },
-    color: theme.verificationCode,
-    display: 'inline-block',
-    fontFamily: 'monospace',
-    fontStyle: 'italic',
-    margin: {
-      left: 4,
-      right: 16,
-      top: 4
-    },
-    padding: '4px 8px'
-  }),
-  verificationCodeCopyOnClick: theme => ({
-    cursor: 'copy'
-  }),
-  copyHelper: theme => ({
-    color: theme.colorUnimportant,
-    fontSize: 13,
-    fontStyle: 'italic',
-    lineHeight: '16px',
-    opacity: 0,
-    transition: 'opacity .4s',
-    userSelect: 'none'
-  }),
-  copyHelperCopied: theme => ({
-    opacity: 1
+    marginTop: 64,
+    paddingTop: 16
   })
 };

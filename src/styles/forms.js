@@ -80,6 +80,25 @@ export default () => {
         opacity: 0.6
       }
     }),
+    buttonSmall: () => ({
+      fontSize: 14,
+      lineHeight: '17px',
+      display: 'inline-block',
+      padding: '4px 8px',
+      width: 'auto'
+    }),
+    buttonDanger: theme => ({
+      background: theme.form.buttonDangerBackground,
+      borderColor: theme.form.buttonDangerBorder,
+
+      '&:hover, &:focus': {
+        background: theme.form.buttonDangerBorder
+      },
+
+      '&:disabled': {
+        background: theme.form.buttonDangerBackground
+      }
+    }),
     linkButton: theme => ({
       ...controlDefaults,
       background: 'transparent',

@@ -55,7 +55,7 @@ export default class Character {
     if (!characterAchievements.AchievementsPublic) {
       const responseIfPrivate = {
         cacheExpires: Number(new Date()) + 300000,
-        private: true
+        isPrivate: true
       }
 
       sessionStorage.setItem(cacheKey, JSON.stringify(responseIfPrivate));
@@ -83,8 +83,9 @@ export default class Character {
   /**
    * Get Character data from XIVAPI or returned cached data.
    * This function caches retrieved data within session storage with an expiry of 24 hours.
+   * @param {Boolean} [bypassCache] - If true this will ignore cached data and pull fresh data from the API.
    */
-  async getData() {
+  async getData(bypassCache) {
     if (!this.id) {
       throw new Error('Cannot call getData without an ID being specified.');
     }
@@ -92,7 +93,7 @@ export default class Character {
     const cacheKey = `character/${this.id}`;
     const fromCache = JSON.parse(sessionStorage.getItem(cacheKey));
 
-    if (fromCache && fromCache.cacheExpires > Number(new Date())) {
+    if (!bypassCache && fromCache && fromCache.cacheExpires > Number(new Date())) {
       return fromCache;
     }
 
@@ -109,6 +110,14 @@ export default class Character {
 
     if (characterInfo.error) {
       return characterInfo;
+    }
+
+    // If an exception was thrown with a status of 200, pass that back to the callee.
+    if (characterInfo.Ex) {
+      return {
+        error: true,
+        errorCode: characterInfo.ExCode
+      };
     }
 
     const {
