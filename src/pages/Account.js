@@ -49,6 +49,8 @@ function Account({
     return <React.Fragment />;
   }
 
+  const { settings: userSettings } = user;
+
   return (
     <React.Fragment>
       <h1>{pageLocale.heading}</h1>
@@ -73,7 +75,7 @@ function Account({
           <Switch
             id="look-and-feel-dark-mode"
             label={locale.labels.darkMode}
-            on={user.settings.theme.key === 'dark'}
+            on={userSettings.theme.key === 'dark'}
             onChange={(checked) => user.modifySettings({
               theme: themes[checked ? 'dark' : 'light']
             })}
@@ -83,7 +85,7 @@ function Account({
           <Switch
             id="look-and-feel-dark-mode"
             label={locale.labels.hideVerifyCharacterSection}
-            on={user.settings.hideVerifyCharacterSection}
+            on={userSettings.hideVerifyCharacterSection}
             onChange={(checked) => user.modifySettings({
               hideVerifyCharacterSection: checked
             })}
@@ -98,40 +100,50 @@ function Account({
           <Switch
             id="manual-tracking-minions"
             label={locale.common.minions}
-            on={true}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.enableManualTrackingMinions}
+            onChange={(checked) => user.modifySettings({
+              enableManualTrackingMinions: checked
+            })}
           />
         </div>
         <div className={classes.control}>
           <Switch
             id="manual-tracking-mounts"
             label={locale.common.mounts}
-            on={true}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.enableManualTrackingMounts}
+            onChange={(checked) => user.modifySettings({
+              enableManualTrackingMounts: checked
+            })}
           />
         </div>
         <div className={classes.control}>
           <Switch
             id="manual-tracking-emotes"
             label={locale.common.emotes}
-            on={true}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.enableManualTrackingEmotes}
+            onChange={(checked) => user.modifySettings({
+              enableManualTrackingEmotes: checked
+            })}
           />
         </div>
         <div className={classes.control}>
           <Switch
             id="manual-tracking-orchestion-rolls"
             label={locale.common.orchestrionRolls}
-            on={true}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.enableManualTrackingOrchestrion}
+            onChange={(checked) => user.modifySettings({
+              enableManualTrackingOrchestrion: checked
+            })}
           />
         </div>
         <div className={classes.control}>
           <Switch
             id="manual-tracking-barding"
             label={locale.common.barding}
-            on={true}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.enableManualTrackingBarding}
+            onChange={(checked) => user.modifySettings({
+              enableManualTrackingBarding: checked
+            })}
           />
         </div>
       </Panel>

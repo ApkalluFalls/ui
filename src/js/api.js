@@ -59,7 +59,7 @@ class API {
    */
   async json(resource, bypassCacheCheck) {
     // If we're not ignoring the cache, attempt to return cached data.
-    if (window.config && window.config.offline || !bypassCacheCheck) {
+    if (!bypassCacheCheck) {
       const cachedData = await this.fromCache(resource);
 
       // If an entry exists in the cache, return that instead of making a new
@@ -105,115 +105,6 @@ class API {
   }
 
   /**
-   * Consolidate resources from https://apiv2.apkallufalls.com.
-   * This function returns consolidated information about a given id from a
-   * given resource to return a fully-fledged data object.
-   * 
-   * @param {string} resource - the name of the directory file.
-   * @param {string} subresource - the name of the directory subfolder.
-   * @param {number} id - the id of the piece of data to retrieve.
-   * 
-   * @example
-   * // returns {
-   * //   ...minions.json entry,
-   * //   ...minion/40.json,
-   * //   ...patches.json entry
-   * // }
-   * consolidate('minions', 'minion', 40);
-   * 
-   * @returns {Promise} Returns the consilidated API responses.
-   */
-  async consolidate(resource, subresource, id) {      
-    // Grab the {resource}.json list (i.e. minions.json).
-    const data = await new Promise(
-      (resolve, reject) => this.json(resource, false).then(resolve).catch(reject)
-    );
-
-    const list = data.data;
-    const localisation = data.localisation;
-    const tags = resource === 'achievements' || resource === 'titles'
-    ? await new Promise(
-      (resolve, reject) => this.json('achievement_categories', false, 'v3').then(resolve).catch(reject)
-    ) : undefined;
-    
-    // If the promise was rejected, error.
-    if (!(list instanceof Array))
-      throw new Error(list);
-
-    // The previous and next items.
-    let nextEntry = {};
-    let previousEntry = {};
-    
-    // Filter the list to retrieve the matching value.
-    let entry = list.filter((l, index) => {
-      if (+l.id !== +id)
-        return false;
-
-      if (index !== 0) {
-        const previous = list[index - 1];
-        previousEntry.id = previous.id;
-        previousEntry.name = previous.name[window.lang];
-        previousEntry.url = window.config.wikiUrl(subresource, previousEntry.id, previousEntry.name);
-      }
-      
-      if (index !== list.length -1) {
-        const next = list[index + 1];
-        nextEntry.id = next.id;
-        nextEntry.name = next.name[window.lang];
-        nextEntry.url = window.config.wikiUrl(subresource, nextEntry.id, nextEntry.name);
-      }
-
-      return true;
-    });
-  
-    // If there isn't exactly 1 match, error.
-    if (entry.length !== 1)
-      return false;
-  
-    // The entry we need is the 0 index.
-    entry = entry[0];
-    
-    // We can now grab the individual json file for that entry.
-    const individual = await new Promise(
-      (resolve, reject) => this.json(subresource + '/' + entry.id, false) .then(resolve).catch(reject)
-    );
-  
-    // If no individual json file was found, error.
-    if (!individual || typeof individual !== 'object')
-      throw new Error(individual);
-    
-    // Grab the patch list.
-    const patches = await new Promise(
-      (resolve, reject) => this.json('patches', false, 'v3').then(resolve).catch(reject)
-    );
-  
-    // Get details of the relevant patch.
-    let patch = patches.filter(p => p.id === entry.patch);
-  
-    // If there isn't exactly 1 patch, error.
-    if (patch.length !== 1)
-      throw new Error(
-        "Expected 1 entry for patch '" + entry.patch + "' in 'patches', instead found " + patch.length
-      );
-  
-    // The patch we need is the 0 index.
-    patch = patch[0];
-  
-    // Return the unified data.
-    return {
-      data: {
-        ...individual,
-        ...entry,
-        patch,
-        previousEntry,
-        nextEntry
-      },
-      localisation,
-      tags
-    }
-  }
-
-  /**
    * Fetch data from and store data to the Firebase database.
    * 
    * @param {string} resource - the name of the directory file.
@@ -240,17 +131,13 @@ class API {
     let cachedDb = (localStorage && JSON.parse(localStorage.getItem('store'))) || {};
 
     // If we're not ignoring the cache, attempt to return cached data.
-    if (((window.config && window.config.offline) || !bypassCacheCheck) && cachedDb.uid === this.uid) {
+    if (!bypassCacheCheck && cachedDb.uid === this.uid) {
       const cachedData = cachedDb[resource];
 
       // If an entry exists in the cache, return that instead of making a new DB call.
       if (cachedData)
         return cachedData;
     }
-
-    // It shouldn't ever get here. Do nothing just in case.
-    if (window.config && window.config.offline)
-      return;
 
     // Wipe the currently-stored data (if any).
     cachedDb = {

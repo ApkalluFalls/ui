@@ -23,6 +23,24 @@ import { createTheming } from 'react-jss';
 
 const { ThemeProvider } = createTheming(ThemeContext);
 
+/**
+ * These are the default settings for anyone who first visits the site. If the user is logged in
+ * these will be replaced with the settings saved from their Account page.
+ */
+const defaultUserSettings = {
+  enableManualTrackingBarding: true,
+  enableManualTrackingEmotes: true,
+  enableManualTrackingMinions: true,
+  enableManualTrackingMounts: true,
+  enableManualTrackingOrchestrion: true,
+  hideVerifyCharacterSection: false,
+  theme: themes[localStorage.getItem('theme') || 'light']
+};
+
+/**
+ * Make the first handshake with Firebase so that we're ready to send and receive data when
+ * necessary.
+ */
 function initFirebase() {
   firebase.initializeApp({
     apiKey: "AIzaSyA5P0r1Iur1bGtXm7nLwwz1JNDa2YhHZ18",
@@ -36,6 +54,10 @@ function initFirebase() {
   firebase.firestore();
 }
 
+/**
+ * When Firebase's auth state changes, this function is called to populate the user context.
+ * @param {Object} user - The user object received from Firebase.
+ */
 function parseFirebaseUserObject(user) {
   if (!user) {
     return {
@@ -82,8 +104,7 @@ function parseFirebaseUserObject(user) {
     isLoggedIn: true,
     type
   };
-  
-  window.signedInUser = character;
+
   return character;
 }
 
@@ -98,9 +119,7 @@ function ApkalluFalls({}) {
   const [version, setVersion] = useState(-1);
   const [character, setCharacter] = useState({ loading: true });
   const [user, setUser] = useState({ loading: true });
-  const [userSettings, setUserSettings] = useState({
-    theme: themes[localStorage.getItem('theme') || 'light']
-  });
+  const [userSettings, setUserSettings] = useState(defaultUserSettings);
   const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
 
   const cachedTheme = localStorage.getItem('theme') || 'light';

@@ -40,14 +40,12 @@ function ContentProgress({
     })();
   }, [])
 
-  const hasProgressBar = window.signedInCharacter || !source.requiresSignIn;
-
   return (
     <section className={classes.container}>
       <h2 className={classes.heading}>
         {source.title}
       </h2>
-      {hasProgressBar && (
+      {source.hasVisibleProgressBar && (
         selectedCharacterName
           ? (
             <ProgressBar value={0 /* todo */} limit={total || undefined} />

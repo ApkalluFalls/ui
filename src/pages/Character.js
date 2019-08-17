@@ -143,96 +143,98 @@ function CharacterPage({
           </blockquote>
         </section>
       )}
-      <section className={classes.verifyCharacter}>
-        <h2 className={classes.verifyCharacterHeading}>
-          {pageLocale.verifyOwnership}
-        </h2>
-        <p className={classes.help}>
-          {pageLocale.whyVerifyOwnership}
-        </p>
-        {user.isLoggedIn
-          ? (
-            <React.Fragment>
-              <p className={classes.help}>
-                {pageLocale.howToVerifyOwnership}
-              </p>
-              <ol className={classes.list}>
-                <li className={classes.listItem}>
-                  {pageLocale.lodestoneSignIn}
-                  <br />
-                  <a
-                    href={locale.links.lodestone}
-                    className={classes.hyperlink}
-                  >
-                    {locale.links.lodestone}
-                  </a>
-                </li>
-                <li className={classes.listItem}>
-                  {pageLocale.lodestoneEditProfile}
-                  <br />
-                  <a 
-                    href={locale.links.lodestoneProfileEdit}
-                    className={classes.hyperlink}
-                  >
-                    {locale.links.lodestoneProfileEdit}
-                  </a>
-                </li>
-                <li className={classes.listItem}>
-                  {pageLocale.lodestoneVerificationCode}
-                  <br />
-                  {canCopyOnClick
-                    ? (
-                      <React.Fragment>
-                        <span
-                          className={`${classes.verificationCode} ${classes.verificationCodeCopyOnClick}`}
-                          role="button"
-                          tabIndex={0}
-                          onClick={handleVerificationCodeCopy}
-                          onKeyDown={(event) => event.which === 13 && handleVerificationCodeCopy()}
-                        >
+      {!user.isLoggedIn || !user.settings.hideVerifyCharacterSection && (
+        <section className={classes.verifyCharacter}>
+          <h2 className={classes.verifyCharacterHeading}>
+            {pageLocale.verifyOwnership}
+          </h2>
+          <p className={classes.help}>
+            {pageLocale.whyVerifyOwnership}
+          </p>
+          {user.isLoggedIn
+            ? (
+              <React.Fragment>
+                <p className={classes.help}>
+                  {pageLocale.howToVerifyOwnership}
+                </p>
+                <ol className={classes.list}>
+                  <li className={classes.listItem}>
+                    {pageLocale.lodestoneSignIn}
+                    <br />
+                    <a
+                      href={locale.links.lodestone}
+                      className={classes.hyperlink}
+                    >
+                      {locale.links.lodestone}
+                    </a>
+                  </li>
+                  <li className={classes.listItem}>
+                    {pageLocale.lodestoneEditProfile}
+                    <br />
+                    <a 
+                      href={locale.links.lodestoneProfileEdit}
+                      className={classes.hyperlink}
+                    >
+                      {locale.links.lodestoneProfileEdit}
+                    </a>
+                  </li>
+                  <li className={classes.listItem}>
+                    {pageLocale.lodestoneVerificationCode}
+                    <br />
+                    {canCopyOnClick
+                      ? (
+                        <React.Fragment>
+                          <span
+                            className={`${classes.verificationCode} ${classes.verificationCodeCopyOnClick}`}
+                            role="button"
+                            tabIndex={0}
+                            onClick={handleVerificationCodeCopy}
+                            onKeyDown={(event) => event.which === 13 && handleVerificationCodeCopy()}
+                          >
+                            {verificationCode}
+                          </span>
+                          {' '}
+                          <span className={`${classes.copyHelper} ${verificationCodeCopied ? classes.copyHelperCopied : ''}`}>
+                            <span className="fal fa-clipboard" />
+                            {' '}
+                            {locale.info.copied}
+                          </span>
+                        </React.Fragment>
+                      ) : (
+                        <span className={classes.verificationCode}>
                           {verificationCode}
                         </span>
-                        {' '}
-                        <span className={`${classes.copyHelper} ${verificationCodeCopied ? classes.copyHelperCopied : ''}`}>
-                          <span className="fal fa-clipboard" />
-                          {' '}
-                          {locale.info.copied}
-                        </span>
-                      </React.Fragment>
-                    ) : (
-                      <span className={classes.verificationCode}>
-                        {verificationCode}
-                      </span>
-                    )
-                  }
-                </li>
-              </ol>
-              <div className={classes.control}>
-                <button
-                  className={classes.button}
-                  type="button"
-                >
-                  {locale.actions.checkForVerificationCode}
-                </button>
-              </div>
-            </React.Fragment>
-          )
-          : (
-            <React.Fragment>
-              <p className={classes.help}>
-                {pageLocale.accountRequired}
-              </p>
-              <Link to={paths.authentication}>
-                <span className={classes.button}>
-                  <span className="fal fa-user-plus" />
-                  {' '}
-                  {locale.actions.signInOrCreateAccount}
-                </span>
-              </Link>
-            </React.Fragment>
-          )
-        }
-      </section>
+                      )
+                    }
+                  </li>
+                </ol>
+                <div className={classes.control}>
+                  <button
+                    className={classes.button}
+                    type="button"
+                  >
+                    {locale.actions.checkForVerificationCode}
+                  </button>
+                </div>
+              </React.Fragment>
+            )
+            : (
+              <React.Fragment>
+                <p className={classes.help}>
+                  {pageLocale.accountRequired}
+                </p>
+                <Link to={paths.authentication}>
+                  <span className={classes.button}>
+                    <span className="fal fa-user-plus" />
+                    {' '}
+                    {locale.actions.signInOrCreateAccount}
+                  </span>
+                </Link>
+              </React.Fragment>
+            )
+          }
+        </section>
+      )}
     </React.Fragment>
   )
 }

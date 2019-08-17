@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
+import { UserContext } from 'contexts/user';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
 
@@ -17,6 +18,7 @@ function Navigation() {
   const classes = useStyles(useContext(ThemeContext));
   const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
+  const user = useContext(UserContext);
 
   const {
     common: contentText
@@ -25,32 +27,33 @@ function Navigation() {
   const contents = [{
     api: 'achievements',
     path: paths.achievements,
-    title: contentText.achievements
+    title: contentText.achievements,
+    hasVisibleProgressBar: true,
   }, {
     api: 'minions',
     path: paths.minions,
     title: contentText.minions,
-    requiresSignIn: true
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingMinions
   }, {
     api: 'mounts',
     path: paths.mounts,
     title: contentText.mounts,
-    requiresSignIn: true
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingMounts
   }, {
     api: 'emotes',
     path: paths.emotes,
     title: contentText.emotes,
-    requiresSignIn: true
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingEmotes
   }, {
     api: 'orchestrion',
     path: paths.orchestrion,
     title: contentText.orchestrionRolls,
-    requiresSignIn: true
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingOrchestrion
   }, {
     api: 'barding',
     path: paths.barding,
     title: contentText.barding,
-    requiresSignIn: true
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingBarding
   }];
 
   return (
@@ -74,7 +77,7 @@ function Navigation() {
               key={content.path}
             >
               <NavLink
-                className={`${classes.link} ${window.signedInCharacter || !content.requiresSignIn ? '' : classes.linkCollapsed}`}
+                className={`${classes.link} ${content.hasVisibleProgressBar ? '' : classes.linkCollapsed}`}
                 activeClassName={classes.linkActive}
                 to={content.path}
               >
