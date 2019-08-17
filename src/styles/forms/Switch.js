@@ -1,4 +1,4 @@
-import formStyles from '../forms';
+import formStyles from 'styles/forms.js';
 
 export default {
   switch: {

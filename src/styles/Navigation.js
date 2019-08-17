@@ -1,3 +1,4 @@
+import brandStyles from 'styles/brands';
 import Background from 'images/background2.png';
 import Logo from 'images/apkallu.png';
 
@@ -223,6 +224,7 @@ export default () => {
       display: 'block',
       fontSize: 14,
       marginTop: 4,
+      opacity: 0.7,
       padding: {
         bottom: 4,
         left: 8,
@@ -230,22 +232,26 @@ export default () => {
         top: 4
       },
       textAlign: 'center',
-      transition: 'background .2s'
+      transition: 'background .1s, opacity .1s'
     }),
     discord: theme => ({
-      background: theme.navigation.discord,
+      background: brandStyles.discord,
+      borderColor: brandStyles.discordAlt,
 
-      '&:hover, &:focus': {
-        background: theme.navigation.discordHover,
-        color: '#fff'
+      '&:hover, &:focus, &:active': {
+        background: brandStyles.discordAlt,
+        color: '#fff',
+        opacity: 1
       }
     }),
     patreon: theme => ({
-      background: theme.navigation.patreon,
+      background: brandStyles.patreon,
+      borderColor: brandStyles.patreonAlt,
 
-      '&:hover, &:focus': {
-        background: theme.navigation.patreonHover,
-        color: '#fff'
+      '&:hover, &:focus, &:active': {
+        background: brandStyles.patreonAlt,
+        color: '#fff',
+        opacity: 1
       }
     })
   }

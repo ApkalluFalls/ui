@@ -37,12 +37,8 @@ export const themes = {
 
     // Layout sections.
     navigation: {
-      discord: 'rgba(113, 136, 218)',
-      discordHover: 'rgba(113, 136, 218, 0.9)',
       gradientStart: 'rgba(242, 242, 242, 0.8)',
-      gradientEnd: 'rgba(234, 234, 234, 1)',
-      patreon: 'rgba(249, 104, 84)',
-      patreonHover: 'rgba(249, 104, 84, 0.9)'
+      gradientEnd: 'rgba(234, 234, 234, 1)'
     },
 
     // Forms.
@@ -110,12 +106,8 @@ export const themes = {
 
     // Layout sections.
     navigation: {
-      discord: 'rgba(113, 136, 218, 0.5)',
-      discordHover: 'rgba(113, 136, 218, 0.8)',
       gradientStart: 'rgba(33, 33, 33, 0.9)',
-      gradientEnd: 'rgba(51, 51, 51, 1)',
-      patreon: 'rgba(249, 104, 84, 0.5)',
-      patreonHover: 'rgba(249, 104, 84, 0.8)'
+      gradientEnd: 'rgba(51, 51, 51, 1)'
     },
 
     // Forms.

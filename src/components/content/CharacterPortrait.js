@@ -60,7 +60,7 @@ function CharacterPortrait() {
               </figure>
             </NavLink>
             <Link
-              className={classes.changeCharacter}
+              className={`${classes.hyperlink} ${classes.changeCharacter}`}
               to={paths.characterSearch}
             >
               {locale.actions.changeCharacter}

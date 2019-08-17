@@ -1,7 +1,9 @@
 import CharacterBackground from 'images/character-background.png';
 import { navigation } from 'styles/Navigation';
+import textStyles from 'styles/text';
 
 export default {
+  ...textStyles,
   container: {
     margin: {
       bottom: 4,

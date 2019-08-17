@@ -1,5 +1,5 @@
-import brandStyles from '../brands';
-import formStyles from '../forms';
+import brandStyles from 'styles/brands';
+import formStyles from 'styles/forms';
 
 export default {
   ...formStyles(),

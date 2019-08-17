@@ -160,14 +160,20 @@ function CharacterPage({
                 <li className={classes.listItem}>
                   {pageLocale.lodestoneSignIn}
                   <br />
-                  <a href={locale.links.lodestone}>
+                  <a
+                    href={locale.links.lodestone}
+                    className={classes.hyperlink}
+                  >
                     {locale.links.lodestone}
                   </a>
                 </li>
                 <li className={classes.listItem}>
                   {pageLocale.lodestoneEditProfile}
                   <br />
-                  <a href={locale.links.lodestoneProfileEdit}>
+                  <a 
+                    href={locale.links.lodestoneProfileEdit}
+                    className={classes.hyperlink}
+                  >
                     {locale.links.lodestoneProfileEdit}
                   </a>
                 </li>
