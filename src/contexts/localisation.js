@@ -51,7 +51,8 @@ export const localisation = {
       signInOrCreateAccount: 'Sign In or Create an Account'
     },
     labels: {
-      darkMode: 'Dark mode'
+      darkMode: 'Dark mode',
+      hideVerifyCharacterSection: 'Hide "Verify ownership" section on character profiles'
     },
     info: {
       copied: 'Copied to clipboard.',
@@ -64,6 +65,11 @@ export const localisation = {
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account'
     },
     components: {
+      fullPageError: {
+        heading: 'Something went wrong!',
+        about: 'Apkallu Falls was unable to retrieve any data. This could be because your network has changed or because you\'ve lost internet connection. Please reload the page and try again.',
+        ifThisKeepsHappening: 'If this keeps happening, let Tequila know about it on Discord:'
+      },
       language: {
         change: 'Change language'
       },

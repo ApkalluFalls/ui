@@ -1,7 +1,7 @@
 export default {
-  loader: {
+  loader: theme => ({
     alignItems: 'center',
-    color: '#9d9d9d',
+    color: theme.colorMid,
     display: 'flex',
     height: '4vh',
     justifyContent: 'center',
@@ -9,7 +9,7 @@ export default {
     marginTop: '46vh',
     padding: 0,
     width: '100%'
-  },
+  }),
   caption: {
     fontSize: 20,
     margin: 0,

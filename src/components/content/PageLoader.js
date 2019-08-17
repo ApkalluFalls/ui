@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'contexts/theme';
 
 // Theme.
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss'
 import style from 'styles/content/PageLoader';
 
-function PageLoader({
-  text,
-  classes
-}) {
+const useStyles = createUseStyles(style);
+
+function PageLoader({ text }) {
+  const classes = useStyles(useContext(ThemeContext));
+
   return (
     <section className={classes.loader}>
       <p className={`${classes.caption} ${text ? '' : classes.iconOnly}`}>
@@ -23,4 +25,4 @@ function PageLoader({
   )
 }
 
-export default injectSheet(style)(PageLoader);
+export default PageLoader;

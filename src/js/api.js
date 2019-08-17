@@ -81,8 +81,14 @@ class API {
     ).then(
       response => response.json()
     ).catch(exception => {
-      throw new Error("API error", exception);
+      console.error(exception);
+      return { error: true };
     });
+
+    console.info(data);
+    if (data.error) {
+      return data;
+    }
 
     // Update cache.
     if (localStorage) {

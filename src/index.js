@@ -13,12 +13,13 @@ import firebase from "firebase/app";
 import 'firebase/auth';
 import 'firebase/firestore';
 
+import FullPageError from 'components/content/FullPageError';
 import PageLoader from 'components/content/PageLoader';
 import Container from "components/Container";
 import Navigation from "components/Navigation";
 
 // Theme.
-import { createTheming, createUseStyles } from 'react-jss';
+import { createTheming } from 'react-jss';
 
 const { ThemeProvider } = createTheming(ThemeContext);
 
@@ -97,6 +98,9 @@ function ApkalluFalls({}) {
   const [version, setVersion] = useState(-1);
   const [character, setCharacter] = useState({ loading: true });
   const [user, setUser] = useState({ loading: true });
+  const [userSettings, setUserSettings] = useState({
+    theme: themes[localStorage.getItem('theme') || 'light']
+  });
   const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
 
   const cachedTheme = localStorage.getItem('theme') || 'light';
@@ -115,6 +119,11 @@ function ApkalluFalls({}) {
       const cachedVersion = await api.fromCache('version');
       const apiVersion = await api.json('version', true);
 
+      if (typeof apiVersion === 'object' && apiVersion.error) {
+        setVersion(-999);
+        return;
+      }
+
       // If cached data exists for an older version, remove it.
       if (cachedVersion !== undefined && cachedVersion !== apiVersion) {
         localStorage.setItem('api', `{"misc":{"version":${apiVersion}}}`);
@@ -128,7 +137,19 @@ function ApkalluFalls({}) {
 
       return () => firebaseUnsubscribe();
     })();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const {
+      key: settingsThemeKey
+    } = userSettings.theme;
+
+    if (theme.key !== settingsThemeKey) {
+      localStorage.setItem('theme', settingsThemeKey);
+      document.documentElement.className = settingsThemeKey;
+      setTheme(userSettings.theme);
+    }
+  }, [userSettings])
 
   /**
    * Update the user context (via state) when Firebase detects an authentication change.
@@ -152,18 +173,34 @@ function ApkalluFalls({}) {
   }
 
   /**
-   * Update the theme context (via state).
+   * Update the user settings to include the new changes.
+   * @param {Object} settings - An object containing modified settings.
    */
-  function handleThemeChange(theme) {
-    localStorage.setItem('theme', theme.key);
-    document.documentElement.className = theme.key;
-    setTheme(theme);
+  function handleUserSettingsChange(settings) {
+    setUserSettings({
+      ...userSettings,
+      ...settings
+    })
   }
 
   if (version === -1) {
     return (
-      <PageLoader />
+      <ThemeProvider theme={{
+        ...theme
+      }}>
+        <PageLoader />
+      </ThemeProvider>
     );
+  }
+
+  if (version === -999) {
+    return (
+      <ThemeProvider theme={{
+        ...theme
+      }}>
+        <FullPageError />
+      </ThemeProvider>
+    )
   }
 
   // Language is stored in local storage.
@@ -173,6 +210,8 @@ function ApkalluFalls({}) {
     <React.StrictMode>
       <UserContext.Provider value={{
         ...user,
+        settings: userSettings,
+        modifySettings: handleUserSettingsChange,
         verifiedCharacters: userVerifiedCharacters,
         setVerifiedCharacters: setUserVerifiedCharacters
       }}>
@@ -182,8 +221,7 @@ function ApkalluFalls({}) {
         }}>
           <BrowserRouter>
             <ThemeProvider theme={{
-              ...theme,
-              change: handleThemeChange
+              ...theme
             }}>
               <LocalisationContext.Provider value={{
                 language,

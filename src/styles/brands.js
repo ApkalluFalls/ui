@@ -1,4 +1,6 @@
 export default {
+  discord: '#7188da',
+  discordAlt: '#5069c6',
   facebook: '#3b5998',
   facebookAlt: '#224389',
   google: '#db4437',

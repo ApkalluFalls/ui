@@ -26,8 +26,7 @@ function Account({
     history.push(paths.authentication);
   }
 
-  const theme = useContext(ThemeContext);
-  const classes = useStyles(theme);
+  const classes = useStyles(useContext(ThemeContext));
   const { locale } = useContext(LocalisationContext);
   const { account: pageLocale } = locale.pages;
   const { whatIsHidden: hiddenContent } = locale.pages.home;
@@ -74,8 +73,20 @@ function Account({
           <Switch
             id="look-and-feel-dark-mode"
             label={locale.labels.darkMode}
-            on={theme.key === 'dark'}
-            onChange={(checked) => theme.change(themes[theme.key === 'light' ? 'dark' : 'light'])}
+            on={user.settings.theme.key === 'dark'}
+            onChange={(checked) => user.modifySettings({
+              theme: themes[checked ? 'dark' : 'light']
+            })}
+          />
+        </div>
+        <div className={classes.control}>
+          <Switch
+            id="look-and-feel-dark-mode"
+            label={locale.labels.hideVerifyCharacterSection}
+            on={user.settings.hideVerifyCharacterSection}
+            onChange={(checked) => user.modifySettings({
+              hideVerifyCharacterSection: checked
+            })}
           />
         </div>
       </Panel>
