@@ -1,11 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { APIContext } from 'contexts/api';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
 import CharacterPortrait from 'components/content/CharacterPortrait';
 import ContentProgress from 'components/content/ContentProgress';
+import InlineLoader from 'components/content/InlineLoader';
+import API from 'js/api';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
@@ -15,10 +18,21 @@ import { paths } from 'js/routes';
 const useStyles = createUseStyles(style);
 
 function Navigation() {
+  const api = useContext(APIContext);
   const classes = useStyles(useContext(ThemeContext));
   const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
   const user = useContext(UserContext);
+
+  const [contentData, setContentData] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const contentData = await new API().json('data');
+      api.setKeys(contentData.keys);
+      setContentData(contentData);
+    })();
+  }, []);
 
   const {
     common: contentText
@@ -70,22 +84,33 @@ function Navigation() {
         <div className={classes.character}>
           <CharacterPortrait />
         </div>
-        <ul className={classes.links}>
-          {contents.map(content => (
-            <li
-              className={classes.linkItem}
-              key={content.path}
-            >
-              <NavLink
-                className={`${classes.link} ${content.hasVisibleProgressBar ? '' : classes.linkCollapsed}`}
-                activeClassName={classes.linkActive}
-                to={content.path}
-              >
-                <ContentProgress source={content} />
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        {contentData
+          ? (
+            <ul className={classes.links}>
+              {contents.map(content => (
+                <li
+                  className={classes.linkItem}
+                  key={content.path}
+                >
+                  <NavLink
+                    className={`${classes.link} ${content.hasVisibleProgressBar ? '' : classes.linkCollapsed}`}
+                    activeClassName={classes.linkActive}
+                    to={content.path}
+                  >
+                    <ContentProgress
+                      contentData={contentData[content.api]}
+                      source={content}
+                    />
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <section className={classes.links}>
+              <InlineLoader text={locale.info.fetchingTotals} />
+            </section>
+          )
+        }
         <section className={classes.options}>
           <a
             className={`${classes.externalLink} ${classes.discord}`}

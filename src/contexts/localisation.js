@@ -65,6 +65,7 @@ export const localisation = {
       checkingLodestoneBio: 'Checking Lodestone bio...',
       copied: 'Copied to clipboard.',
       fetchingList: 'Fetching {0} list...',
+      fetchingTotals: 'Fetching totals...',
       loading: 'Loading...',
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
@@ -133,7 +134,7 @@ export const localisation = {
           li3: 'Marketing campaigns and fan festivals',
           li4: 'Lodestone contest rewards',
           li5: 'Mog Station and Square Enix Store purchases',
-          li6: 'Disused Legacy (1.0) content',
+          li6: 'Unused Legacy (1.0) content',
           li7: 'Starting city achievements',
           outro: 'This content is still accessible, take the {a0} for example, it just doesn\'t display within the content lists without first applying a filter, nor does this hidden content count towards character progress displayed in the sidebar when tracking a character.'
         },

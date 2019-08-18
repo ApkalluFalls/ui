@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
+import { APIContext } from "contexts/api";
 import { CharacterContext } from "contexts/character";
 import { LocalisationContext, localisation } from "contexts/localisation";
 import { ThemeContext, themes } from "contexts/theme";
@@ -34,6 +35,8 @@ const defaultUserSettings = {
   enableManualTrackingMounts: true,
   enableManualTrackingOrchestrion: true,
   hideVerifyCharacterSection: false,
+  revealInGameEvents: false,
+  revealUnusedLegacyContent: false,
   theme: themes[localStorage.getItem('theme') || 'light']
 };
 
@@ -110,6 +113,7 @@ function parseFirebaseUserObject(user) {
 
 function ApkalluFalls({}) {
   // Contexts.
+  useContext(APIContext);
   useContext(CharacterContext);
   useContext(LocalisationContext);
   useContext(UserContext);
@@ -117,6 +121,7 @@ function ApkalluFalls({}) {
 
   // State.
   const [version, setVersion] = useState(-1);
+  const [apiKeys, setAPIKeys] = useState();
   const [character, setCharacter] = useState({ loading: true });
   const [characterAchievements, setCharacterAchievements] = useState();
   const [user, setUser] = useState({ loading: true });
@@ -250,8 +255,14 @@ function ApkalluFalls({}) {
                 language,
                 locale: localisation[language]
               }}>
-                <Navigation />
-                <Container />
+                <APIContext.Provider value={{
+                  keys: apiKeys,
+                  version,
+                  setKeys: setAPIKeys
+                }}>
+                  <Navigation />
+                  <Container />
+                </APIContext.Provider>
               </LocalisationContext.Provider>
             </ThemeProvider>
           </BrowserRouter>

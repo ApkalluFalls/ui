@@ -155,8 +155,10 @@ function Account({
           <Switch
             id="tracking-events"
             label={hiddenContent.li1}
-            on={false}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.revealInGameEvents}
+            onChange={(checked) => user.modifySettings({
+              revealInGameEvents: checked
+            })}
           />
         </div>
         <div className={classes.control}>
@@ -193,10 +195,12 @@ function Account({
         </div>
         <div className={classes.control}>
           <Switch
-            id="tracking-disused-legacy"
+            id="tracking-unsused-legacy"
             label={hiddenContent.li6}
-            on={false}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.revealUnusedLegacyContent}
+            onChange={(checked) => user.modifySettings({
+              revealUnusedLegacyContent: checked
+            })}
           />
         </div>
       </Panel>

@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProgressBar from 'components/content/ProgressBar';
+import { APIContext } from 'contexts/api';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
+import { UserContext } from 'contexts/user';
 import API from 'js/api';
 
 // Theme.
@@ -12,33 +14,46 @@ import style from 'styles/content/ContentProgress';
 const useStyles = createUseStyles(style);
 
 function ContentProgress({
+  contentData = {},
   source = {}
 }) {
   // Context.
+  const { keys: apiKeys } = useContext(APIContext);
   const { name: selectedCharacterName } = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
   const classes = useStyles(useContext(ThemeContext));
+  const user = useContext(UserContext);
 
   // State.
   const [total, setTotal] = useState(1);
 
   useEffect(() => {
-    const {
-      api: sourceAPI
-    } = source;
+    const { settings } = user;
+    if (!settings) {
+      return;
+    }
+    let keyTotal = 'total';
+    let keyTotalEvents = 'totalEvents';
+    let keyTotalLegacy = 'totalLegacy';
 
-    (async () => {
-      const api = new API();
-      const data = await api.json('data');
+    if (source.api === 'achievements') {
+      keyTotal = 'pointsTotal';
+      keyTotalEvents = 'pointsTotalEvents';
+      keyTotalLegacy = 'pointsTotalLegacy';
+    }
 
-      if (sourceAPI === 'achievements') {
-        setTotal(data[sourceAPI].pointsTotal);
-        return;
-      }
-      
-      setTotal(data[sourceAPI].total);
-    })();
-  }, [])
+    let offsetTotal = contentData[apiKeys.overview[keyTotal]];
+    
+    if (settings.revealInGameEvents) {
+      offsetTotal += contentData[apiKeys.overview[keyTotalEvents]] || 0;
+    }
+    
+    if (settings.revealUnusedLegacyContent) {
+      offsetTotal += contentData[apiKeys.overview[keyTotalLegacy]] || 0;
+    }
+
+    setTotal(offsetTotal);
+  }, [user.settings])
 
   return (
     <section className={classes.container}>
