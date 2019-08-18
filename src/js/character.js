@@ -23,8 +23,9 @@ export default class Character {
   /**
    * Get Character achievement data from XIVAPI or returned cached data.
    * This function caches retrieved data within session storage with an expiry of 24 hours.
+   * @param {Boolean} [bypassCache] - If true this will ignore cached data and pull fresh data from the API.
    */
-  async getAchievements() {
+  async getAchievements(bypassCache) {
     if (!this.id) {
       throw new Error('Cannot call getAchievements without an ID being specified.');
     }
@@ -32,7 +33,7 @@ export default class Character {
     const cacheKey = `character/${this.id}/achievements`;
     const fromCache = JSON.parse(sessionStorage.getItem(cacheKey));
 
-    if (fromCache && fromCache.cacheExpires > Number(new Date())) {
+    if (!bypassCache && fromCache && fromCache.cacheExpires > Number(new Date())) {
       return fromCache;
     }
 
@@ -54,7 +55,7 @@ export default class Character {
     // Return if the character's achievements are not public.
     if (!characterAchievements.AchievementsPublic) {
       const responseIfPrivate = {
-        cacheExpires: Number(new Date()) + 300000,
+        cacheExpires: Number(new Date()) + 86400000,
         isPrivate: true
       }
 

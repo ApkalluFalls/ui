@@ -52,6 +52,9 @@ function CharacterStats({ achievements }) {
           <li className={classes.listItem}>
             {componentLocale.lodestoneAchievementsPublic}
           </li>
+          <li className={classes.listItem}>
+            {componentLocale.howToRefreshData}
+          </li>
         </ol>
       </React.Fragment>
     )

@@ -47,6 +47,8 @@ export const themes = {
       buttonBackground: '#ffd358',
       buttonBorder: '#e9b932',
       buttonColor: '#000',
+      buttonDangerBackground: '#f65e5e',
+      buttonDangerBorder: '#e13232',
       inputBackground: '#fafafa',
       inputBorder: '#ccc',
       inputColor: '#333',

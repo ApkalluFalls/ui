@@ -29,29 +29,50 @@ function CharacterPage({ match }) {
 
   const [character, setCharacter] = useState();
   const [achievements, setAchievements] = useState();
+  const [synchronising, setSynchronising] = useState(false);
   const [unverifying, setUnverifying] = useState(false);
 
+  /**
+   * When a character is selected, fetch their data and update the character context.
+   */
   useEffect(() => {
+    syncCharacterData(false);
+  }, [characterId]);
+
+  /**
+   * Synchronise character data with the Lodestone via XIVAPI.
+   * This will fetch character data and information about their achievements and update the
+   * character context accordingly.
+   * @param {Boolean} [bypassCache] - A flag to determine whether we should ignore any cached data.
+   */
+  function syncCharacterData(bypassCache) {
+    setSynchronising(true);
+    
     const character = new Character({
       id: Number(characterId)
     });
 
     (async () => {
-      const data = await character.getData();
+      const data = await character.getData(bypassCache);
       setCharacter(data);
 
-      const achievements = await character.getAchievements();
+      const achievements = await character.getAchievements(bypassCache);
       setAchievements(achievements);
 
       if (achievements.isPrivate || Number(characterId) !== characterFromContext.id) {
+        setSynchronising(false);
         return;
       }
 
       // If this is the active character update the context entry.
       characterFromContext.setAchievements(achievements.list);
+      setSynchronising(false);
     })();
-  }, [characterId]);
+  }
 
+  /**
+   * Parse the error response from XIVAPI and generate the message to be displayed to the user.
+   */
   function getErrorOutput() {
     let icon = 'frown';
     let title;
@@ -200,9 +221,39 @@ function CharacterPage({ match }) {
                 </blockquote>
               </section>
             )}
+            <section className={`${classes.section} ${classes.sectionSeparate}`}>
+              <p className={`${classes.help} ${classes.helpUnimportant}`}>
+                {pageLocale.howToSyncCharacterData}
+              </p>
+              <div className={classes.control}>
+                <button
+                  type="button"
+                  className={`${classes.button} ${classes.buttonSmall}`}
+                  disabled={synchronising}
+                  onClick={() => syncCharacterData(true)}
+                  onKeyDown={(event) => event.which === 13 && syncCharacterData(true)}
+                >
+                  {synchronising
+                    ? (
+                      <React.Fragment>
+                        <span className="fal fa-sync fa-spin" />
+                        {' '}
+                        {locale.info.synchronising}
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <span className="fal fa-sync" />
+                        {' '}
+                        {locale.actions.syncCharacterData}
+                      </React.Fragment>
+                    )
+                  }
+                </button>
+              </div>
+            </section>
             {characterIsVerified
               ? (
-                <section className={`${classes.section} ${classes.unverify}`}>
+                <section className={`${classes.section} ${classes.sectionSeparate}`}>
                   <p className={`${classes.help} ${classes.helpUnimportant}`}>
                     {pageLocale.howToUnverifyCharacter}
                   </p>
@@ -221,7 +272,13 @@ function CharacterPage({ match }) {
                             {' '}
                             {locale.info.unverifyingCharacter}
                           </React.Fragment>
-                        ) : locale.actions.unverifyCharacter
+                        ) : (
+                          <React.Fragment>
+                            <span className="fal fa-user-minus" />
+                            {' '}
+                            {locale.actions.unverifyOwnership}
+                          </React.Fragment>
+                        )
                       }
                     </button>
                   </div>

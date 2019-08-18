@@ -52,7 +52,8 @@ export const localisation = {
       search: 'Search',
       selectACharacter: 'Search for a character to track',
       signInOrCreateAccount: 'Sign In or Create an Account',
-      unverifyCharacter: 'Unverify ownership',
+      syncCharacterData: 'Sync character data',
+      unverifyOwnership: 'Unverify ownership',
       verifyOwnership: 'Verify ownership'
     },
     labels: {
@@ -68,6 +69,7 @@ export const localisation = {
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
       searching: 'Searching...',
+      synchronising: 'Synchronising...',
       talkingToFirebase: 'Talking to Firebase',
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account',
       unverifyCharacter: 'Are you sure you want to remove this character from your Apkallu Falls account?',
@@ -77,6 +79,7 @@ export const localisation = {
       characterStats: {
         achievementsPrivate: 'This character\'s stats are private and cannot be accessed by Apkallu Falls.',
         howToMakeAchievementsPublic: 'If this is your character and you would like to make your achievements public, please follow the below steps:',
+        howToRefreshData: 'Click on the "Sync Character Data" button near the bottom of this page. If nothing changes, try again in 10 to 15 minutes.',
         lodestoneAccountManagement: 'Navigate to your Lodestone Account Management page.',
         lodestoneAchievementsPublic: 'Make sure the option next to Achievements is set to Public, then click Confirm.'
       },
@@ -203,6 +206,7 @@ export const localisation = {
         characterNotFoundDescription: 'This character was likely claimed by The Calamity.',
         communicatingWithXIVAPI: 'Communicating with XIVAPI...',
         fetchingCharacterAchievements: 'Fetching character achievements...',
+        howToSyncCharacterData: 'If you think the data displayed here is out of date, you can use the below button to forcably update the data. Do note though that the Lodestone only updates once every 6 to 12 hours.',
         howToUnverifyCharacter: 'This is one of your characters. If you\'d like to remove this character from your profile, you can do so by clicking on the button below. You can re-verify ownership of the character at any time, and any manual tracking you may have done will be automatically restored for you.',
         lodestoneBio: 'Lodestone bio',
         setActive: 'Set Active',

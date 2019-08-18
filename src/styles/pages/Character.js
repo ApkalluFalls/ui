@@ -80,7 +80,7 @@ export default {
     marginRight: 8,
     verticalAlign: 'top'
   }),
-  unverify: theme => ({
+  sectionSeparate: theme => ({
     borderTop: {
       color: theme.border,
       style: 'dotted',
