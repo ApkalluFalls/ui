@@ -114,21 +114,21 @@ function VerifyCharacter({
   }
 
   return (
-    <section className={classes.verifyCharacter}>
+    <React.Fragment>
       <h2 className={classes.heading}>
         {componentLocale.verifyOwnership}
       </h2>
-      <p className={classes.help}>
+      <p className={`${classes.help} ${classes.helpUnimportant}`}>
         {componentLocale.whyVerifyOwnership}
       </p>
       {user.isLoggedIn
         ? (
           <React.Fragment>
-            <p className={classes.help}>
+            <p className={`${classes.help} ${classes.helpUnimportant}`}>
               {componentLocale.howToVerifyOwnership}
             </p>
             <ol className={classes.list}>
-              <li className={classes.listItem}>
+              <li className={`${classes.listItem} ${classes.listItemUnimportant}`}>
                 {locale.common.lodestoneSignIn}
                 <br />
                 <a
@@ -139,7 +139,7 @@ function VerifyCharacter({
                   {locale.links.lodestone}
                 </a>
               </li>
-              <li className={classes.listItem}>
+              <li className={`${classes.listItem} ${classes.listItemUnimportant}`}>
                 {componentLocale.lodestoneEditProfile}
                 <br />
                 <a 
@@ -150,7 +150,7 @@ function VerifyCharacter({
                   {locale.links.lodestoneProfileEdit}
                 </a>
               </li>
-              <li className={classes.listItem}>
+              <li className={`${classes.listItem} ${classes.listItemUnimportant}`}>
                 {componentLocale.lodestoneVerificationCode}
                 <br />
                 {canCopyOnClick
@@ -187,7 +187,7 @@ function VerifyCharacter({
             )}
             <div className={classes.control}>
               <button
-                className={classes.button}
+                className={`${classes.button} ${classes.buttonSmall}`}
                 type="button"
                 disabled={checking}
                 onClick={checkVerificationCode}
@@ -211,7 +211,7 @@ function VerifyCharacter({
         )
         : (
           <React.Fragment>
-            <p className={classes.help}>
+            <p className={`${classes.help} ${classes.helpUnimportant}`}>
               {componentLocale.accountRequired}
             </p>
             <Link to={paths.authentication}>
@@ -224,7 +224,7 @@ function VerifyCharacter({
           </React.Fragment>
         )
       }
-    </section>
+    </React.Fragment>
   );
 }
 

@@ -285,8 +285,11 @@ function CharacterPage({ match }) {
                 </section>
               ) : (
                 !user.isLoggedIn || !user.settings.hideVerifyCharacterSection && (
-                <VerifyCharacter {...character} />
-              ))
+                  <section className={`${classes.section} ${classes.sectionSeparate}`}>
+                    <VerifyCharacter {...character} />
+                  </section>
+                )
+              )
             }
           </React.Fragment>
         )

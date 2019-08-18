@@ -52,4 +52,7 @@ export default {
       marginBottom: 0
     }
   }),
+  listItemUnimportant: theme => ({
+    color: theme.colorUnimportant
+  })
 }
