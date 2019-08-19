@@ -8,7 +8,6 @@ import style from 'styles/forms/Switch';
 const useStyles = createUseStyles(style);
 
 function Switch({
-  id = 'switch',
   label,
   on = false,
   onChange = () => {}

@@ -5,7 +5,6 @@ import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
-import API from 'js/api';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
@@ -32,24 +31,92 @@ function ContentProgress({
     if (!settings) {
       return;
     }
-    let keyTotal = 'total';
-    let keyTotalEvents = 'totalEvents';
-    let keyTotalLegacy = 'totalLegacy';
 
-    if (source.api === 'achievements') {
-      keyTotal = 'pointsTotal';
-      keyTotalEvents = 'pointsTotalEvents';
-      keyTotalLegacy = 'pointsTotalLegacy';
-    }
+    const { overview: overviewKeys } = apiKeys;
+    let offsetTotal = 0;
 
-    let offsetTotal = contentData[apiKeys.overview[keyTotal]];
-    
-    if (settings.revealInGameEvents) {
-      offsetTotal += contentData[apiKeys.overview[keyTotalEvents]] || 0;
-    }
-    
-    if (settings.revealUnusedLegacyContent) {
-      offsetTotal += contentData[apiKeys.overview[keyTotalLegacy]] || 0;
+    const available = contentData[overviewKeys.available];
+    if (Array.isArray(available)) {
+      // If there's an available array, we need to do array comparisons to determine the totals.
+      let offsetArray = [...available];
+
+      function getAvailableContentByFilter(filterKey) {
+        const content = contentData[filterKey];
+
+        if (!content) {
+          return [];
+        }
+
+        return content;
+      }
+      
+      if (settings.revealUnknownObtainMethods) {
+        offsetArray = [
+          ...offsetArray,
+          ...getAvailableContentByFilter(overviewKeys.availableUnknown)
+        ];
+      }
+      
+      if (settings.revealInGameEvents) {
+        offsetArray = [
+          ...offsetArray,
+          ...getAvailableContentByFilter(overviewKeys.availableEvent)
+        ];
+      }
+      
+      if (settings.revealExternalPromos) {
+        offsetArray = [
+          ...offsetArray,
+          ...getAvailableContentByFilter(overviewKeys.availableExternalPromo)
+        ];
+      }
+      
+      if (settings.revealUnusedLegacyContent) {
+        offsetArray = [
+          ...offsetArray,
+          ...getAvailableContentByFilter(overviewKeys.availableLegacy)
+        ];
+      }
+      
+      if (settings.revealRealWorldEvents) {
+        offsetArray = [
+          ...offsetArray,
+          ...getAvailableContentByFilter(overviewKeys.availableRealWorldEvent)
+        ];
+      }
+      
+      if (settings.revealStorePurchases) {
+        offsetArray = [
+          ...offsetArray,
+          ...getAvailableContentByFilter(overviewKeys.availableStorePurchase)
+        ];
+      }
+
+      offsetTotal = offsetArray.filter((
+        (entry, index) => offsetArray.indexOf(entry) === index
+      )).length;
+    } else {
+      // Otherwise we take either the total or pointsTotal and proceed from there.
+      let keyTotal = 'total';
+      let keyTotalEvents = 'totalEvents';
+      let keyTotalLegacy = 'totalLegacy';
+
+      // Achievements rely on achievement points, not totals.
+      if (source.api === 'achievements') {
+        keyTotal = 'pointsTotal';
+        keyTotalEvents = 'pointsTotalEvents';
+        keyTotalLegacy = 'pointsTotalLegacy';
+      }
+
+      offsetTotal = contentData[overviewKeys[keyTotal]];
+      
+      if (settings.revealInGameEvents) {
+        offsetTotal += contentData[overviewKeys[keyTotalEvents]] || 0;
+      }
+      
+      if (settings.revealUnusedLegacyContent) {
+        offsetTotal += contentData[apiKeys.overview[keyTotalLegacy]] || 0;
+      }
     }
 
     setTotal(offsetTotal);

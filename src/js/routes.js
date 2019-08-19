@@ -11,6 +11,7 @@ export const paths = {
   // Character pages.
   character: (characterId = ':characterId') => `/character/${characterId}`,
   characterSearch: '/character-search',
+  freeCompany: (freeCompanyId = ':freeCompanyId') => `/fc/${freeCompanyId}`,
 
   // Content lists.
   achievements: '/achievements',
@@ -58,4 +59,6 @@ export default [{
 }, {
   path: paths.characterSearch,
   exact: true
+}, {
+  path: paths.freeCompany()
 }];

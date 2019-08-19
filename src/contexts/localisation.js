@@ -58,11 +58,13 @@ export const localisation = {
     },
     labels: {
       darkMode: 'Dark mode',
-      hideVerifyCharacterSection: 'Hide "Verify ownership" section on character profiles'
+      hideVerifyCharacterSection: 'Hide "Verify ownership" section on character profiles',
+      showUnknownMethods: 'Show content which Apkallu Falls does not yet know how to obtain'
     },
     info: {
       addingCharacter: 'Adding character...',
       checkingLodestoneBio: 'Checking Lodestone bio...',
+      communicatingWithXIVAPI: 'Communicating with XIVAPI...',
       copied: 'Copied to clipboard.',
       fetchingList: 'Fetching {0} list...',
       fetchingTotals: 'Fetching totals...',
@@ -105,10 +107,12 @@ export const localisation = {
       },
       verifyCharacter: {
         accountRequired: 'You\'ll need to sign in or create an Apkallu Falls account before you can begin the character verification process.',
+        codeExpiration: 'Note: For security reasons the above code is reset every time this page reloads. It\'s recommended that you only copy the code once you\'re signed into the Lodestone and ready to change your bio.',
         codeMissing: 'The code could not be found. Make sure the code was saved to your character\'s bio and try again.',
         howToVerifyOwnership: 'To verify that this character is yours, please follow the below steps:',
         lodestoneEditProfile: 'Navigate to your character\'s profile page, scroll down and click to edit your bio (Character Profile).',
         lodestoneVerificationCode: 'Copy the unique code below anywhere into the edit box and click Confirm twice to save it.',
+        rememberToRemoveCode: 'After the verification is complete you\'re free to remove the code from your bio.',
         signedOutNotice: 'If you have an Apkallu Falls account you can then verify ownership of the character and start manually checking off the content you\'ve unlocked.',
         verifyOwnership: 'Verify ownership',
         whyVerifyOwnership: 'If this is your character you can verify ownership of it and unlock all of Apkallu Falls tracking abilities.'
@@ -132,7 +136,7 @@ export const localisation = {
           li1: 'In-game events',
           li2: 'The Feast season rewards',
           li3: 'Marketing campaigns and fan festivals',
-          li4: 'Lodestone contest rewards',
+          li4: 'Lodestone contest rewards and external promotions',
           li5: 'Mog Station and Square Enix Store purchases',
           li6: 'Unused Legacy (1.0) content',
           li7: 'Starting city achievements',
@@ -205,7 +209,6 @@ export const localisation = {
         characterErrorServer: 'Lost in the Lifestream',
         characterNotFound: 'We looked, but found nothing...',
         characterNotFoundDescription: 'This character was likely claimed by The Calamity.',
-        communicatingWithXIVAPI: 'Communicating with XIVAPI...',
         fetchingCharacterAchievements: 'Fetching character achievements...',
         howToSyncCharacterData: 'If you think the data displayed here is out of date, you can use the below button to forcably update the data. Do note though that the Lodestone only updates once every 6 to 12 hours.',
         howToUnverifyCharacter: 'This is one of your characters. If you\'d like to remove this character from your profile, you can do so by clicking on the button below. You can re-verify ownership of the character at any time, and any manual tracking you may have done will be automatically restored for you.',
@@ -223,6 +226,14 @@ export const localisation = {
         selectADataCenterFirst: 'Server selection will appear here after first selecting a data center from the choices above.',
         selectDataCenter: 'Which data center is the character on?',
         selectServer: 'Which server is the character on?'
+      },
+      freeCompany: {
+        daysSinceFormed: daysAgo => `${daysAgo} days ago`,
+        estate: 'Free Company estate',
+        formed: 'Established',
+        members: 'Members',
+        noMembers: 'This free company has no members.',
+        slogan: 'Slogan'
       }
     },
     obtainMethods: {

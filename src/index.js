@@ -21,7 +21,6 @@ import Navigation from "components/Navigation";
 
 // Theme.
 import { createTheming } from 'react-jss';
-
 const { ThemeProvider } = createTheming(ThemeContext);
 
 /**
@@ -35,7 +34,11 @@ const defaultUserSettings = {
   enableManualTrackingMounts: true,
   enableManualTrackingOrchestrion: true,
   hideVerifyCharacterSection: false,
+  revealExternalPromos: false,
   revealInGameEvents: false,
+  revealRealWorldEvents: false,
+  revealStorePurchases: false,
+  revealUnknownObtainMethods: true,
   revealUnusedLegacyContent: false,
   theme: themes[localStorage.getItem('theme') || 'light']
 };
@@ -105,6 +108,7 @@ function parseFirebaseUserObject(user) {
       uid
     },
     isLoggedIn: true,
+    sessionStart: Number(new Date()),
     type
   };
 
@@ -158,7 +162,13 @@ function ApkalluFalls({}) {
       const firebaseUnsubscribe = firebase.auth().onAuthStateChanged(onFirebaseAuthChange);
 
       setVersion(apiVersion);
-      setCharacter(JSON.parse(localStorage.getItem('character')) || {});
+
+      const cachedCharacter = JSON.parse(localStorage.getItem('character'));
+      setCharacter(cachedCharacter || {});
+      
+      if (cachedCharacter) {
+        setCharacterAchievements(JSON.parse(localStorage.getItem('character-achievements')))
+      }
 
       return () => firebaseUnsubscribe();
     })();
@@ -190,11 +200,21 @@ function ApkalluFalls({}) {
   function handleCharacterChange(character) {
     if (character.name) {
       localStorage.setItem('character', JSON.stringify(character));
+      localStorage.removeItem('character-achievements');
     } else {
       localStorage.removeItem('character');
+      localStorage.removeItem('character-achievements');
     }
 
     setCharacterAchievements(undefined);
+    setCharacter(character);
+  }
+
+  function handleCharacterSync(character, achievements) {
+    localStorage.setItem('character', JSON.stringify(character));
+    localStorage.setItem('character-achievements', JSON.stringify(achievements));
+
+    setCharacterAchievements(achievements);
     setCharacter(character);
   }
 
@@ -245,7 +265,8 @@ function ApkalluFalls({}) {
           ...character,
           achievements: characterAchievements,
           change: handleCharacterChange,
-          setAchievements: setCharacterAchievements
+          setAchievements: setCharacterAchievements,
+          onSync: handleCharacterSync
         }}>
           <BrowserRouter>
             <ThemeProvider theme={{

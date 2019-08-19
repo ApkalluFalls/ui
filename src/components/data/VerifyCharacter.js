@@ -33,9 +33,10 @@ function VerifyCharacter({
       return;
     }
 
-    const uidBase32 = parseInt(user.data.uid, 32).toString(16);
+    const uidBase32 = parseInt(user.data.uid, 32);
+    const { sessionStart } = user;
 
-    setCode(`apkallu_${uidBase32}`);
+    setCode(`apkallu_${(uidBase32 + sessionStart).toString(16)}`);
   }, [user]);
 
   /**
@@ -207,6 +208,12 @@ function VerifyCharacter({
                 }
               </button>
             </div>
+            <p className={`${classes.help} ${classes.helpUnimportant}`}>
+              {componentLocale.codeExpiration}
+            </p>
+            <p className={`${classes.help} ${classes.helpUnimportant}`}>
+              {componentLocale.rememberToRemoveCode}
+            </p>
           </React.Fragment>
         )
         : (

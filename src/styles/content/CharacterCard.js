@@ -18,7 +18,7 @@ export default {
     margin: 8,
     overflow: 'hidden',
     transition: 'background .1s',
-    width: 256,
+    width: 232,
 
     '&:hover, &:focus': {
       background: theme.characterCard.backgroundHover

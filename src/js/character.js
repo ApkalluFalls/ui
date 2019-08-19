@@ -99,7 +99,7 @@ export default class Character {
     }
 
     const characterInfo = await fetch(
-      `https://xivapi.com/character/${this.id}?data=FC&columns=Character.Avatar,Character.Bio,Character.DC,Character.ID,Character.Name,Character.Server,FreeCompany.Name,FreeCompany.Crest,FreeCompany.Tag&af=${+new Date()}`
+      `https://xivapi.com/character/${this.id}?data=FC&columns=Character.Avatar,Character.Bio,Character.DC,Character.ID,Character.Name,Character.Server,FreeCompany.ID,FreeCompany.Crest,FreeCompany.Name,FreeCompany.Tag&af=${+new Date()}`
     )
       .then(response => response.json())
       .catch((error) => {
@@ -140,6 +140,7 @@ export default class Character {
     if (FreeCompany && FreeCompany.Name) {
       response.freeCompany = {
         crestParts: FreeCompany.Crest,
+        id: FreeCompany.ID,
         name: FreeCompany.Name,
         tag: FreeCompany.Tag
       }
@@ -148,22 +149,6 @@ export default class Character {
     sessionStorage.setItem(cacheKey, JSON.stringify(response));
 
     return response;
-  }
-
-  /**
-   * Normalise the raw Character object returned by XIVAPI.
-   * @param {Object} character - A Character object as returned by XIVAPI.
-   */
-  parseRawCharacterData(character) {
-    const nameParts = character.Name.split(' ');
-
-    return {
-      avatar: character.Avatar,
-      forename: nameParts[0],
-      id: character.ID,
-      name: character.Name,
-      surname: nameParts[1]
-    }
   }
 
   /**
@@ -195,5 +180,21 @@ export default class Character {
       });
 
     return response.Results.map(this.parseRawCharacterData);
+  }
+}
+
+/**
+ * Normalise the raw Character object returned by XIVAPI.
+ * @param {Object} character - A Character object as returned by XIVAPI.
+ */
+export function parseRawCharacterData(character) {
+  const nameParts = character.Name.split(' ');
+
+  return {
+    avatar: character.Avatar,
+    forename: nameParts[0],
+    id: character.ID,
+    name: character.Name,
+    surname: nameParts[1]
   }
 }

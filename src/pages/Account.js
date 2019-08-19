@@ -20,6 +20,8 @@ const useStyles = createUseStyles(style);
 function Account({
   history
 }) {
+  console.warn('Todo: The Feast content filtering.');
+
   // If the user is not signed in, redirect them to the sign in page.
   const user = useContext(UserContext);
   if (!user.loading && !user.isLoggedIn) {
@@ -83,11 +85,21 @@ function Account({
         </div>
         <div className={classes.control}>
           <Switch
-            id="look-and-feel-dark-mode"
+            id="look-and-feel-verify-characters"
             label={locale.labels.hideVerifyCharacterSection}
             on={userSettings.hideVerifyCharacterSection}
             onChange={(checked) => user.modifySettings({
               hideVerifyCharacterSection: checked
+            })}
+          />
+        </div>
+        <div className={classes.control}>
+          <Switch
+            id="look-and-feel-unknown-methods"
+            label={locale.labels.showUnknownMethods}
+            on={userSettings.revealUnknownObtainMethods}
+            onChange={(checked) => user.modifySettings({
+              revealUnknownObtainMethods: checked
             })}
           />
         </div>
@@ -173,24 +185,30 @@ function Account({
           <Switch
             id="tracking-marketing-festivals"
             label={hiddenContent.li3}
-            on={false}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.revealRealWorldEvents}
+            onChange={(checked) => user.modifySettings({
+              revealRealWorldEvents: checked
+            })}
           />
         </div>
         <div className={classes.control}>
           <Switch
-            id="tracking-lodestone-contests"
+            id="tracking-external-promos"
             label={hiddenContent.li4}
-            on={false}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.revealExternalPromos}
+            onChange={(checked) => user.modifySettings({
+              revealExternalPromos: checked
+            })}
           />
         </div>
         <div className={classes.control}>
           <Switch
             id="tracking-mog-station"
             label={hiddenContent.li5}
-            on={false}
-            onChange={(checked) => console.info(checked)}
+            on={userSettings.revealStorePurchases}
+            onChange={(checked) => user.modifySettings({
+              revealStorePurchases: checked
+            })}
           />
         </div>
         <div className={classes.control}>

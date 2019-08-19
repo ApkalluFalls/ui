@@ -7,6 +7,7 @@ import Authentication from "pages/Authentication";
 import Character from "pages/Character";
 import CharacterSearch from "pages/CharacterSearch";
 import Error404 from "pages/Error404";
+import FreeCompany from "pages/FreeCompany";
 import Home from "pages/Home";
 import List from "pages/List";
 
@@ -53,6 +54,9 @@ const routes = {
   [paths.characterSearch]: {
     component: CharacterSearch
   },
+  [paths.freeCompany()]: {
+    component: FreeCompany
+  }
 };
 
 export default routes;

@@ -33,8 +33,6 @@ function CharacterPortrait() {
     )
   }
 
-  console.warn(character);
-
   return (
     <section className={classes.container}>
       {character.name

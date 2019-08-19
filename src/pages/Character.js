@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
+import FreeCompanyName from 'components/content/FreeCompanyName';
 import InlineLoader from 'components/content/InlineLoader';
 import PageLoader from 'components/content/PageLoader';
 import Panel from 'components/content/Panel';
@@ -65,7 +66,7 @@ function CharacterPage({ match }) {
       }
 
       // If this is the active character update the context entry.
-      characterFromContext.setAchievements(achievements.list);
+      characterFromContext.onSync(data, achievements.list);
       setSynchronising(false);
     })();
   }
@@ -106,7 +107,7 @@ function CharacterPage({ match }) {
 
   if (!character) {
     return (
-      <PageLoader text={pageLocale.communicatingWithXIVAPI} />
+      <PageLoader text={locale.info.communicatingWithXIVAPI} />
     );
   }
 
@@ -176,16 +177,13 @@ function CharacterPage({ match }) {
         <section className={classes.details}>
           <h1 className={classes.name}>
             {name}
-            {freeCompany && (
-              <React.Fragment>
-                {' '}
-                <span className={classes.freeCompanyTag}>
-                  «{freeCompany.tag}»
-                </span>
-              </React.Fragment>
-            )}
           </h1>
-          <p className={classes.tagline}>
+          {freeCompany && (
+            <p className={classes.tagline}>
+              <FreeCompanyName {...freeCompany} />
+            </p>
+          )}
+          <p className={`${classes.tagline} ${classes.taglineSmall}`}>
             {dataCenter && (
               <React.Fragment>
                 {dataCenter}
