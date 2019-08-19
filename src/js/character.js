@@ -127,7 +127,7 @@ export default class Character {
     } = characterInfo;
 
     const response = {
-      ...this.parseRawCharacterData(Character),
+      ...parseRawCharacterData(Character),
       bio: Character.Bio,
       claimed: !!this.timeClaimed,
       cacheExpires: Number(new Date()) + 86400000,
@@ -179,7 +179,7 @@ export default class Character {
         return [];
       });
 
-    return response.Results.map(this.parseRawCharacterData);
+    return response.Results.map(parseRawCharacterData);
   }
 }
 
