@@ -50,6 +50,12 @@ export default {
     lineHeight: '27px',
     marginBottom: 0
   },
+  tag: theme => ({
+    color: theme.colorSubtle,
+    fontSize: 20,
+    fontWeight: 'normal',
+    lineHeight: '23px'
+  }),
   tagline: theme => ({
     color: theme.colorUnimportant,
     marginBottom: 0

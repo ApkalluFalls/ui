@@ -43,6 +43,7 @@ function FreeCompanyPage({ match }) {
     memberRanks,
     name,
     slogan,
+    tag,
     world
   } = freeCompany;
 
@@ -71,6 +72,10 @@ function FreeCompanyPage({ match }) {
         <section className={classes.details}>
           <h1 className={classes.name}>
             {name}
+            {' '}
+            <span className={classes.tag}>
+              «{tag}»
+            </span>
           </h1>
           <p className={`${classes.tagline} ${classes.taglineSmall}`}>
             {dataCenter && (
