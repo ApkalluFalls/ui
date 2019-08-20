@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
+import Server from 'js/server';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
@@ -16,8 +17,10 @@ function PatreonSettings({ inheritedClasses }) {
   /**
    * Attempt to connect to a user's Patreon account.
    */
-  function handleConnect() {
-
+  async function handleConnect() {
+    const server = new Server();
+    const response = await server.get('verify');
+    console.info(response);
   }
 
   return (

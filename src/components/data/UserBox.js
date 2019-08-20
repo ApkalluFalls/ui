@@ -39,8 +39,6 @@ function UserBox() {
       const fetchedCharacters = [];
 
       for (const characterData of verifiedCharacters) {
-        console.warn(characterData);
-
         fetchedCharacters.push({
           ...characterData,
           ...await new Character(characterData).getData()

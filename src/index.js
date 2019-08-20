@@ -198,23 +198,28 @@ function ApkalluFalls({}) {
    * Update the theme context (via state).
    */
   function handleCharacterChange(character) {
+    console.info(character);
     if (character.name) {
       localStorage.setItem('character', JSON.stringify(character));
-      localStorage.removeItem('character-achievements');
     } else {
       localStorage.removeItem('character');
-      localStorage.removeItem('character-achievements');
     }
 
+    localStorage.removeItem('character-achievements');
     setCharacterAchievements(undefined);
     setCharacter(character);
   }
 
   function handleCharacterSync(character, achievements) {
     localStorage.setItem('character', JSON.stringify(character));
-    localStorage.setItem('character-achievements', JSON.stringify(achievements));
+    
+    if (Array.isArray(achievements)) {
+      localStorage.setItem('character-achievements', JSON.stringify(achievements));
+      setCharacterAchievements(achievements);
+    } else {
+      setCharacterAchievements(undefined);
+    }
 
-    setCharacterAchievements(achievements);
     setCharacter(character);
   }
 

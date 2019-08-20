@@ -1,9 +1,10 @@
+import firebase from "firebase/app";
 import React, { useContext, useEffect, useState } from 'react';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
-import API from 'js/api';
 import Character from 'js/character';
+import Server from 'js/server';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
@@ -26,17 +27,13 @@ function VerifyCharacter({
   const [codeFound, setCodeFound] = useState(false);
   const [codeMissing, setCodeMissing] = useState(false);
 
-  console.info(user);
-
   useEffect(() => {
     if (!user.isLoggedIn) {
       return;
     }
 
     const uidBase32 = parseInt(user.data.uid, 32);
-    const { sessionStart } = user;
-
-    setCode(`apkallu_${(uidBase32 + sessionStart).toString(16)}`);
+    setCode(`apkallu_${(uidBase32 + user.sessionStart).toString(16)}`);
   }, [user]);
 
   /**
@@ -58,9 +55,17 @@ function VerifyCharacter({
     navigator.clipboard.writeText(code).then(() => setCodeCopied(true));
   }
 
+  /**
+   * Check if the verification code matches.
+   * If true, this updates the verifiedCharacters array to include the new character.
+   */
   async function checkVerificationCode() {
     setChecking(true);
 
+    /**
+     * First we check the bio from the user's side to block repeated failed attempts getting
+     * through to the Apkallu Falls server.
+     */
     const data = await new Character({
       id: characterId
     }).getData(true);
@@ -78,40 +83,52 @@ function VerifyCharacter({
 
     setCodeFound(true);
 
-    const formattedVerifiedCharacters = user.verifiedCharacters.map(character => {
-      const response = {
-        '@': character['@'],
-        id: character.id
-      }
-
-      if (character.main) {
-        response.main = true;
-      }
-
-      return response;
+    // If the code exists, attempt verification.
+    const server = await new Server().post('verify', {
+      characterId: characterId,
+      sessionStart: user.sessionStart
     });
 
-    const formattedEntry = {
-      '@': Number(new Date()),
-      id: characterId
-    }
+    const { isCodeMatch, verifiedCharacters } = server.data;
 
-    const api = new API(undefined, user.data.uid);
-    const x = await api.db('verified', [
-      ...formattedVerifiedCharacters,
-      formattedEntry
-    ]);
+    // If the code no longer matches, mark the code as missing.
+    if (!isCodeMatch) {
+      setCodeMissing(true);
+    }
 
     setChecking(false);
     setCodeFound(false);
 
-    user.setVerifiedCharacters([
-      ...user.verifiedCharacters,
-      {
-        ...formattedEntry,
-        ...character
+    // If there are no verified characters (including the above code match check), return.
+    if (!verifiedCharacters) {
+      return;
+    }
+
+    // Update the Local Storage store to include the new character.
+    localStorage.setItem('store', JSON.stringify({
+      ...JSON.parse(localStorage.getItem('store')),
+      verified: verifiedCharacters
+    }));
+
+    /**
+     * Merge the current parsed verified characters object with the response from the server.
+     * This preserves avatar data, which the server itself doesn't store.
+     */
+    user.setVerifiedCharacters(verifiedCharacters.map(verifiedCharacter => {
+      if (verifiedCharacter.id === Number(characterId)) {
+        return {
+          ...verifiedCharacter,
+          ...character
+        }
       }
-    ]);
+
+      return {
+        ...verifiedCharacter,
+        ...user.verifiedCharacters.find((
+          userVerifiedCharacter => userVerifiedCharacter.id === verifiedCharacter.id
+        ))
+      }
+    }));
   }
 
   return (
