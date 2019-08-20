@@ -47,7 +47,7 @@ function UserBox() {
 
       user.setVerifiedCharacters(fetchedCharacters);
     })();
-  }, [user.loading]);
+  }, [user.isLoggedIn]);
 
   if (user.loading) {
     return (
