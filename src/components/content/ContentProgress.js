@@ -18,35 +18,77 @@ function ContentProgress({
 }) {
   // Context.
   const { keys: apiKeys } = useContext(APIContext);
-  const { name: selectedCharacterName } = useContext(CharacterContext);
+  const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
   const classes = useStyles(useContext(ThemeContext));
   const user = useContext(UserContext);
 
   // State.
+  const [value, setValue] = useState(0);
   const [total, setTotal] = useState(1);
 
+  // Map settings to relevant API keys.
+  const { contentFilters: filterKeys } = apiKeys;
+  const settingsMapping = [{
+    apiKey: filterKeys.event,
+    settingsKey: 'revealInGameEvents'
+  }, {
+    apiKey: filterKeys.externalPromo,
+    settingsKey: 'revealExternalPromos'
+  }, {
+    apiKey: filterKeys.legacy,
+    settingsKey: 'revealUnusedLegacyContent'
+  }, {
+    apiKey: filterKeys.realWorldEvent,
+    settingsKey: 'revealRealWorldEvents'
+  }, {
+    apiKey: filterKeys.storePurchase,
+    settingsKey: 'revealStorePurchases'
+  }]
+
   useEffect(() => {
-    const { settings } = user;
-    if (!settings) {
+    if (!user.settings) {
       return;
     }
 
+    calculateTotalsForContent(settingsMapping);
+
+    if (!character[source.api]) {
+      return;
+    }
+
+    calculateValuesFromUserData(settingsMapping);
+  }, [user.settings])
+
+  useEffect(() => {
+    if (!character[source.api]) {
+      return;
+    }
+
+    calculateValuesFromUserData(settingsMapping);
+  }, [character[source.api]])
+
+  /**
+   * Parse the data to retrieve the total value offset by the user's settings.
+   * @param {Array} settingsMapping - An array of settings mapped to keys.
+   */
+  function calculateTotalsForContent(settingsMapping) {
+    const { settings } = user;
     const { overview: overviewKeys } = apiKeys;
     let offsetTotal = 0;
-
+  
     const available = contentData[overviewKeys.available];
     if (Array.isArray(available)) {
       // If there's an available array, we need to do array comparisons to determine the totals.
       let offsetArray = [...available];
-
+  
       function getAvailableContentByFilter(filterKey) {
         const content = contentData[filterKey];
-
+  
         if (!content) {
           return [];
         }
-
+  
         return content;
       }
       
@@ -91,7 +133,7 @@ function ContentProgress({
           ...getAvailableContentByFilter(overviewKeys.availableStorePurchase)
         ];
       }
-
+  
       offsetTotal = offsetArray.filter((
         (entry, index) => offsetArray.indexOf(entry) === index
       )).length;
@@ -100,14 +142,14 @@ function ContentProgress({
       let keyTotal = 'total';
       let keyTotalEvents = 'totalEvents';
       let keyTotalLegacy = 'totalLegacy';
-
+  
       // Achievements rely on achievement points, not totals.
       if (source.api === 'achievements') {
         keyTotal = 'pointsTotal';
         keyTotalEvents = 'pointsTotalEvents';
         keyTotalLegacy = 'pointsTotalLegacy';
       }
-
+  
       offsetTotal = contentData[overviewKeys[keyTotal]];
       
       if (settings.revealInGameEvents) {
@@ -118,9 +160,50 @@ function ContentProgress({
         offsetTotal += contentData[apiKeys.overview[keyTotalLegacy]] || 0;
       }
     }
-
+  
     setTotal(offsetTotal);
-  }, [user.settings])
+  }
+
+  /**
+   * Calculate the progress values based on the user's totals.
+   * @param {Array} settingsMapping - An array of settings mapped to keys.
+   */
+  function calculateValuesFromUserData(settingsMapping) {
+    let offsetValue = 0;
+
+    // Achievements use the character context.
+    if (source.api === 'achievements') {
+      const { achievements } = character;
+      
+      if (!Array.isArray(achievements) || !achievements.length) {
+        // If the character has no achievements, return 0.
+        offsetValue = 0;
+      } else {
+        // Iterate over the achievements extracting relevant entries as per the user settings.
+        offsetValue = achievements.reduce((points, achievement) => {
+          const achievementFilter = achievement[apiKeys.overview.available];
+
+          // If there are no filters on the achievement, increase the points.
+          if (!achievementFilter) {
+            return points + achievement[apiKeys.lists.points];
+          }
+
+          // Compare the user's settings with the achievement's filter properties.
+          for (const mapping of settingsMapping) {
+            // If the setting is false but the achievement has the filter applied, return 0.
+            if (!user.settings[mapping.settingsKey] && achievementFilter[mapping.apiKey]) {
+              return points;
+            }
+          }
+
+          // If it got past the settings mapping check, return the points.
+          return points + achievement[apiKeys.lists.points];
+        }, 0);
+      }
+    }
+
+    setValue(offsetValue);
+  }
 
   return (
     <section className={classes.container}>
@@ -128,9 +211,9 @@ function ContentProgress({
         {source.title}
       </h2>
       {source.hasVisibleProgressBar && (
-        selectedCharacterName
+        character.name
           ? (
-            <ProgressBar value={0 /* todo */} limit={total || undefined} />
+            <ProgressBar value={value} limit={total || undefined} />
           ) : (
             <ProgressBar limit={total || undefined} />
           )

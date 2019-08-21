@@ -130,7 +130,7 @@ function List({
         methodIconPositions
       });
     })();
-  }, []);
+  }, [keys]);
 
   const {
     content,

@@ -9,7 +9,8 @@ export default {
   bar: theme => ({
     background: theme.progress.bar,
     display: 'block',
-    height: '100%'
+    height: '100%',
+    transition: 'width .5s'
   }),
   caption: theme => ({
     alignItems: 'center',

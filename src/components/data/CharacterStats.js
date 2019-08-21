@@ -13,8 +13,6 @@ function CharacterStats({ achievements }) {
   const { locale } = useContext(LocalisationContext);
   const { characterStats: componentLocale } = locale.components;
 
-  console.info(achievements);
-
   if (achievements.isPrivate) {
     return (
       <React.Fragment>

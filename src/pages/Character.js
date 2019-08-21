@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { APIContext } from 'contexts/api';
 import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
@@ -20,10 +21,12 @@ import style from 'styles/pages/Character';
 const useStyles = createUseStyles(style);
 
 function CharacterPage({ match }) {
+  const { keys: apiKeys } = useContext(APIContext);
+  const { lists: apiListKeys } = apiKeys;
   const characterFromContext = useContext(CharacterContext);
   const user = useContext(UserContext);
   const classes = useStyles(useContext(ThemeContext));
-  const { locale } = useContext(LocalisationContext);
+  const { language, locale } = useContext(LocalisationContext);
   const { character: pageLocale } = locale.pages;
 
   const { characterId } = match.params;
@@ -56,17 +59,33 @@ function CharacterPage({ match }) {
     (async () => {
       const data = await character.getData(bypassCache);
       setCharacter(data);
-
+  
       const achievements = await character.getAchievements(bypassCache);
-      setAchievements(achievements);
 
       if (achievements.isPrivate || Number(characterId) !== characterFromContext.id) {
+        setAchievements(achievements);
         setSynchronising(false);
         return;
       }
 
+      // Fetch the achievements data from the API to merge with the character's achievements.
+      const achievementsFromApi = await new API(language).json('achievements');
+
+      const characterAchievements = achievements.list.map(entry => {
+        const achievementFromApi = achievementsFromApi.find((
+          achievement => achievement[apiListKeys.id] === entry.id
+        ));
+
+        return {
+          ...achievementFromApi,
+          unlocked: entry.date
+        }
+      })
+
+      setAchievements(characterAchievements);
+
       // If this is the active character update the context entry.
-      characterFromContext.onSync(data, achievements.list);
+      characterFromContext.onSync(data, characterAchievements);
       setSynchronising(false);
     })();
   }

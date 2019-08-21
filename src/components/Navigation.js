@@ -42,7 +42,7 @@ function Navigation() {
     api: 'achievements',
     path: paths.achievements,
     title: contentText.achievements,
-    hasVisibleProgressBar: character && character.achievements,
+    hasVisibleProgressBar: character,
   }, {
     api: 'minions',
     path: paths.minions,

@@ -5,8 +5,7 @@ export default {
     display: 'flex',
     height: '4vh',
     justifyContent: 'center',
-    margin: 0,
-    marginTop: '46vh',
+    margin: '46vh 0',
     padding: 0,
     width: '100%'
   }),
