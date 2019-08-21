@@ -86,6 +86,9 @@ export const localisation = {
         lodestoneAccountManagement: 'Navigate to your Lodestone Account Management page.',
         lodestoneAchievementsPublic: 'Make sure the option next to Achievements is set to Public, then click Confirm.'
       },
+      footer: {
+        squareEnixDisclaimer: 'FINAL FANTASY XIV ©2010 - 2019 SQUARE ENIX CO., LTD. FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. All material used under license.'
+      },
       fullPageError: {
         heading: 'Something went wrong!',
         about: 'Apkallu Falls was unable to retrieve any data. This could be because your network has changed or because you\'ve lost internet connection. Please reload the page and try again.',
@@ -261,9 +264,11 @@ export const localisation = {
 
       // Misc
       collectorsEdition: 'Purchase the Collectors Edition of {i0}',
+      companionChocobo: 'Complete the Companion Chocobo\'s {i0} skill tree',
       byDefault: 'Available by default',
       fanFest: 'Attend the {i0} {i1} Fan Festival',
       fanFestStream: 'Purchase access to the {i0} {i1} Fan Festival live stream',
+      forumContest: 'Win a Lodestone forum contest',
       generic: '{0}',
       instance: 'Awarded randomly from {i1}',
       itemExchange: 'Randomly awarded when exchanging 1 {i0} with {1} in {2} (x: {3}, y: {4})',

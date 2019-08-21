@@ -4,6 +4,7 @@ import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from "contexts/theme";
 import { UserContext } from "contexts/user";
 import PageLoader from 'components/content/PageLoader';
+import Footer from 'components/Footer';
 import UserBox from 'components/data/UserBox';
 import routes from 'js/routes';
 import pageRoutes from 'js/routes/pages';
@@ -63,6 +64,7 @@ function Container() {
           )
         }
       </main>
+      <Footer />
       <UserBox />
     </section>
   );
