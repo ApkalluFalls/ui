@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProgressBar from 'components/content/ProgressBar';
 import { APIContext } from 'contexts/api';
-import { CharacterContext } from 'contexts/character';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
@@ -13,12 +12,12 @@ import style from 'styles/content/ContentProgress';
 const useStyles = createUseStyles(style);
 
 function ContentProgress({
+  characterSourceData = [],
   contentData = {},
   source = {}
 }) {
   // Context.
   const { keys: apiKeys } = useContext(APIContext);
-  const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
   const classes = useStyles(useContext(ThemeContext));
   const user = useContext(UserContext);
@@ -53,7 +52,7 @@ function ContentProgress({
 
     calculateTotalsForContent(settingsMapping);
 
-    if (!character[source.api]) {
+    if (!characterSourceData) {
       return;
     }
 
@@ -61,12 +60,12 @@ function ContentProgress({
   }, [user.settings])
 
   useEffect(() => {
-    if (!character[source.api]) {
+    if (!characterSourceData) {
       return;
     }
 
     calculateValuesFromUserData(settingsMapping);
-  }, [character[source.api]])
+  }, [characterSourceData])
 
   /**
    * Parse the data to retrieve the total value offset by the user's settings.
@@ -172,15 +171,13 @@ function ContentProgress({
     let offsetValue = 0;
 
     // Achievements use the character context.
-    if (source.api === 'achievements') {
-      const { achievements } = character;
-      
-      if (!Array.isArray(achievements) || !achievements.length) {
+    if (source.api === 'achievements') {      
+      if (!Array.isArray(characterSourceData) || !characterSourceData.length) {
         // If the character has no achievements, return 0.
         offsetValue = 0;
       } else {
         // Iterate over the achievements extracting relevant entries as per the user settings.
-        offsetValue = achievements.reduce((points, achievement) => {
+        offsetValue = characterSourceData.reduce((points, achievement) => {
           const achievementFilter = achievement[apiKeys.overview.available];
 
           // If there are no filters on the achievement, increase the points.
@@ -211,7 +208,7 @@ function ContentProgress({
         {source.title}
       </h2>
       {source.hasVisibleProgressBar && (
-        character.name
+        characterSourceData.length
           ? (
             <ProgressBar value={value} limit={total || undefined} />
           ) : (

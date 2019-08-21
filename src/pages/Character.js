@@ -62,7 +62,7 @@ function CharacterPage({ match }) {
   
       const achievements = await character.getAchievements(bypassCache);
 
-      if (achievements.isPrivate || Number(characterId) !== characterFromContext.id) {
+      if (achievements.isPrivate) {
         setAchievements(achievements);
         setSynchronising(false);
         return;
@@ -84,8 +84,11 @@ function CharacterPage({ match }) {
 
       setAchievements(characterAchievements);
 
-      // If this is the active character update the context entry.
-      characterFromContext.onSync(data, characterAchievements);
+      // If this is the active character, update the context.
+      if (Number(characterId) === characterFromContext.id) {
+        characterFromContext.onSync(data, characterAchievements);
+      }
+
       setSynchronising(false);
     })();
   }

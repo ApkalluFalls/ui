@@ -1,6 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
+import ContentProgress from 'components/content/ContentProgress';
+import InlineLoader from 'components/content/InlineLoader';
+import API from 'js/api';
+import { paths } from 'js/routes';
 
 // Theme.
 import { createUseStyles } from 'react-jss'
@@ -58,9 +62,36 @@ function CharacterStats({ achievements }) {
     )
   }
 
+  const [contentData, setContentData] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const contentData = await new API().json('data');
+      setContentData(contentData);
+    })();
+  }, []);
+
+  if (!contentData) {
+    return (
+      <InlineLoader text={locale.info.loading} />
+    )
+  }
+
+  console.info(achievements);
+
   return (
-    <section className={classes.verifyCharacter}>
-    </section>
+    <React.Fragment>
+      <ContentProgress
+        characterSourceData={achievements}
+        contentData={contentData.achievements}
+        source={{
+          api: 'achievements',
+          hasVisibleProgressBar: true,
+          path: paths.achievements,
+          title: locale.common.achievements
+        }}
+      />
+    </React.Fragment>
   );
 }
 

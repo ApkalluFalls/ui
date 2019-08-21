@@ -28,20 +28,27 @@ export default {
       marginRight: 0
     }
   }),
-  avatar: {
+  avatar: theme => ({
     backgroundSize: 'cover',
     border: {
       radius: '100%'
     },
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 0,
+    boxShadow: {
+      blur: 4,
+      spread: 2,
+      color: '#000',
+      x: 1,
+      y: 1
+    },
     height: 56,
     flex: {
       basis: 56,
       shrink: 0
     },
     marginRight: 8
-  },
+  }),
   name: theme => ({
     color: theme.characterCard.color,
     display: 'block',

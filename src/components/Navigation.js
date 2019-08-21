@@ -98,6 +98,7 @@ function Navigation() {
                     to={content.path}
                   >
                     <ContentProgress
+                      characterSourceData={character[content.api]}
                       contentData={contentData[content.api]}
                       source={content}
                     />
