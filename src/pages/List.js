@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import List from 'components/data/List';
 
 function ListPage({
-  match,
   source
 }) {
   return (
