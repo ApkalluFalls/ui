@@ -264,21 +264,26 @@ export const localisation = {
 
       // Misc
       collectorsEdition: 'Purchase the Collectors Edition of {i0}',
+      companionApp: 'Sign in to the Final Fantasy XIV Companion App using your account',
       companionChocobo: 'Complete the Companion Chocobo\'s {i0} skill tree',
       byDefault: 'Available by default',
       fanFest: 'Attend the {i0} {i1} Fan Festival',
       fanFestStream: 'Purchase access to the {i0} {i1} Fan Festival live stream',
       forumContest: 'Win a Lodestone forum contest',
+      gardening: 'Grown in an estate garden using {i0} ({1} hours)',
       generic: '{0}',
       instance: 'Awarded randomly from {i1}',
       itemExchange: 'Randomly awarded when exchanging 1 {i0} with {1} in {2} (x: {3}, y: {4})',
       legacyLevelGoal: 'Awarded for reaching level {i0} during {1}',
       legacyStatus: 'Awarded for having at least {i0} cumulative days of subscription within the last {1} months of {2}',
       mogStation: 'Purchase from the Mog Station',
+      preOrder: 'Pre-order {i0} (time limited)',
       promo: 'Promotion: "{i0}"',
       recruitAFriend: 'Have a friend subscribe for at least {i0} days during the Recruit A Friend campaign',
+      squareEnixStore: 'Purchase {i0} from the Square Enix Store (time limited; check if bonus still applies before purchase)',
       treasureHunt: 'Randomly awarded from {i0}',
-      venture: 'Randomly awarded from the level {0} {i1} retainer venture'
+      venture: 'Randomly awarded from the level {0} {i1} retainer venture',
+      yokaiWatch: 'Purchase for between 1 and 9 Legendary Yo-kai Medals during the Yo-kai Watch cross-over event'
     }
   }
 };
