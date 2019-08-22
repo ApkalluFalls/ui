@@ -22,6 +22,12 @@ export const localisation = {
       lodestoneProfileEdit: 'https://na.finalfantasyxiv.com/lodestone/my/setting/profile',
       lodestoneAccountManagement: 'https://na.finalfantasyxiv.com/lodestone/my/setting/account'
     },
+    expansions: {
+      aRealmReborn: 'A Realm Reborn',
+      heavensward: 'Heavensward',
+      stormblood: 'Stormblood',
+      shadowbringers: 'Shadowbringers'
+    },
     common: {
       achievements: 'Achievements',
       anUnknownErrorOccurred: 'An unknown error occurred.',
@@ -155,6 +161,10 @@ export const localisation = {
         yourCharacters: 'Your characters',
 
         settings: {
+          expansions: {
+            heading: 'Expansion settings',
+            help: 'Not ready to start the next expansion yet? Don\'t worry, these settings let you completely hide any content released during each expansion period.'
+          },
           lookAndFeel: {
             heading: 'Look and Feel Settings',
             help: 'With these settings you can change the way the site displays.'

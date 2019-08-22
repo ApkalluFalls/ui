@@ -8,11 +8,11 @@ import style from 'styles/content/ProgressBar';
 const useStyles = createUseStyles(style);
 
 function ProgressBar({
-  limit = 1,
+  limit = 0,
   value = 0
 }) {
   const classes = useStyles(useContext(ThemeContext));
-  const percentage = `${Math.ceil(((100 / limit) * value) * 10) / 10}%`;
+  const percentage = `${limit ? Math.ceil(((100 / limit) * value) * 10) / 10 : 100}%`;
 
   return (
     <section className={classes.container}>

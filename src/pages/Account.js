@@ -33,6 +33,7 @@ function Account({
   const { account: pageLocale } = locale.pages;
   const { whatIsHidden: hiddenContent } = locale.pages.home;
   const {
+    expansions: expansionSettings,
     lookAndFeel: lookAndFeelSettings,
     manualTracking: manuallyTrackedContent,
     temporaryOrOldContent: temporaryOrOldContent
@@ -60,6 +61,16 @@ function Account({
       <Panel heading={pageLocale.yourCharacters}>
         <UserCharacters />
       </Panel>
+      <div className={classes.control}>
+        <button
+          className={classes.button}
+          type="button"
+          onClick={handleSignOut}
+          onKeyDown={(event) => { return event.which === 13 && handleSignOut() }}
+        >
+          {pageLocale.signOut}
+        </button>
+      </div>
       <Panel heading={(
         <React.Fragment>
           <span className="fab fa-patreon" />
@@ -222,16 +233,51 @@ function Account({
           />
         </div>
       </Panel>
-      <div className={classes.control}>
-        <button
-          className={classes.button}
-          type="button"
-          onClick={handleSignOut}
-          onKeyDown={(event) => { return event.which === 13 && handleSignOut() }}
-        >
-          {pageLocale.signOut}
-        </button>
-      </div>
+      <Panel heading={expansionSettings.heading}>
+        <p className={classes.help}>
+          {expansionSettings.help}
+        </p>
+        <div className={classes.control}>
+          <Switch
+            id="expansion-arr"
+            label={locale.expansions.aRealmReborn}
+            on={userSettings.expansionARealmReborn}
+            onChange={(checked) => user.modifySettings({
+              expansionARealmReborn: checked
+            })}
+          />
+        </div>
+        <div className={classes.control}>
+          <Switch
+            id="expansion-hw"
+            label={locale.expansions.heavensward}
+            on={userSettings.expansionHeavensward}
+            onChange={(checked) => user.modifySettings({
+              expansionHeavensward: checked
+            })}
+          />
+        </div>
+        <div className={classes.control}>
+          <Switch
+            id="expansion-sb"
+            label={locale.expansions.stormblood}
+            on={userSettings.expansionStormblood}
+            onChange={(checked) => user.modifySettings({
+              expansionStormblood: checked
+            })}
+          />
+        </div>
+        <div className={classes.control}>
+          <Switch
+            id="expansion-shb"
+            label={locale.expansions.shadowbringers}
+            on={userSettings.expansionShadowbringers}
+            onChange={(checked) => user.modifySettings({
+              expansionShadowbringers: checked
+            })}
+          />
+        </div>
+      </Panel>
     </React.Fragment>
   )
 }

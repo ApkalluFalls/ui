@@ -17,13 +17,16 @@ function ContentProgress({
 }) {
   // Context.
   const { overview: apiOverview } = useContext(APIContext);
-  const { keys: apiKeys } = apiOverview;
+  const {
+    expansions: apiExpansions,
+    keys: apiKeys
+  } = apiOverview;
   const classes = useStyles(useContext(ThemeContext));
   const user = useContext(UserContext);
 
   // State.
   const [value, setValue] = useState(0);
-  const [total, setTotal] = useState(1);
+  const [total, setTotal] = useState(0);
 
   // Map settings to relevant API keys.
   const {
@@ -51,6 +54,34 @@ function ContentProgress({
     filterKey: filterKeys.storePurchase,
     overviewKey: overviewKeys.availableStorePurchase,
     settingsKey: 'revealStorePurchases'
+  }];
+
+  const {
+    patchFirst,
+    patchLast,
+    rel
+  } = overviewKeys;
+
+  const expansionSettings = [{
+    patchFirst: apiExpansions[0][patchFirst],
+    patchLast: apiExpansions[0][patchLast],
+    rel: apiExpansions[0][rel],
+    settingsKey: 'expansionARealmReborn'
+  }, {
+    patchFirst: apiExpansions[1][patchFirst],
+    patchLast: apiExpansions[1][patchLast],
+    rel: apiExpansions[1][rel],
+    settingsKey: 'expansionHeavensward'
+  }, {
+    patchFirst: apiExpansions[2][patchFirst],
+    patchLast: apiExpansions[2][patchLast],
+    rel: apiExpansions[2][rel],
+    settingsKey: 'expansionStormblood'
+  }, {
+    patchFirst: apiExpansions[3][patchFirst],
+    patchLast: apiExpansions[3][patchLast],
+    rel: apiExpansions[3][rel],
+    settingsKey: 'expansionShadowbringers'
   }];
 
   useEffect(() => {
@@ -83,15 +114,22 @@ function ContentProgress({
     const { overview: overviewKeys } = apiKeys;
     let offsetTotal = 0;
   
-    if (source.api === 'achievements') {  
-      offsetTotal = contentData[overviewKeys.pointsTotal];
-      
-      if (settings.revealInGameEvents) {
-        offsetTotal += contentData[overviewKeys.pointsTotalEvents] || 0;
-      }
-      
-      if (settings.revealUnusedLegacyContent) {
-        offsetTotal += contentData[apiKeys.overview.pointsTotalLegacy] || 0;
+    if (source.api === 'achievements') {
+      for (const expansion of expansionSettings) {
+        if (!user.settings[expansion.settingsKey]) {
+          continue;
+        }
+
+        const achievementExpansion = contentData[expansion.rel];
+        offsetTotal += achievementExpansion[overviewKeys.pointsTotal];
+        
+        if (settings.revealInGameEvents) {
+          offsetTotal += achievementExpansion[overviewKeys.pointsTotalEvents] || 0;
+        }
+        
+        if (settings.revealUnusedLegacyContent) {
+          offsetTotal += achievementExpansion[apiKeys.overview.pointsTotalLegacy] || 0;
+        }
       }
     } else if (source.api !== 'orchestrion') { /** TODO: Implement orchestrion overview data */
       offsetTotal = getTotalsFromSettingsMapping();
@@ -112,8 +150,26 @@ function ContentProgress({
         // If the character has no achievements, return 0.
         offsetValue = 0;
       } else {
+        const { lists: listsKeys } = apiKeys;
+
+        console.info(expansionSettings);
+
         // Iterate over the achievements extracting relevant entries as per the user settings.
-        offsetValue = characterSourceData.reduce((points, achievement) => {
+        offsetValue = characterSourceData.filter(achievement => {
+          const { [listsKeys.patch]: patch } = achievement;
+
+          // Filter out anything which may be from a disabled expansion.
+          for (const expansion of expansionSettings) {
+            if (!user.settings[expansion.settingsKey] && (
+              patch >= expansion.patchFirst
+              && patch <= expansion.patchLast
+            )) {
+              return false;
+            }
+          }
+      
+          return true;
+        }).reduce((points, achievement) => {
           const achievementFilter = achievement[apiKeys.overview.available];
 
           // If there are no filters on the achievement, increase the points.
@@ -167,8 +223,45 @@ function ContentProgress({
       }
     }
 
+    // Filter out anything which doesn't match the expansion settings.
+    masterArray = masterArray.filter(entry => {
+      for (const expansion of expansionSettings) {
+        if (!user.settings[expansion.settingsKey] && (
+          contentData[expansion.rel].indexOf(entry) !== -1
+        )) {
+          return false;
+        }
+      }
+
+      return true;
+    })
+
     if (isOffsetByCharacterSourceData) {
-      return characterSourceData.filter(entry => masterArray.indexOf(entry) !== -1).length;
+      const unlockedByDefault = (contentData[overviewKeys.unlockedByDefault] || []).filter((
+        entry => {
+          for (const expansion of expansionSettings) {
+            if (!user.settings[expansion.settingsKey] && (
+              contentData[expansion.rel].indexOf(entry) !== -1
+            )) {
+              return false;
+            }
+          }
+    
+          return true;
+        }
+      ));
+
+      return [
+        ...unlockedByDefault,
+        ...characterSourceData.filter(entry => {
+          // Ignore any which are unlocked by default.
+          if (unlockedByDefault.indexOf(entry) !== -1) {
+            return false;
+          }
+
+          return masterArray.indexOf(entry) !== -1;
+        })
+      ].length;
     }
 
     return masterArray.filter((entry, index) => masterArray.indexOf(entry) === index).length;
@@ -182,9 +275,9 @@ function ContentProgress({
       {source.hasVisibleProgressBar && (
         characterSourceData.length
           ? (
-            <ProgressBar value={value} limit={total || undefined} />
+            <ProgressBar value={value} limit={total} />
           ) : (
-            <ProgressBar limit={total || undefined} />
+            <ProgressBar limit={total} />
           )
       )}
     </section>

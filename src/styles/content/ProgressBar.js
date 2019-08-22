@@ -29,9 +29,10 @@ export default {
       grow: 1
     }
   },
-  limit: {
+  limit: theme => ({
+    color: theme.colorUnimportant,
     fontStyle: 'italic'
-  },
+  }),
   percent: {
     flex: {
       basis: 40
