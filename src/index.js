@@ -125,9 +125,9 @@ function ApkalluFalls({}) {
 
   // State.
   const [version, setVersion] = useState(-1);
-  const [apiKeys, setAPIKeys] = useState();
+  const [apiOverview, setAPIOverview] = useState();
   const [character, setCharacter] = useState({ loading: true });
-  const [characterAchievements, setCharacterAchievements] = useState();
+  const [characterData, setCharacterData] = useState();
   const [user, setUser] = useState({ loading: true });
   const [userSettings, setUserSettings] = useState(defaultUserSettings);
   const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
@@ -167,7 +167,7 @@ function ApkalluFalls({}) {
       setCharacter(cachedCharacter || {});
       
       if (cachedCharacter) {
-        setCharacterAchievements(JSON.parse(localStorage.getItem('character-achievements')))
+        setCharacterData(JSON.parse(localStorage.getItem('character-data')))
       }
 
       return () => firebaseUnsubscribe();
@@ -206,18 +206,55 @@ function ApkalluFalls({}) {
     }
 
     localStorage.removeItem('character-achievements');
-    setCharacterAchievements(undefined);
+    setCharacterData(undefined);
     setCharacter(character);
   }
 
-  function handleCharacterSync(character, achievements) {
+  async function handleCharacterSync(character, achievements) {
     localStorage.setItem('character', JSON.stringify(character));
     
     if (Array.isArray(achievements)) {
-      localStorage.setItem('character-achievements', JSON.stringify(achievements));
-      setCharacterAchievements(achievements);
+      if (!user || !user.isLoggedIn) {
+        return;
+      }
+
+      const { id: characterId } = character;
+
+      if (!characterId) {
+        return;
+      }
+
+      const {
+        barding = [],
+        emotes = [],
+        minions = [],
+        mounts = [],
+        'orchestrion-rolls': orchestrion = []
+      } = await new API(undefined, user.data.uid).db();
+
+      /**
+       * Filter the relevant information from the user's saved data.
+       * @param {Array} content - A content array.
+       */
+      function getObtainedContentForCharacter(content) {
+        return content.filter((
+          entry => entry.character === characterId && entry.obtained
+        )).map(entry => entry.id);
+      }
+
+      const characterData = {
+        achievements: achievements,
+        barding: getObtainedContentForCharacter(barding),
+        emotes: getObtainedContentForCharacter(emotes),
+        minions: getObtainedContentForCharacter(minions),
+        mounts: getObtainedContentForCharacter(mounts),
+        orchestrion: getObtainedContentForCharacter(orchestrion)
+      };
+      
+      localStorage.setItem('character-data', JSON.stringify(characterData));
+      setCharacterData(characterData);
     } else {
-      setCharacterAchievements(undefined);
+      setCharacterData(undefined);
     }
 
     setCharacter(character);
@@ -268,9 +305,9 @@ function ApkalluFalls({}) {
       }}>
         <CharacterContext.Provider value={{
           ...character,
-          achievements: characterAchievements,
           change: handleCharacterChange,
-          setAchievements: setCharacterAchievements,
+          data: characterData,
+          setData: setCharacterData,
           onSync: handleCharacterSync
         }}>
           <BrowserRouter>
@@ -282,9 +319,9 @@ function ApkalluFalls({}) {
                 locale: localisation[language]
               }}>
                 <APIContext.Provider value={{
-                  keys: apiKeys,
+                  overview: apiOverview,
                   version,
-                  setKeys: setAPIKeys
+                  setOverview: setAPIOverview
                 }}>
                   <Navigation />
                   <Container />

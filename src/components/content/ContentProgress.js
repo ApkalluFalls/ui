@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProgressBar from 'components/content/ProgressBar';
 import { APIContext } from 'contexts/api';
-import { LocalisationContext } from 'contexts/localisation';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
 
@@ -17,8 +16,8 @@ function ContentProgress({
   source = {}
 }) {
   // Context.
-  const { keys: apiKeys } = useContext(APIContext);
-  const { locale } = useContext(LocalisationContext);
+  const { overview: apiOverview } = useContext(APIContext);
+  const { keys: apiKeys } = apiOverview;
   const classes = useStyles(useContext(ThemeContext));
   const user = useContext(UserContext);
 
@@ -27,36 +26,45 @@ function ContentProgress({
   const [total, setTotal] = useState(1);
 
   // Map settings to relevant API keys.
-  const { contentFilters: filterKeys } = apiKeys;
+  const {
+    contentFilters: filterKeys,
+    overview: overviewKeys
+  } = apiKeys;
+
   const settingsMapping = [{
-    apiKey: filterKeys.event,
+    filterKey: filterKeys.event,
+    overviewKey: overviewKeys.availableEvent,
     settingsKey: 'revealInGameEvents'
   }, {
-    apiKey: filterKeys.externalPromo,
+    filterKey: filterKeys.externalPromo,
+    overviewKey: overviewKeys.availableExternalPromo,
     settingsKey: 'revealExternalPromos'
   }, {
-    apiKey: filterKeys.legacy,
+    filterKey: filterKeys.legacy,
+    overviewKey: overviewKeys.availableLegacy,
     settingsKey: 'revealUnusedLegacyContent'
   }, {
-    apiKey: filterKeys.realWorldEvent,
+    filterKey: filterKeys.realWorldEvent,
+    overviewKey: overviewKeys.availableRealWorldEvent,
     settingsKey: 'revealRealWorldEvents'
   }, {
-    apiKey: filterKeys.storePurchase,
+    filterKey: filterKeys.storePurchase,
+    overviewKey: overviewKeys.availableStorePurchase,
     settingsKey: 'revealStorePurchases'
-  }]
+  }];
 
   useEffect(() => {
     if (!user.settings) {
       return;
     }
 
-    calculateTotalsForContent(settingsMapping);
+    calculateTotalsForContent();
 
     if (!characterSourceData) {
       return;
     }
 
-    calculateValuesFromUserData(settingsMapping);
+    calculateValuesFromUserData();
   }, [user.settings])
 
   useEffect(() => {
@@ -64,100 +72,29 @@ function ContentProgress({
       return;
     }
 
-    calculateValuesFromUserData(settingsMapping);
+    calculateValuesFromUserData();
   }, [characterSourceData])
 
   /**
    * Parse the data to retrieve the total value offset by the user's settings.
-   * @param {Array} settingsMapping - An array of settings mapped to keys.
    */
-  function calculateTotalsForContent(settingsMapping) {
+  function calculateTotalsForContent() {
     const { settings } = user;
     const { overview: overviewKeys } = apiKeys;
     let offsetTotal = 0;
   
-    const available = contentData[overviewKeys.available];
-    if (Array.isArray(available)) {
-      // If there's an available array, we need to do array comparisons to determine the totals.
-      let offsetArray = [...available];
-  
-      function getAvailableContentByFilter(filterKey) {
-        const content = contentData[filterKey];
-  
-        if (!content) {
-          return [];
-        }
-  
-        return content;
-      }
-      
-      if (settings.revealUnknownObtainMethods) {
-        offsetArray = [
-          ...offsetArray,
-          ...getAvailableContentByFilter(overviewKeys.availableUnknown)
-        ];
-      }
+    if (source.api === 'achievements') {  
+      offsetTotal = contentData[overviewKeys.pointsTotal];
       
       if (settings.revealInGameEvents) {
-        offsetArray = [
-          ...offsetArray,
-          ...getAvailableContentByFilter(overviewKeys.availableEvent)
-        ];
-      }
-      
-      if (settings.revealExternalPromos) {
-        offsetArray = [
-          ...offsetArray,
-          ...getAvailableContentByFilter(overviewKeys.availableExternalPromo)
-        ];
+        offsetTotal += contentData[overviewKeys.pointsTotalEvents] || 0;
       }
       
       if (settings.revealUnusedLegacyContent) {
-        offsetArray = [
-          ...offsetArray,
-          ...getAvailableContentByFilter(overviewKeys.availableLegacy)
-        ];
+        offsetTotal += contentData[apiKeys.overview.pointsTotalLegacy] || 0;
       }
-      
-      if (settings.revealRealWorldEvents) {
-        offsetArray = [
-          ...offsetArray,
-          ...getAvailableContentByFilter(overviewKeys.availableRealWorldEvent)
-        ];
-      }
-      
-      if (settings.revealStorePurchases) {
-        offsetArray = [
-          ...offsetArray,
-          ...getAvailableContentByFilter(overviewKeys.availableStorePurchase)
-        ];
-      }
-  
-      offsetTotal = offsetArray.filter((
-        (entry, index) => offsetArray.indexOf(entry) === index
-      )).length;
-    } else {
-      // Otherwise we take either the total or pointsTotal and proceed from there.
-      let keyTotal = 'total';
-      let keyTotalEvents = 'totalEvents';
-      let keyTotalLegacy = 'totalLegacy';
-  
-      // Achievements rely on achievement points, not totals.
-      if (source.api === 'achievements') {
-        keyTotal = 'pointsTotal';
-        keyTotalEvents = 'pointsTotalEvents';
-        keyTotalLegacy = 'pointsTotalLegacy';
-      }
-  
-      offsetTotal = contentData[overviewKeys[keyTotal]];
-      
-      if (settings.revealInGameEvents) {
-        offsetTotal += contentData[overviewKeys[keyTotalEvents]] || 0;
-      }
-      
-      if (settings.revealUnusedLegacyContent) {
-        offsetTotal += contentData[apiKeys.overview[keyTotalLegacy]] || 0;
-      }
+    } else if (source.api !== 'orchestrion') { /** TODO: Implement orchestrion overview data */
+      offsetTotal = getTotalsFromSettingsMapping();
     }
   
     setTotal(offsetTotal);
@@ -165,9 +102,8 @@ function ContentProgress({
 
   /**
    * Calculate the progress values based on the user's totals.
-   * @param {Array} settingsMapping - An array of settings mapped to keys.
    */
-  function calculateValuesFromUserData(settingsMapping) {
+  function calculateValuesFromUserData() {
     let offsetValue = 0;
 
     // Achievements use the character context.
@@ -188,7 +124,7 @@ function ContentProgress({
           // Compare the user's settings with the achievement's filter properties.
           for (const mapping of settingsMapping) {
             // If the setting is false but the achievement has the filter applied, return 0.
-            if (!user.settings[mapping.settingsKey] && achievementFilter[mapping.apiKey]) {
+            if (!user.settings[mapping.settingsKey] && achievementFilter[mapping.filterKey]) {
               return points;
             }
           }
@@ -197,9 +133,45 @@ function ContentProgress({
           return points + achievement[apiKeys.lists.points];
         }, 0);
       }
+    } else if (source.api !== 'orchestrion') { /** TODO: Implement orchestrion overview data */
+      // Everything else uses the same format.
+      offsetValue = getTotalsFromSettingsMapping(true)
     }
 
     setValue(offsetValue);
+  }
+
+  /**
+   * Determine the total value from the settings mapping.
+   * @param {Boolean} [isOffsetByCharacterSourceData] - Boolean to determine if we're using the character source data to determine the values.
+   */
+  function getTotalsFromSettingsMapping(isOffsetByCharacterSourceData = false) {
+    const unknown = (
+      user.settings.revealUnknownObtainMethods && contentData[overviewKeys.availableUnknown]
+    );
+
+    let masterArray = [
+      ...contentData[overviewKeys.available],
+      ...(unknown || [])
+    ];
+
+    // Compare the user's settings with the content's filter properties.
+    for (const mapping of settingsMapping) {
+      const data = contentData[mapping.overviewKey];
+      // If the setting is false but the content has the filter applied, extend the master array.
+      if (data && user.settings[mapping.settingsKey]) {
+        masterArray = [
+          ...masterArray,
+          ...data
+        ]
+      }
+    }
+
+    if (isOffsetByCharacterSourceData) {
+      return characterSourceData.filter(entry => masterArray.indexOf(entry) !== -1).length;
+    }
+
+    return masterArray.filter((entry, index) => masterArray.indexOf(entry) === index).length;
   }
 
   return (

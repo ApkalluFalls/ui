@@ -21,10 +21,11 @@ const useStyles = createUseStyles(style);
 function List({
   source
 }) {
+  const { overview: apiOverview } = useContext(APIContext);
+  const { keys } = apiOverview;
   const theme = useContext(ThemeContext);
   const panelClasses = usePanelStyles(theme);
   const classes = useStyles(theme);
-  const { keys } = useContext(APIContext);
   const user = useContext(UserContext);
 
   // Contexts.

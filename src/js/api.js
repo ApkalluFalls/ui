@@ -106,10 +106,10 @@ class API {
   /**
    * Fetch data from and store data to the Firebase database.
    * 
-   * @param {string} resource - the name of the directory file.
-   * @param {Object} data - the data to send.
-   * @param {boolean} bypassCacheCheck - should get requests ignore the cache?
-   * @param {boolean} saveAll - does this need to save the entire data set?
+   * @param {string} [resource] - the name of the directory file.
+   * @param {Object} [data] - the data to send.
+   * @param {boolean} [bypassCacheCheck] - should get requests ignore the cache?
+   * @param {boolean} [saveAll] - does this need to save the entire data set?
    * 
    * @example
    * // returns {
@@ -131,6 +131,10 @@ class API {
 
     // If we're not ignoring the cache, attempt to return cached data.
     if (!data && !bypassCacheCheck && cachedDb.uid === this.uid) {
+      if (!resource && cachedDb) {
+        return cachedDb;
+      }
+
       const cachedData = cachedDb[resource];
 
       // If an entry exists in the cache, return that instead of making a new DB call.
@@ -144,7 +148,7 @@ class API {
     };
 
     // Get a reference to the Firebase store.
-    const document = firebase.firestore().doc('data/' + this.uid);
+    const document = firebase.firestore().doc(`data/${this.uid}`);
 
     // If there's data, it's a set request.
     if (data) {
@@ -190,6 +194,10 @@ class API {
 
         if (!data)
           return;
+
+        if (!resource) {
+          return data;
+        }
 
         return data[resource];
       })

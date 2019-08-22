@@ -24,15 +24,17 @@ function Navigation() {
   const { locale } = useContext(LocalisationContext);
   const user = useContext(UserContext);
 
+  const [characterData, setCharacterData] = useState();
   const [contentData, setContentData] = useState();
 
   useEffect(() => {
     (async () => {
       const contentData = await new API().json('data');
-      api.setKeys(contentData.keys);
+      api.setOverview(contentData);
+      setCharacterData(character.data);
       setContentData(contentData);
     })();
-  }, []);
+  }, [character.data]);
 
   const {
     common: contentText
@@ -98,7 +100,7 @@ function Navigation() {
                     to={content.path}
                   >
                     <ContentProgress
-                      characterSourceData={character[content.api]}
+                      characterSourceData={characterData && characterData[content.api]}
                       contentData={contentData[content.api]}
                       source={content}
                     />

@@ -21,7 +21,8 @@ import style from 'styles/pages/Character';
 const useStyles = createUseStyles(style);
 
 function CharacterPage({ match }) {
-  const { keys: apiKeys } = useContext(APIContext);
+  const { overview: apiOverview } = useContext(APIContext);
+  const { keys: apiKeys } = apiOverview;
   const { lists: apiListKeys } = apiKeys;
   const characterFromContext = useContext(CharacterContext);
   const user = useContext(UserContext);
