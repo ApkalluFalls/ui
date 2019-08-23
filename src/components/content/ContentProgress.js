@@ -152,8 +152,6 @@ function ContentProgress({
       } else {
         const { lists: listsKeys } = apiKeys;
 
-        console.info(expansionSettings);
-
         // Iterate over the achievements extracting relevant entries as per the user settings.
         offsetValue = characterSourceData.filter(achievement => {
           const { [listsKeys.patch]: patch } = achievement;
@@ -270,6 +268,12 @@ function ContentProgress({
   return (
     <section className={classes.container}>
       <h2 className={classes.heading}>
+        {source.icon && (
+          <React.Fragment>
+            <span className={`fal fa-${source.icon}`} />
+            {' '}
+          </React.Fragment>
+        )}
         {source.title}
       </h2>
       {source.hasVisibleProgressBar && (

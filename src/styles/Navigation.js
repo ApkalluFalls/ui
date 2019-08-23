@@ -139,10 +139,12 @@ export default () => {
     links: {
       boxSizing: 'border-box',
       display: 'block',
-      height: 'calc(100% - 224px)',
+      height: 'calc(100vh - 224px)',
       listStyle: 'none',
-      padding: 0,
-      margin: 0
+      margin: '0 -16px',
+      overflowX: 'visible',
+      overflowY: 'overlay',
+      padding: '0 16px'
     },
     linkItem: {
       display: 'block'

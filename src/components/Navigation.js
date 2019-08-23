@@ -45,31 +45,37 @@ function Navigation() {
     path: paths.achievements,
     title: contentText.achievements,
     hasVisibleProgressBar: character,
+    icon: 'trophy'
   }, {
     api: 'minions',
     path: paths.minions,
     title: contentText.minions,
-    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingMinions
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingMinions,
+    icon: 'paw'
   }, {
     api: 'mounts',
     path: paths.mounts,
     title: contentText.mounts,
-    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingMounts
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingMounts,
+    icon: 'crow'
   }, {
     api: 'emotes',
     path: paths.emotes,
     title: contentText.emotes,
-    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingEmotes
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingEmotes,
+    icon: 'smile'
   }, {
     api: 'orchestrion',
     path: paths.orchestrion,
     title: contentText.orchestrionRolls,
-    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingOrchestrion
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingOrchestrion,
+    icon: 'music'
   }, {
     api: 'barding',
     path: paths.barding,
     title: contentText.barding,
-    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingBarding
+    hasVisibleProgressBar: !user.isLoggedIn || user.settings.enableManualTrackingBarding,
+    icon: 'loveseat'
   }];
 
   return (
