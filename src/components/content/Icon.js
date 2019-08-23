@@ -10,7 +10,6 @@ function Icon(props) {
     const position = props.positions[props.id];
 
     if (!Array.isArray(position)) {
-      console.info(props.id);
       return (
         <span className={props.classes.icon}>?</span>
       );

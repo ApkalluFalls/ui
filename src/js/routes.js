@@ -19,7 +19,8 @@ export const paths = {
   emotes: '/emotes',
   minions: '/minions',
   mounts: '/mounts',
-  orchestrion: '/orchestrion-rolls'
+  orchestrion: '/orchestrion-rolls',
+  titles: '/titles'
 };
 
 export default [{

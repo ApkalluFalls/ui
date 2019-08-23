@@ -221,7 +221,13 @@ function ApkalluFalls({}) {
     setCharacter(character);
   }
 
-  async function handleCharacterSync(character, achievements) {
+  /**
+   * Update the Character context.
+   * @param {Object} character - The character object.
+   * @param {Array} achievements - The character's unlocked achievements.
+   * @param {Array} titles - The character's unlocked titles.
+   */
+  async function handleCharacterSync(character, achievements, titles = []) {
     localStorage.setItem('character', JSON.stringify(character));
     
     if (Array.isArray(achievements)) {
@@ -254,12 +260,13 @@ function ApkalluFalls({}) {
       }
 
       const characterData = {
-        achievements: achievements,
+        achievements,
         barding: getObtainedContentForCharacter(barding),
         emotes: getObtainedContentForCharacter(emotes),
         minions: getObtainedContentForCharacter(minions),
         mounts: getObtainedContentForCharacter(mounts),
-        orchestrion: getObtainedContentForCharacter(orchestrion)
+        orchestrion: getObtainedContentForCharacter(orchestrion),
+        titles
       };
       
       localStorage.setItem('character-data', JSON.stringify(characterData));

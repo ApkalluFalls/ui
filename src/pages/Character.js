@@ -72,22 +72,28 @@ function CharacterPage({ match }) {
       // Fetch the achievements data from the API to merge with the character's achievements.
       const achievementsFromApi = await new API(language).json('achievements');
 
+      const characterTitles = [];
       const characterAchievements = achievements.list.map(entry => {
         const achievementFromApi = achievementsFromApi.find((
           achievement => achievement[apiListKeys.id] === entry.id
         ));
 
+        const title = achievementFromApi[apiListKeys.title];
+        if (title) {
+          characterTitles.push(title.id);
+        }
+
         return {
           ...achievementFromApi,
           unlocked: entry.date
         }
-      })
+      });
 
       setAchievements(characterAchievements);
 
       // If this is the active character, update the context.
       if (Number(characterId) === characterFromContext.id) {
-        characterFromContext.onSync(data, characterAchievements);
+        characterFromContext.onSync(data, characterAchievements, characterTitles);
       }
 
       setSynchronising(false);

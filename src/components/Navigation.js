@@ -47,6 +47,12 @@ function Navigation() {
     hasVisibleProgressBar: character,
     icon: 'trophy'
   }, {
+    api: 'titles',
+    path: paths.titles,
+    title: contentText.titles,
+    hasVisibleProgressBar: character,
+    icon: 'tag'
+  }, {
     api: 'minions',
     path: paths.minions,
     title: contentText.minions,

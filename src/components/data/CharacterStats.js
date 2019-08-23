@@ -77,8 +77,6 @@ function CharacterStats({ achievements }) {
     )
   }
 
-  console.info(achievements);
-
   return (
     <React.Fragment>
       <ContentProgress
