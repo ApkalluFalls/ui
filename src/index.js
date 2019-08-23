@@ -130,12 +130,16 @@ function ApkalluFalls({}) {
   // State.
   const [version, setVersion] = useState(-1);
   const [apiOverview, setAPIOverview] = useState();
+  const [apiPatchData, setAPIPatchData] = useState();
   const [character, setCharacter] = useState({ loading: true });
   const [characterData, setCharacterData] = useState();
   const [user, setUser] = useState({ loading: true });
   const [userSettings, setUserSettings] = useState(defaultUserSettings);
   const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
 
+
+  // Language and theme are stored in local storage.
+  const language = localStorage && JSON.parse(localStorage.getItem('lang')) || 'en';
   const cachedTheme = localStorage.getItem('theme') || 'light';
 
   if (cachedTheme === 'dark') {
@@ -173,6 +177,9 @@ function ApkalluFalls({}) {
       if (cachedCharacter) {
         setCharacterData(JSON.parse(localStorage.getItem('character-data')))
       }
+
+      const patches = await new API(language).json('patches');
+      setAPIPatchData(patches);
 
       return () => firebaseUnsubscribe();
     })();
@@ -295,9 +302,6 @@ function ApkalluFalls({}) {
     )
   }
 
-  // Language is stored in local storage.
-  const language = localStorage && JSON.parse(localStorage.getItem('lang')) || 'en';
-
   return (
     <React.StrictMode>
       <UserContext.Provider value={{
@@ -324,6 +328,7 @@ function ApkalluFalls({}) {
               }}>
                 <APIContext.Provider value={{
                   overview: apiOverview,
+                  patches: apiPatchData,
                   version,
                   setOverview: setAPIOverview
                 }}>

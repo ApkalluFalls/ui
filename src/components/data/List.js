@@ -21,7 +21,10 @@ const useStyles = createUseStyles(style);
 function List({
   source
 }) {
-  const { overview: apiOverview } = useContext(APIContext);
+  const {
+    overview: apiOverview,
+    patches: apiPatches
+  } = useContext(APIContext);
   const { keys } = apiOverview;
   const theme = useContext(ThemeContext);
   const panelClasses = usePanelStyles(theme);
@@ -140,10 +143,16 @@ function List({
     methodIconPositions
   } = data;
 
+  const { patches: apiPatchKeys } = keys;
+
   return (
     <section className={classes.list}>
       {loaded ? (
         content.map(([patch, entries]) => {
+          const {
+            [apiPatchKeys.name] : patchName
+          } = apiPatches.find(apiPatch => apiPatch[apiPatchKeys.id] === Number(patch));
+
           return (
             <article
               key={`list-content-${patch}`}
@@ -152,7 +161,7 @@ function List({
               <Panel
                 classesOverride={panelClasses}
                 className={classes.patchListItem}
-                heading={`Patch ${patch}`}
+                heading={patchName}
                 headingClassName={classes.patchListItemHeading}
               >
                 {entries.map(entry => (
