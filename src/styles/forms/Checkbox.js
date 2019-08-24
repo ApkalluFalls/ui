@@ -22,6 +22,6 @@ export default {
     }
   }),
   checkboxUnsaved: theme => ({
-    color: theme.form.checkboxUnsaved
+    color: theme.unsaved
   })
 }

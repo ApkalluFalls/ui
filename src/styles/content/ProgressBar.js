@@ -12,6 +12,9 @@ export default {
     height: '100%',
     transition: 'width .5s'
   }),
+  barUnsaved: theme => ({
+    background: theme.unsaved
+  }),
   caption: theme => ({
     alignItems: 'center',
     color: theme.color,
@@ -23,6 +26,9 @@ export default {
       top: 4
     },
     width: '100%'
+  }),
+  unsaved: theme => ({
+    color: theme.unsaved
   }),
   value: {
     flex: {

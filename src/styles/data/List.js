@@ -194,7 +194,7 @@ export default {
     filter: 'grayscale(1)'
   },
   unsavedChanges: theme => ({
-    color: theme.form.checkboxUnsaved,
+    color: theme.unsaved,
     fontSize: 12,
     lineHeight: '15px',
     marginLeft: 20

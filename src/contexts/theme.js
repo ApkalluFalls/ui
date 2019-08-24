@@ -34,6 +34,7 @@ export const themes = {
     linkActive: '#760E7D',
     shadow: '#757575',
     textShadow: '#fff',
+    unsaved: '#0e8d35',
     verificationCode: '#7046ad',
 
     // Layout sections.
@@ -49,7 +50,6 @@ export const themes = {
       buttonColor: '#000',
       buttonDangerBackground: '#f65e5e',
       buttonDangerBorder: '#e13232',
-      checkboxUnsaved: '#0e8d35',
       inputBackground: '#fafafa',
       inputBorder: '#ccc',
       inputColor: '#333',
@@ -107,6 +107,7 @@ export const themes = {
     linkActive: '#BB5EC2',
     shadow: '#111',
     textShadow: '#111',
+    unsaved: '#41bd66',
     verificationCode: '#9ea1e1',
 
     // Layout sections.
@@ -122,7 +123,6 @@ export const themes = {
       buttonColor: '#fff',
       buttonDangerBackground: '#9d0101',
       buttonDangerBorder: '#730000',
-      checkboxUnsaved: '#41bd66',
       inputBackground: '#414141',
       inputBorder: '#222',
       inputColor: '#fff',

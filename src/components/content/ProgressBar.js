@@ -9,6 +9,7 @@ const useStyles = createUseStyles(style);
 
 function ProgressBar({
   limit = 0,
+  unsaved = false,
   value = 0
 }) {
   const classes = useStyles(useContext(ThemeContext));
@@ -21,13 +22,13 @@ function ProgressBar({
         role="progress"
       >
         <div
-          className={classes.bar}
+          className={`${classes.bar} ${unsaved ? classes.barUnsaved : ''}`}
           style={{
             width: percentage
           }}
         />
       </div>
-      <div className={classes.caption}>
+      <div className={`${classes.caption} ${unsaved ? classes.unsaved : ''}`}>
         <span className={classes.value}>
           {value.toLocaleString()}
           {' '}

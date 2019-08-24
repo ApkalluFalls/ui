@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProgressBar from 'components/content/ProgressBar';
 import { APIContext } from 'contexts/api';
+import { CharacterContext } from 'contexts/character';
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from 'contexts/user';
 
@@ -17,6 +18,7 @@ function ContentProgress({
 }) {
   // Context.
   const { overview: apiOverview } = useContext(APIContext);
+  const character = useContext(CharacterContext);
   const {
     expansions: apiExpansions,
     keys: apiKeys
@@ -25,12 +27,14 @@ function ContentProgress({
   const user = useContext(UserContext);
 
   // State.
+  const [unsaved, setUnsaved] = useState(0);
   const [value, setValue] = useState(0);
   const [total, setTotal] = useState(0);
 
   // Map settings to relevant API keys.
   const {
     contentFilters: filterKeys,
+    lists: listsKeys,
     overview: overviewKeys
   } = apiKeys;
 
@@ -99,12 +103,12 @@ function ContentProgress({
   }, [user.settings])
 
   useEffect(() => {
-    if (!characterSourceData) {
+    if (!characterSourceData || user.loading) {
       return;
     }
 
     calculateValuesFromUserData();
-  }, [characterSourceData])
+  }, [characterSourceData, user.loading, user.unsavedChanges])
 
   /**
    * Parse the data to retrieve the total value offset by the user's settings.
@@ -143,9 +147,10 @@ function ContentProgress({
    */
   function calculateValuesFromUserData() {
     let offsetValue = 0;
+    let unsavedChangesOffset = 0;
 
     // Achievements use the character context.
-    if (source.api === 'achievements') {      
+    if (source.api === 'achievements') {
       if (!Array.isArray(characterSourceData) || !characterSourceData.length) {
         // If the character has no achievements, return 0.
         offsetValue = 0;
@@ -172,7 +177,7 @@ function ContentProgress({
 
           // If there are no filters on the achievement, increase the points.
           if (!achievementFilter) {
-            return points + achievement[apiKeys.lists.points];
+            return points + achievement[listsKeys.points];
           }
 
           // Compare the user's settings with the achievement's filter properties.
@@ -184,22 +189,41 @@ function ContentProgress({
           }
 
           // If it got past the settings mapping check, return the points.
-          return points + achievement[apiKeys.lists.points];
+          return points + achievement[listsKeys.points];
         }, 0);
       }
     } else if (source.api !== 'orchestrion') { /** TODO: Implement orchestrion overview data */
       // Everything else uses the same format.
       offsetValue = getTotalsFromSettingsMapping(true)
+    
+      const unsavedChanges = (
+        character
+        && user
+        && !user.loading
+        && user.unsavedChanges
+        && user.unsavedChanges[user.data.uid]
+        && user.unsavedChanges[user.data.uid][character.id]
+        && user.unsavedChanges[user.data.uid][character.id][source.api]
+      ) || {};
+  
+      unsavedChangesOffset = getTotalsFromSettingsMapping(false, unsavedChanges);
     }
 
     setValue(offsetValue);
+
+    if (unsavedChangesOffset) {
+      setUnsaved(unsavedChangesOffset);
+    } else {
+      setUnsaved(0);
+    }
   }
 
   /**
    * Determine the total value from the settings mapping.
    * @param {Boolean} [isOffsetByCharacterSourceData] - Boolean to determine if we're using the character source data to determine the values.
+   * @param {Object} [unsavedChangesData] - The unsaved changes object, used to offset the value based on progress the user has not yet saved.
    */
-  function getTotalsFromSettingsMapping(isOffsetByCharacterSourceData = false) {
+  function getTotalsFromSettingsMapping(isOffsetByCharacterSourceData = false, unsavedChangesData) {
     const unknown = (
       user.settings.revealUnknownObtainMethods && contentData[overviewKeys.availableUnknown]
     );
@@ -262,6 +286,18 @@ function ContentProgress({
       ].length;
     }
 
+    if (unsavedChangesData) {
+      return masterArray.filter(entry => unsavedChangesData[entry] !== undefined).reduce(
+        (count, entry) => {
+          if (unsavedChangesData[entry] === true) {
+            return count + 1;
+          }
+
+          return count - 1;
+        }, 0
+      )
+    }
+
     return masterArray.filter((entry, index) => masterArray.indexOf(entry) === index).length;
   }
 
@@ -279,9 +315,9 @@ function ContentProgress({
       {source.hasVisibleProgressBar && (
         characterSourceData.length
           ? (
-            <ProgressBar value={value} limit={total} />
+            <ProgressBar value={value + unsaved} limit={total} unsaved={!!unsaved} />
           ) : (
-            <ProgressBar limit={total} />
+            <ProgressBar value={unsaved} limit={total} unsaved={!!unsaved} />
           )
       )}
     </section>
