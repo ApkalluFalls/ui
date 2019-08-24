@@ -1,4 +1,10 @@
 export default () => {
+  const userBoxAvatar = {
+    height: 60,
+    width: 60,
+    zIndex: 9
+  }
+
   const verifiedCharacterStyle = {
     height: 40,
     marginBottom: 4,
@@ -12,22 +18,22 @@ export default () => {
       x: 1,
       y: 1
     },
-    opacity: 0.7,
-    transition: 'opacity .2s',
+    filter: 'grayscale(1)',
+    transition: 'box-shadow .2s, filter .2s',
 
     '&:hover, &:focus': {
-      opacity: 1
+      filter: 'grayscale(0)',
     }
   });
 
   return {
     wrapper: {
-      height: 60,
+      height: userBoxAvatar.height,
       position: 'fixed',
         bottom: 12,
         right: 12,
-      width: 60,
-      zIndex: 9
+      width: userBoxAvatar.width,
+      zIndex: userBoxAvatar.zIndex
     },
     userBox: theme => ({
       ...linkEffects(theme),
@@ -39,17 +45,28 @@ export default () => {
       boxSizing: 'border-box',
       color: theme.brand,
       display: 'flex',
-      height: 60,
+      height: userBoxAvatar.height,
       justifyContent: 'center',
-      width: 60,
+      position: 'relative',
+      width: userBoxAvatar.width,
+      zIndex: userBoxAvatar.zIndex,
 
       '& > *': {
         color: theme.brand
       }
     }),
+    userBoxUnsavedChanges: theme => ({
+      boxShadow: {
+        blur: 1,
+        color: theme.unsaved,
+        spread: 3,
+        x: 0,
+        y: 0
+      }
+    }),
     pageActive: () => ({
       cursor: 'default',
-      opacity: 1,
+      filter: 'grayscale(0)',
       pointerEvents: 'none',
     }),
     userBoxAnonymous: theme => ({
@@ -101,6 +118,49 @@ export default () => {
       '&:nth-last-child(odd)': {
         marginRight: -4
       }
-    })
+    }),
+    unsavedChanges: theme => ({
+      background: theme.unsaved,
+      borderRadius: 4,
+      boxShadow: {
+        blur: 2,
+        color: theme.shadow,
+        x: 1,
+        y: 1
+      },
+      color: theme.unsavedColor,
+      display: 'block',
+      fontSize: 14,
+      lineHeight: '17px',
+      height: 28,
+      opacity: 0.6,
+      overflow: 'hidden',
+      paddingRight: userBoxAvatar.width / 2,
+      position: 'absolute',
+        bottom: (userBoxAvatar.height - 28) / 2,
+        right: userBoxAvatar.width / 2,
+      transition: 'opacity .1s, padding .1s, width .2s',
+      width: 80,
+      zIndex: userBoxAvatar.zIndex - 1,
+
+      '&:hover, &:focus': {
+        opacity: 1
+      }
+    }),
+    unsavedChangesCollapsed: () => ({
+      padding: 0,
+      width: 0
+    }),
+    unsavedChangesButton: {
+      alignItems: 'center',
+      cursor: 'pointer',
+      display: 'flex',
+      height: '100%',
+      justifyContent: 'center',
+      width: '100%'
+    },
+    unsavedChangesText: {
+      marginLeft: 8
+    }
   }
 }

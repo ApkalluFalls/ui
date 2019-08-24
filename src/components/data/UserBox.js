@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { CharacterContext } from "contexts/character";
+import { LocalisationContext } from "contexts/localisation";
 import { ThemeContext } from 'contexts/theme';
 import { UserContext } from "contexts/user";
 import API from 'js/api';
@@ -15,6 +16,7 @@ const useStyles = createUseStyles(style);
 
 function UserBox() {
   const character = useContext(CharacterContext);
+  const { locale } = useContext(LocalisationContext);
   const user = useContext(UserContext);
   const classes = useStyles({
     ...useContext(ThemeContext),
@@ -22,6 +24,8 @@ function UserBox() {
       verifiedCharacters: user.verifiedCharacters
     }
   });
+
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   /**
    * When the `user.loading` state changes, check and fetch the user's verified characters from
@@ -48,6 +52,21 @@ function UserBox() {
       user.setVerifiedCharacters(fetchedCharacters);
     })();
   }, [user.isLoggedIn]);
+
+  useEffect(() => {
+    if (user.loading) {
+      return;
+    }
+
+    const userUnsavedChanges = user.unsavedChanges[user.data.uid];
+
+    if (!userUnsavedChanges && typeof userUnsavedChanges !== 'object') {
+      setHasUnsavedChanges(false);
+      return;
+    }
+
+    setHasUnsavedChanges(!!Object.keys(userUnsavedChanges).length);
+  }, [user.loading, user.unsavedChanges])
 
   if (user.loading) {
     return (
@@ -78,7 +97,7 @@ function UserBox() {
   return (
     <div className={classes.wrapper}>
       <NavLink
-        className={classes.userBox}
+        className={`${classes.userBox} ${hasUnsavedChanges ? classes.userBoxUnsavedChanges : ''}`}
         activeClassName={classes.pageActive}
         to={paths.account}
         style={avatar && {
@@ -104,6 +123,20 @@ function UserBox() {
             onKeyDown={(event) => event.which === 13 && character.change(verifiedCharacter)}
           />
         ))}
+      </div>
+      <div className={`${classes.unsavedChanges} ${hasUnsavedChanges ? '' : classes.unsavedChangesCollapsed}`}>
+        {hasUnsavedChanges && (
+          <span
+            className={classes.unsavedChangesButton}
+            role="button"
+            tabIndex="0"
+          >
+            <span className="fal fa-save" />
+            <span className={classes.unsavedChangesText}>
+              {locale.actions.saveChanges}
+            </span>
+          </span>
+        )}
       </div>
     </div>
   );

@@ -55,6 +55,7 @@ export const localisation = {
       changeCharacter: 'Change character',
       iconsMode: 'Icons mode',
       listMode: 'List mode',
+      saveChanges: 'Save',
       search: 'Search',
       selectACharacter: 'Search for a character to track',
       signInOrCreateAccount: 'Sign In or Create an Account',

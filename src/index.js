@@ -318,6 +318,19 @@ function ApkalluFalls({}) {
 
     if (unsavedChangesForUserCharacter[source][entry.id]) {
       delete unsavedChangesForUserCharacter[source][entry.id];
+
+      // Tidy up.
+      if (!Object.keys(unsavedChangesForUserCharacter[source]).length) {
+        delete unsavedChangesForUserCharacter[source];
+
+        if (!Object.keys(unsavedChangesForUserCharacter).length) {
+          delete unsavedChanges[uid][characterId];
+
+          if (!Object.keys(unsavedChanges[uid]).length) {
+            delete unsavedChanges[uid];
+          }
+        }
+      }
     } else {
       unsavedChangesForUserCharacter[source][entry.id] = isObtained;
     }

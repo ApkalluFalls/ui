@@ -34,7 +34,8 @@ export const themes = {
     linkActive: '#760E7D',
     shadow: '#757575',
     textShadow: '#fff',
-    unsaved: '#0e8d35',
+    unsaved: '#e98131',
+    unsavedColor: '#fff',
     verificationCode: '#7046ad',
 
     // Layout sections.
@@ -108,6 +109,7 @@ export const themes = {
     shadow: '#111',
     textShadow: '#111',
     unsaved: '#41bd66',
+    unsavedColor: '#fff',
     verificationCode: '#9ea1e1',
 
     // Layout sections.
