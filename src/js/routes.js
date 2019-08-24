@@ -20,7 +20,10 @@ export const paths = {
   minions: '/minions',
   mounts: '/mounts',
   orchestrion: '/orchestrion-rolls',
-  titles: '/titles'
+  titles: '/titles',
+
+  // Patreon redirect.
+  patreon: '/patreon'
 };
 
 export default [{
@@ -62,4 +65,7 @@ export default [{
   exact: true
 }, {
   path: paths.freeCompany()
+}, {
+  path: paths.patreon,
+  exact: true
 }];

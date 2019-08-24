@@ -75,6 +75,17 @@ export default {
   iconRound: {
     borderRadius: '100%'
   },
+  checkbox: {
+    alignSelf: 'flex-start',
+    flex: {
+      basis: 40,
+      grow: 0,
+      shrink: 0
+    },
+    position: 'relative',
+    textDecoration: 'none',
+    zIndex: 2
+  },
   detail: {
     flex: {
       grow: 1
@@ -111,13 +122,13 @@ export default {
     listStyle: 'none',
     margin: {
       bottom: -8,
-      left: -58,
+      left: -98,
       right: -8,
       top: 4
     },
     padding: {
       bottom: 8,
-      left: 58,
+      left: 98,
       right: 8,
       top: 8
     },
@@ -165,5 +176,27 @@ export default {
   },
   methodText: {
     flexGrow: 1
-  }
+  },
+  obtained: theme => ({
+    color: theme.colorUnimportant,
+    fontWeight: 'normal',
+    textShadow: 'initial'
+  }),
+  obtainedIcon: {
+    filter: 'grayscale(1)',
+    marginBottom: -10,
+    marginTop: -10,
+    opacity: 0.6,
+    transform: 'scale(0.6)'
+  },
+  obtainedMethods: {
+    display: 'none',
+    filter: 'grayscale(1)'
+  },
+  unsavedChanges: theme => ({
+    color: theme.form.checkboxUnsaved,
+    fontSize: 12,
+    lineHeight: '15px',
+    marginLeft: 20
+  })
 }

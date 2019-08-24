@@ -1,8 +1,10 @@
 import brandStyles from 'styles/brands';
 import formStyles from 'styles/forms';
+import textStyles from 'styles/text';
 
 export default {
   ...formStyles(),
+  ...textStyles,
   connectButton: () => ({
     background: brandStyles.patreon,
     border: {
@@ -14,6 +16,10 @@ export default {
 
     '&:hover, &:focus': {
       background: brandStyles.patreonAlt
+    },
+
+    '&:disabled': {
+      background: brandStyles.patreon
     }
   })
 }

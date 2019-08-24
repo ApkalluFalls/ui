@@ -70,6 +70,7 @@ export const localisation = {
     info: {
       addingCharacter: 'Adding character...',
       checkingLodestoneBio: 'Checking Lodestone bio...',
+      comingSoon: 'Coming soon',
       communicatingWithXIVAPI: 'Communicating with XIVAPI...',
       copied: 'Copied to clipboard.',
       fetchingList: 'Fetching {0} list...',
@@ -78,11 +79,15 @@ export const localisation = {
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
       searching: 'Searching...',
+      selectCharacterBeforeMarkingComplete: 'You must select a character before you can mark content as obtained. Would you like to be taken to the character search page?',
+      signInBeforeMarkingComplete: 'You need to sign in before you can mark content as obtained. Would you like to be taken to the sign in page?',
       synchronising: 'Synchronising...',
       talkingToFirebase: 'Talking to Firebase',
       trackingRequiresSignIn: 'Manual tracking requires an Apkallu Falls account',
+      unsavedChanges: 'Unsaved changes',
       unverifyCharacter: 'Are you sure you want to remove this character from your Apkallu Falls account?',
-      unverifyingCharacter: 'Unverifying...'
+      unverifyingCharacter: 'Unverifying...',
+      verifyCharacterBeforeMakingComplete: 'You need to verify ownership of this character before you can mark content as obtained. Would you like to be taken to the character profile page?'
     },
     components: {
       characterStats: {
@@ -104,7 +109,8 @@ export const localisation = {
         change: 'Change language'
       },
       patreonSettings: {
-        about: 'If you\'re a supporter of Apkallu Falls you can connect your Patreon account below to access supporter perk settings like custom URLs and character badges for everyone else to use and see. If you\'re not already a supporter, hit the "Become a Patron" button in the bottom left of the site to find out more.' 
+        about: 'If you\'re a supporter of Apkallu Falls you can connect your Patreon account below to access supporter perk settings like custom URLs and character badges for everyone else to use and see. If you\'re not already a supporter, hit the "Become a Patron" button in the bottom left of the site to find out more.',
+        error: 'Something went wrong, please try again.'
       },
       progress: {
         nOfN2: '{n0} of {n1}'

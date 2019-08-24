@@ -1,20 +1,70 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import VisibilitySensor from 'react-visibility-sensor';
+import { CharacterContext } from 'contexts/character';
+import { localeInject, LocalisationContext } from 'contexts/localisation';
+import { UserContext } from 'contexts/user';
 import Icon from 'components/content/Icon';
-import { localeInject, LocalisationContext, localisation } from 'contexts/localisation';
+import Checkbox from 'components/forms/Checkbox';
+import { paths } from 'js/routes';
 
 function ListItem({
   classes,
   data,
   iconPositions,
   methodIconPositions,
+  history,
   source
 }) {
   // Contexts.
+  const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
+  const user = useContext(UserContext);
 
   const hasKnownMethods = Array.isArray(data.m) && data.m.length > 0;
   const hasRoundedIcon = source === 'orchestrion';
+
+  const unsavedChanges = (
+    character
+    && user
+    && user.unsavedChanges
+    && user.unsavedChanges[user.data.uid]
+    && user.unsavedChanges[user.data.uid][character.id]
+    && user.unsavedChanges[user.data.uid][character.id][source]
+  ) || {};
+
+  const [obtained, setObtained] = useState(unsavedChanges[data.id] || false);
+  const [unsaved, setUnsaved] = useState(unsavedChanges[data.id] !== undefined);
+
+  function handleObtainedChange(checked) {
+    if (!character) {
+      if (confirm(locale.info.selectCharacterBeforeMarkingComplete)) {
+        history.push(paths.characterSearch);
+      }
+      return;
+    }
+
+    if (!user) {
+      if (confirm(locale.info.signInBeforeMarkingComplete)) {
+        history.push(paths.authentication);
+      }
+      return;
+    }
+
+    if ((
+      !Array.isArray(user.verifiedCharacters)
+      || !user.verifiedCharacters.find(c => c.id === character.id)
+    )) {
+      if (confirm(locale.info.verifyCharacterBeforeMakingComplete)) {
+        history.push(paths.character(character.id));
+      }
+      return;
+    }
+
+    setObtained(checked);
+    user.modifyUnsavedChanges(source, data, checked);
+    setUnsaved(!unsaved);
+  }
 
   return (
     <VisibilitySensor
@@ -28,6 +78,7 @@ function ListItem({
               className={classes.item}
               key={`list-data-${data.id}`}
             >
+              <span className={classes.checkbox} />
               <span
                 className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''}`}
               />
@@ -53,24 +104,39 @@ function ListItem({
             className={classes.item}
             key={`list-data-${data.id}`}
           >
+            <span className={classes.checkbox}>
+              <Checkbox
+                checked={obtained}
+                unsaved={unsaved}
+                onChange={handleObtainedChange}
+              />
+            </span>
             <span
-              className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''}`}
+              className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''} ${obtained ? `${classes.obtained} ${classes.obtainedIcon}` : ''}`}
               title={data.n}
             >
               <Icon id={data.i} positions={iconPositions} source={source} />
             </span>
             <span className={classes.detail}>
-              <h2 className={classes.name}>
+              <h2 className={`${classes.name} ${obtained ? classes.obtained : ''}`}>
                 {source === 'orchestrion' && data.o !== 65535 && (
                   <small className={classes.orchestrionNumber}>
                     #{data.o}{' '}
                   </small>
                 )}
                 {data.n}
+                {unsaved && (
+                  <React.Fragment>
+                    {' '}
+                    <small className={classes.unsavedChanges}>
+                      {locale.info.unsavedChanges}
+                    </small>
+                  </React.Fragment>
+                )}
               </h2>
               {hasKnownMethods
                 ? (
-                  <ol className={classes.methods}>
+                  <ol className={`${classes.methods} ${obtained ? `${classes.obtained} ${classes.obtainedMethods}` : ''}`}>
                     {data.m.map(([localeKey, icon, details], index) => {
                       
                       
@@ -118,4 +184,4 @@ function ListItem({
   );
 }
 
-export default ListItem;
+export default withRouter(ListItem);

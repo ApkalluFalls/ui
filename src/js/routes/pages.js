@@ -26,6 +26,9 @@ const routes = {
   [paths.account]: {
     component: Account
   },
+  [paths.patreon]: {
+    component: Account
+  },
   [paths.authentication]: {
     component: Authentication
   },

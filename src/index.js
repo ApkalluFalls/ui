@@ -135,6 +135,9 @@ function ApkalluFalls({}) {
   const [characterData, setCharacterData] = useState();
   const [user, setUser] = useState({ loading: true });
   const [userSettings, setUserSettings] = useState(defaultUserSettings);
+  const [userUnsavedChanges, setUserUnsavedChanges] = useState((
+    JSON.parse(localStorage.getItem('unsavedChanges'))
+  ));
   const [userVerifiedCharacters, setUserVerifiedCharacters] = useState();
 
 
@@ -209,7 +212,6 @@ function ApkalluFalls({}) {
    * Update the theme context (via state).
    */
   function handleCharacterChange(character) {
-    console.info(character);
     if (character.name) {
       localStorage.setItem('character', JSON.stringify(character));
     } else {
@@ -289,6 +291,41 @@ function ApkalluFalls({}) {
     })
   }
 
+  /**
+   * Modify the user's unsaved changes array.
+   * @param {String} source - The content source (e.g. `"barding"`).
+   * @param {Object} entry - The content entry which has been changed.
+   * @param {Boolean} isObtained - Whether the content is marked as obtained or not.
+   */
+  function handleUserUnsavedChangesChange(source, entry, isObtained) {
+    const unsavedChanges = userUnsavedChanges ? { ...userUnsavedChanges } : {};
+    const { uid } = user.data;
+    const { id: characterId } = character;
+
+    if (!unsavedChanges[uid]) {
+      unsavedChanges[uid] = {};
+    }
+
+    if (!unsavedChanges[uid][characterId]) {
+      unsavedChanges[uid][characterId] = {};
+    }
+
+    const unsavedChangesForUserCharacter = unsavedChanges[uid][characterId];
+
+    if (!unsavedChangesForUserCharacter[source]) {
+      unsavedChangesForUserCharacter[source] = {};
+    }
+
+    if (unsavedChangesForUserCharacter[source][entry.id]) {
+      delete unsavedChangesForUserCharacter[source][entry.id];
+    } else {
+      unsavedChangesForUserCharacter[source][entry.id] = isObtained;
+    }
+
+    setUserUnsavedChanges(unsavedChanges);
+    localStorage.setItem('unsavedChanges', JSON.stringify(unsavedChanges));
+  }
+
   if (version === -1) {
     return (
       <ThemeProvider theme={{
@@ -315,7 +352,9 @@ function ApkalluFalls({}) {
         ...user,
         settings: userSettings,
         modifySettings: handleUserSettingsChange,
+        unsavedChanges: userUnsavedChanges,
         verifiedCharacters: userVerifiedCharacters,
+        modifyUnsavedChanges: handleUserUnsavedChangesChange,
         setVerifiedCharacters: setUserVerifiedCharacters
       }}>
         <CharacterContext.Provider value={{
