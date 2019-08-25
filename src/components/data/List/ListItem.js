@@ -51,6 +51,8 @@ function ListItem({
     return (
       character
       && user
+      && user.isLoggedIn
+      && user.data
       && user.unsavedChanges
       && user.unsavedChanges[user.data.uid]
       && user.unsavedChanges[user.data.uid][character.id]
@@ -88,7 +90,7 @@ function ListItem({
       return;
     }
 
-    if (!user) {
+    if (!user || !user.isLoggedIn) {
       if (confirm(locale.info.signInBeforeMarkingComplete)) {
         history.push(paths.authentication);
       }

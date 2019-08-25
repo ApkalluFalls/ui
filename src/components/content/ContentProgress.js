@@ -200,6 +200,7 @@ function ContentProgress({
         character
         && user
         && !user.loading
+        && user.data
         && user.unsavedChanges
         && user.unsavedChanges[user.data.uid]
         && user.unsavedChanges[user.data.uid][character.id]

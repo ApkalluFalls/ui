@@ -135,8 +135,6 @@ export default class Character {
       world: Character.Server
     }
 
-    console.info(FreeCompany);
-
     if (FreeCompany && FreeCompany.Name) {
       response.freeCompany = {
         crestParts: FreeCompany.Crest,
@@ -163,8 +161,6 @@ export default class Character {
       name,
       server
     } = this.searchParams;
-
-    console.info(this.searchParams);
 
     if (!name || !server) {
       return [];

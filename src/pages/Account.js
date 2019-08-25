@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
 import { UserContext } from 'contexts/user';
 import { LocalisationContext } from 'contexts/localisation';
-import { ThemeContext, themes } from 'contexts/theme';
+import { ThemeContext } from 'contexts/theme';
 import Panel from 'components/content/Panel';
 import PatreonSettings from 'components/data/PatreonSettings';
 import UserCharacters from 'components/data/UserCharacters';
@@ -88,9 +88,9 @@ function Account({
           <Switch
             id="look-and-feel-dark-mode"
             label={locale.labels.darkMode}
-            on={userSettings.theme.key === 'dark'}
+            on={userSettings.theme === 'dark'}
             onChange={(checked) => user.modifySettings({
-              theme: themes[checked ? 'dark' : 'light']
+              theme: checked ? 'dark' : 'light'
             })}
           />
         </div>

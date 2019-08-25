@@ -27,7 +27,7 @@ const { ThemeProvider } = createTheming(ThemeContext);
  * These are the default settings for anyone who first visits the site. If the user is logged in
  * these will be replaced with the settings saved from their Account page.
  */
-const defaultUserSettings = {
+let defaultUserSettings = {
   enableManualTrackingBarding: true,
   enableManualTrackingEmotes: true,
   enableManualTrackingMinions: true,
@@ -44,7 +44,12 @@ const defaultUserSettings = {
   revealStorePurchases: false,
   revealUnknownObtainMethods: true,
   revealUnusedLegacyContent: false,
-  theme: themes[localStorage.getItem('theme') || 'light']
+  theme: 'light'
+};
+
+const userSettingsOffset = {
+  ...defaultUserSettings,
+  ...(JSON.parse(localStorage.getItem('settings')) || {})
 };
 
 /**
@@ -134,7 +139,7 @@ function ApkalluFalls({}) {
   const [character, setCharacter] = useState({ loading: true });
   const [characterData, setCharacterData] = useState();
   const [user, setUser] = useState({ loading: true });
-  const [userSettings, setUserSettings] = useState(defaultUserSettings);
+  const [userSettings, setUserSettings] = useState(userSettingsOffset);
   const [userUnsavedChanges, setUserUnsavedChanges] = useState((
     JSON.parse(localStorage.getItem('unsavedChanges'))
   ));
@@ -143,7 +148,7 @@ function ApkalluFalls({}) {
 
   // Language and theme are stored in local storage.
   const language = localStorage && JSON.parse(localStorage.getItem('lang')) || 'en';
-  const cachedTheme = localStorage.getItem('theme') || 'light';
+  const cachedTheme = userSettings.theme;
 
   if (cachedTheme === 'dark') {
     document.documentElement.className = 'dark';
@@ -188,23 +193,80 @@ function ApkalluFalls({}) {
     })();
   }, []);
 
+  // Check if the user's settings contain unsaved changes.
   useEffect(() => {
-    const {
-      key: settingsThemeKey
-    } = userSettings.theme;
-
-    if (theme.key !== settingsThemeKey) {
-      localStorage.setItem('theme', settingsThemeKey);
-      document.documentElement.className = settingsThemeKey;
-      setTheme(userSettings.theme);
+    if (version < 0 || !userSettings) {
+      return;
     }
+
+    const unsaved = {};
+
+    Object.entries(defaultUserSettings).forEach(([settingKey, settingValue]) => {
+      const newSetting = userSettings[settingKey];
+      if (newSetting !== undefined && newSetting !== settingValue) {
+        unsaved[settingKey] = newSetting;
+      }
+    });
+
+    const { uid } = user.data;
+    const unsavedChanges = { ...userUnsavedChanges };
+
+    if (!Object.keys(unsaved).length) {
+      if (unsavedChanges[uid] && unsavedChanges[uid].settings) {
+        delete unsavedChanges[uid].settings;
+      }
+
+      if (unsavedChanges[uid] && !Object.keys(unsavedChanges[uid]).length) {
+        delete unsavedChanges[uid];
+      }
+    } else {
+      if (!unsavedChanges[uid]) {
+        unsavedChanges[uid] = {};
+      }
+
+      unsavedChanges[uid].settings = unsaved;
+    }
+
+    handleUserUnsavedChangesSet(unsavedChanges);
   }, [userSettings])
+
+  useEffect(() => {
+    if (!user || !user.isLoggedIn || !user.data || !user.data.uid) {
+      return;
+    }
+    
+    (async () => {
+      const { uid } = user.data;
+
+      const {
+        settings
+      } = await new API(undefined, uid).db();
+
+      const unsavedChanges = JSON.parse(localStorage.getItem('unsavedChanges') || {});
+
+      if (unsavedChanges[uid] && unsavedChanges[uid].settings) {
+        localStorage.setItem('settings', JSON.stringify(unsavedChanges[uid].settings));
+      } else {
+        localStorage.removeItem('settings');
+      }
+  
+      // If the user has saved settings, apply those and update the user context.
+      if (settings) {
+        defaultUserSettings = {
+          ...defaultUserSettings,
+          ...settings,
+          ...(JSON.parse(localStorage.getItem('settings')) || {})
+        };
+        handleUserSettingsChange(settings);
+      }
+    })();
+  }, [user]);
 
   /**
    * Update the user context (via state) when Firebase detects an authentication change.
    * @param {Object} user - The user object from Firebase.
    */
-  function onFirebaseAuthChange(user) {
+  async function onFirebaseAuthChange(user) {
     setUser(parseFirebaseUserObject(user));
   }
 
@@ -285,10 +347,24 @@ function ApkalluFalls({}) {
    * @param {Object} settings - An object containing modified settings.
    */
   function handleUserSettingsChange(settings) {
-    setUserSettings({
+    // If the theme has changed, update the theme context.
+    if (settings.theme && theme.key !== settings.theme) {
+      (themeKey => {
+        // Without this timeout the HTML element will not get correctly updated.
+        setTimeout(() => {
+          document.documentElement.className = themeKey;
+        }, 1);
+      })(settings.theme);
+      setTheme(themes[settings.theme]);
+    }
+
+    const newSettings = {
       ...userSettings,
       ...settings
-    })
+    };
+
+    localStorage.setItem('settings', JSON.stringify(newSettings));
+    setUserSettings(newSettings);
   }
 
   /**

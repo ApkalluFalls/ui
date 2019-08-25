@@ -55,13 +55,13 @@ function UserBox() {
   }, [user.isLoggedIn]);
 
   useEffect(() => {
-    if (user.loading) {
+    if (user.loading || !user.data) {
       return;
     }
 
-    const userUnsavedChanges = user.unsavedChanges[user.data.uid];
+    const userUnsavedChanges = user.unsavedChanges && user.unsavedChanges[user.data.uid];
 
-    if (!userUnsavedChanges && typeof userUnsavedChanges !== 'object') {
+    if (!userUnsavedChanges || typeof userUnsavedChanges !== 'object') {
       setHasUnsavedChanges(false);
       return;
     }
@@ -109,7 +109,8 @@ function UserBox() {
       emotes = [],
       minions = [],
       mounts = [],
-      'orchestrion-rolls': orchestrion = []
+      'orchestrion-rolls': orchestrion = [],
+      settings = {}
     } = await new API(undefined, user.data.uid).db();
 
     const response = {
@@ -117,12 +118,18 @@ function UserBox() {
       emotes,
       minions,
       mounts,
-      'orchestrion-rolls': orchestrion
+      'orchestrion-rolls': orchestrion,
+      settings
     };
 
     let shouldSyncCharacter = false;
 
     Object.entries(userUnsavedChanges).forEach(([characterId, content = {}]) => {
+      // Do not parse the settings object here.
+      if (characterId === 'settings') {
+        return;
+      }
+
       if (character.id === Number(characterId)) {
         shouldSyncCharacter = true;
       }
@@ -148,6 +155,13 @@ function UserBox() {
         })
       });
     });
+
+    if (userUnsavedChanges.settings) {
+      response.settings = {
+        ...response.settings,
+        ...userUnsavedChanges.settings
+      }
+    }
 
     await new API(undefined, user.data.uid).db(undefined, response, true, true);
 
