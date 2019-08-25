@@ -257,7 +257,7 @@ function ApkalluFalls({}) {
        */
       function getObtainedContentForCharacter(content) {
         return content.filter((
-          entry => entry.character === characterId && entry.obtained
+          entry => entry.character === Number(characterId) && entry.obtained
         )).map(entry => entry.id);
       }
 
@@ -339,6 +339,15 @@ function ApkalluFalls({}) {
     localStorage.setItem('unsavedChanges', JSON.stringify(unsavedChanges));
   }
 
+  /**
+   * Directly set the unsaved changes for the user.
+   * @param {Object} data - Unsaved changes data.
+   */
+  function handleUserUnsavedChangesSet(data) {
+    setUserUnsavedChanges(data);
+    localStorage.setItem('unsavedChanges', JSON.stringify(data));
+  }
+
   if (version === -1) {
     return (
       <ThemeProvider theme={{
@@ -368,6 +377,7 @@ function ApkalluFalls({}) {
         unsavedChanges: userUnsavedChanges,
         verifiedCharacters: userVerifiedCharacters,
         modifyUnsavedChanges: handleUserUnsavedChangesChange,
+        setUnsavedChanges: handleUserUnsavedChangesSet,
         setVerifiedCharacters: setUserVerifiedCharacters
       }}>
         <CharacterContext.Provider value={{

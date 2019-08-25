@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import VisibilitySensor from 'react-visibility-sensor';
+import { APIContext } from 'contexts/api';
 import { CharacterContext } from 'contexts/character';
 import { localeInject, LocalisationContext } from 'contexts/localisation';
 import { UserContext } from 'contexts/user';
@@ -17,24 +18,67 @@ function ListItem({
   source
 }) {
   // Contexts.
+  const {
+    overview: apiOverview,
+  } = useContext(APIContext);
+  const {
+    lists: listsKeys,
+    overview: overviewKeys
+  } = apiOverview.keys;
+
   const character = useContext(CharacterContext);
   const { locale } = useContext(LocalisationContext);
   const user = useContext(UserContext);
 
-  const hasKnownMethods = Array.isArray(data.m) && data.m.length > 0;
+  const hasKnownMethods = (
+    Array.isArray(data[listsKeys.methods])
+    && data[listsKeys.methods].length > 0
+  );
+
   const hasRoundedIcon = source === 'orchestrion';
 
-  const unsavedChanges = (
-    character
-    && user
-    && user.unsavedChanges
-    && user.unsavedChanges[user.data.uid]
-    && user.unsavedChanges[user.data.uid][character.id]
-    && user.unsavedChanges[user.data.uid][character.id][source]
-  ) || {};
+  const unlockedByDefault = (
+    apiOverview[source][overviewKeys.unlockedByDefault] || []
+  ).indexOf(data[listsKeys.id]) !== -1;
 
-  const [obtained, setObtained] = useState(unsavedChanges[data.id] || false);
-  const [unsaved, setUnsaved] = useState(unsavedChanges[data.id] !== undefined);
+  const characterSourceData = (
+    character
+    && character.data
+    && character.data[source]
+  ) || [];
+
+  const getUnsavedChanges = () => {
+    return (
+      character
+      && user
+      && user.unsavedChanges
+      && user.unsavedChanges[user.data.uid]
+      && user.unsavedChanges[user.data.uid][character.id]
+      && user.unsavedChanges[user.data.uid][character.id][source]
+    ) || {};
+  }
+
+  const unsavedChanges = getUnsavedChanges();
+
+  const [obtained, setObtained] = useState((
+    unlockedByDefault
+    || (
+      unsavedChanges[data[listsKeys.id]] !== undefined
+      ? unsavedChanges[data[listsKeys.id]]
+      : characterSourceData.indexOf(data[listsKeys.id]) !== -1
+    )
+  ));
+  const [unsaved, setUnsaved] = useState(unsavedChanges[data[listsKeys.id]] !== undefined);
+
+  useEffect(() => {
+    const unsavedChanges = getUnsavedChanges();
+    if (unsavedChanges[data[listsKeys.id]] !== undefined) {
+      return;
+    }
+
+    setObtained(unlockedByDefault || characterSourceData.indexOf(data[listsKeys.id]) !== -1);
+    setUnsaved(false);
+  }, [user.unsavedChanges]);
 
   function handleObtainedChange(checked) {
     if (!character) {
@@ -61,7 +105,7 @@ function ListItem({
       return;
     }
 
-    setObtained(checked);
+    setObtained(unlockedByDefault || checked);
     user.modifyUnsavedChanges(source, data, checked);
     setUnsaved(!unsaved);
   }
@@ -76,17 +120,17 @@ function ListItem({
           return (
             <article
               className={classes.item}
-              key={`list-data-${data.id}`}
+              key={`list-data-${data[listsKeys.id]}`}
             >
               <span className={classes.checkbox} />
               <span
                 className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''}`}
               />
               <span className={classes.detail}>
-                <h2 className={classes.name}>{data.n}</h2>
+                <h2 className={classes.name}>{data[listsKeys.name]}</h2>
                   {hasKnownMethods && (
                     <ol className={classes.methods}>
-                      {data.m.map((_, index) => (
+                      {data[listsKeys.methods].map((_, index) => (
                         <li
                           className={classes.methodLoading}
                           key={index}
@@ -102,29 +146,30 @@ function ListItem({
         return (
           <article
             className={classes.item}
-            key={`list-data-${data.id}`}
+            key={`list-data-${data[listsKeys.id]}`}
           >
             <span className={classes.checkbox}>
               <Checkbox
                 checked={obtained}
+                disabled={unlockedByDefault}
                 unsaved={unsaved}
-                onChange={handleObtainedChange}
+                onChange={unlockedByDefault ? () => {} : handleObtainedChange}
               />
             </span>
             <span
               className={`${classes.icon} ${hasRoundedIcon ? classes.iconRound : ''} ${obtained ? `${classes.obtained} ${classes.obtainedIcon}` : ''}`}
-              title={data.n}
+              title={data[listsKeys.name]}
             >
-              <Icon id={data.i} positions={iconPositions} source={source} />
+              <Icon id={data[listsKeys.icon]} positions={iconPositions} source={source} />
             </span>
             <span className={classes.detail}>
               <h2 className={`${classes.name} ${obtained ? classes.obtained : ''}`}>
-                {source === 'orchestrion' && data.o !== 65535 && (
+                {source === 'orchestrion' && data[listsKeys.order] !== 65535 && (
                   <small className={classes.orchestrionNumber}>
-                    #{data.o}{' '}
+                    #{data[listsKeys.order]}{' '}
                   </small>
                 )}
-                {data.n}
+                {data[listsKeys.name]}
                 {unsaved && (
                   <React.Fragment>
                     {' '}
@@ -137,7 +182,7 @@ function ListItem({
               {hasKnownMethods
                 ? (
                   <ol className={`${classes.methods} ${obtained ? `${classes.obtained} ${classes.obtainedMethods}` : ''}`}>
-                    {data.m.map(([localeKey, icon, details], index) => {
+                    {data[listsKeys.methods].map(([localeKey, icon, details], index) => {
                       
                       
                       return (

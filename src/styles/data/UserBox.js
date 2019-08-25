@@ -129,6 +129,7 @@ export default () => {
         y: 1
       },
       color: theme.unsavedColor,
+      cursor: 'pointer',
       display: 'block',
       fontSize: 14,
       lineHeight: '17px',
@@ -153,7 +154,6 @@ export default () => {
     }),
     unsavedChangesButton: {
       alignItems: 'center',
-      cursor: 'pointer',
       display: 'flex',
       height: '100%',
       justifyContent: 'center',
@@ -161,6 +161,12 @@ export default () => {
     },
     unsavedChangesText: {
       marginLeft: 8
-    }
+    },
+    savingChanges: () => ({
+      cursor: 'default',
+      opacity: 1,
+      pointerEvents: 'none',
+      width: 108
+    })
   }
 }

@@ -9,6 +9,7 @@ const useStyles = createUseStyles(style);
 
 function Checkbox({
   checked: checkedProp = false,
+  disabled = false,
   unsaved = false,
   onChange = () => {}
 }) {
@@ -30,6 +31,14 @@ function Checkbox({
    */
   function handleCheckboxChange() {
     setChecked(!checked);
+  }
+
+  if (disabled) {
+    return (
+      <div className={`${classes.checkbox} ${classes.checkboxDisabled} ${checked ? classes.checkboxChecked : classes.checkboxUnchecked}`}>
+        <span className={`fal fa-${checked ? 'check' : 'times'}`} />
+      </div>
+    )
   }
 
   return (

@@ -79,6 +79,7 @@ export const localisation = {
       loading: 'Loading...',
       lodestoneDelay: 'Due to recent Lodestone changes, this may take a while.',
       noKnownObtainMethod: 'Oops! Tweet us at @ApkalluFalls if you know how to obtain this.',
+      savingChanges: 'Saving...',
       searching: 'Searching...',
       selectCharacterBeforeMarkingComplete: 'You must select a character before you can mark content as obtained. Would you like to be taken to the character search page?',
       signInBeforeMarkingComplete: 'You need to sign in before you can mark content as obtained. Would you like to be taken to the sign in page?',

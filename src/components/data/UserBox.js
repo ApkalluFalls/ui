@@ -26,6 +26,7 @@ function UserBox() {
   });
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   /**
    * When the `user.loading` state changes, check and fetch the user's verified characters from
@@ -92,6 +93,75 @@ function UserBox() {
     );
   }
 
+  /**
+   * Send any unsaved changes over to the database.
+   */
+  async function handleSaveChanges() {
+    if (saving) {
+      return;
+    }
+
+    setSaving(true);
+    const userUnsavedChanges = user.unsavedChanges[user.data.uid];
+
+    const {
+      barding = [],
+      emotes = [],
+      minions = [],
+      mounts = [],
+      'orchestrion-rolls': orchestrion = []
+    } = await new API(undefined, user.data.uid).db();
+
+    const response = {
+      barding,
+      emotes,
+      minions,
+      mounts,
+      'orchestrion-rolls': orchestrion
+    };
+
+    let shouldSyncCharacter = false;
+
+    Object.entries(userUnsavedChanges).forEach(([characterId, content = {}]) => {
+      if (character.id === Number(characterId)) {
+        shouldSyncCharacter = true;
+      }
+
+      Object.entries(content).forEach(([source, data = {}]) => {
+        const sourceKey = source === 'orchestrion' ? 'orchestrion-rolls' : source;
+        
+        Object.entries(data).forEach(([contentId, isObtained]) => {
+          const match = response[sourceKey].find((
+            entry => entry.character === Number(characterId) && entry.id === Number(contentId)
+          ));
+
+          if (match) {
+            match.obtained = isObtained;
+            return;
+          }
+
+          response[sourceKey].push({
+            character: Number(characterId),
+            id: Number(contentId),
+            obtained: isObtained
+          });
+        })
+      });
+    });
+
+    await new API(undefined, user.data.uid).db(undefined, response, true, true);
+
+    if (shouldSyncCharacter) {
+      await character.onSync(character, character.data.achievements, character.data.titles);
+    }
+
+    const unsavedChanges = { ...user.UnsavedChanges };
+    delete unsavedChanges[user.data.uid];
+    user.setUnsavedChanges(unsavedChanges);
+
+    setSaving(false);
+  }
+
   const { avatar } = user.data;
 
   return (
@@ -124,16 +194,21 @@ function UserBox() {
           />
         ))}
       </div>
-      <div className={`${classes.unsavedChanges} ${hasUnsavedChanges ? '' : classes.unsavedChangesCollapsed}`}>
+      <div className={`${classes.unsavedChanges} ${hasUnsavedChanges ? '' : classes.unsavedChangesCollapsed} ${saving ? classes.savingChanges : ''}`}>
         {hasUnsavedChanges && (
           <span
             className={classes.unsavedChangesButton}
             role="button"
             tabIndex="0"
+            onClick={handleSaveChanges}
+            onKeyDown={(event) => event.which === 13 && handleSaveChanges()}
           >
-            <span className="fal fa-save" />
+            <span className={`fal fa-${saving ? 'cog fa-spin' : 'save'}`} />
             <span className={classes.unsavedChangesText}>
-              {locale.actions.saveChanges}
+              {saving
+                ? locale.info.savingChanges
+                : locale.actions.saveChanges
+              }
             </span>
           </span>
         )}

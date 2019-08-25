@@ -23,5 +23,13 @@ export default {
   }),
   checkboxUnsaved: theme => ({
     color: theme.unsaved
+  }),
+  checkboxDisabled: theme => ({
+    color: theme.colorUnimportant,
+    cursor: 'default',
+
+    '&:hover, &:focus': {
+      color: theme.colorUnimportant
+    }
   })
 }
